@@ -17,8 +17,8 @@ import {
   DATASET_SOURCE,
 } from "./data/companies";
 import {
-  tagShareSeries,
   industryShareSeries,
+  subindustryShareSeries,
   biggestIndustryShifts,
   shortBatchLabel,
   trends,
@@ -108,9 +108,18 @@ export function Dashboard() {
     flag: b.partial ? "Batch still filling — count not final" : undefined,
   }));
   // --- Trends view (2022 → now, from bundled per-batch aggregates) ---
-  const aiShare = useMemo(() => tagShareSeries(["AI", "Artificial Intelligence"]), []);
-  const industryOverTime = useMemo(
-    () => industryShareSeries(["B2B", "Industrials", "Fintech", "Healthcare"]),
+  // The headline finding: YC's mix rotated out of Fintech and into Industrials.
+  // AI share is deliberately not the lead chart — it saturated around 80% by
+  // 2024 and no longer separates one batch from another.
+  const rotation = useMemo(() => industryShareSeries(["Industrials", "Fintech"]), []);
+  // What actually drove that: robotics and defense, while climate faded.
+  const insideIndustrials = useMemo(
+    () =>
+      subindustryShareSeries([
+        { key: "Robotics", source: "Industrials -> Manufacturing and Robotics" },
+        { key: "Defense", source: "Industrials -> Defense" },
+        { key: "Climate", source: "Industrials -> Climate" },
+      ]),
     [],
   );
   const batchSizeOverTime = useMemo(
@@ -124,6 +133,19 @@ export function Dashboard() {
     [],
   );
   const shifts = useMemo(() => biggestIndustryShifts("winter-2022", "summer-2026", 6), []);
+
+  // Headline for the KPI row. Uses Summer 2026 — the most recent batch that is
+  // fully announced — rather than the newest, which is still filling and would
+  // read as a swing that hasn't actually happened.
+  const industrialsShift = useMemo(() => {
+    const from = trends.find((b) => b.slug === "winter-2022");
+    const to = trends.find((b) => b.slug === "summer-2026");
+    if (!from || !to || from.total === 0 || to.total === 0) return null;
+    return {
+      fromPct: Math.round(((from.industries["Industrials"] ?? 0) / from.total) * 100),
+      toPct: Math.round(((to.industries["Industrials"] ?? 0) / to.total) * 100),
+    };
+  }, []);
 
   // --- Composition view (current batches) ---
   const countryData: BarDatum[] = useMemo(
@@ -270,7 +292,12 @@ export function Dashboard() {
             category="tools"
             hint={`${hiringCount} of ${companies.length} companies`}
           />
-          <StatTile label="Leading signal" value={topTheme} category="heatmaps" hint="most common tag" />
+          <StatTile
+            label="Physical shift"
+            value={industrialsShift ? `${industrialsShift.fromPct}% → ${industrialsShift.toPct}%` : "—"}
+            category="heatmaps"
+            hint="Industrials share, W22 → Su26"
+          />
         </div>
 
         {/* View switcher */}
@@ -325,17 +352,23 @@ export function Dashboard() {
 
           {chartView === "trends" && (
             <>
-              <Card title="AI share of batch" subtitle="% of tagged companies">
-                <TrendChart data={aiShare} series={[{ key: "value", label: "AI-tagged" }]} height={170} />
-              </Card>
-              <Card title="Industry mix over time" subtitle="% of each batch">
+              <Card title="The rotation" subtitle="Industrials vs Fintech, % of batch">
                 <TrendChart
-                  data={industryOverTime}
+                  data={rotation}
                   series={[
-                    { key: "B2B", label: "B2B" },
                     { key: "Industrials", label: "Industrials" },
                     { key: "Fintech", label: "Fintech" },
-                    { key: "Healthcare", label: "Healthcare" },
+                  ]}
+                  height={170}
+                />
+              </Card>
+              <Card title="What's driving it" subtitle="Inside Industrials, % of batch">
+                <TrendChart
+                  data={insideIndustrials}
+                  series={[
+                    { key: "Robotics", label: "Mfg & Robotics" },
+                    { key: "Defense", label: "Defense" },
+                    { key: "Climate", label: "Climate" },
                   ]}
                   height={170}
                 />

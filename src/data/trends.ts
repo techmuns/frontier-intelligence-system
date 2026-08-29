@@ -9,6 +9,7 @@ export interface BatchTrend {
   hiring: number;
   medianTeamSize: number | null;
   industries: Record<string, number>;
+  subindustries: Record<string, number>;
   topTags: { name: string; count: number }[];
 }
 
@@ -82,6 +83,26 @@ export function industryShareSeries(industryNames: string[]) {
     };
     for (const name of industryNames) {
       row[name] = b.total === 0 ? null : Math.round(((b.industries[name] ?? 0) / b.total) * 1000) / 10;
+    }
+    return row;
+  });
+}
+
+/**
+ * Share of each batch in given subindustries, keyed by a short display label.
+ * Subindustry is populated alongside industry for essentially every company,
+ * so this is safe to measure against the batch total.
+ */
+export function subindustryShareSeries(spec: { key: string; source: string }[]) {
+  return trends.map((b) => {
+    const row: Record<string, unknown> = {
+      batch: b.batch,
+      label: shortBatchLabel(b.batch),
+      total: b.total,
+      partial: b.partial,
+    };
+    for (const { key, source } of spec) {
+      row[key] = b.total === 0 ? null : Math.round(((b.subindustries[source] ?? 0) / b.total) * 1000) / 10;
     }
     return row;
   });

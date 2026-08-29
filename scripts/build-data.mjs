@@ -124,6 +124,12 @@ async function main() {
     // thin the evidence is rather than quietly implying a trend.
     const taggedCount = list.filter((c) => (c.tags ?? []).length > 0).length;
 
+    // Subindustry is where the actual rotation shows up — a flat "Industrials"
+    // share hides that its composition changed completely. YC formats these as
+    // "Parent -> Child"; keep the full label so children of different parents
+    // can't collide (e.g. Energy appears under more than one).
+    const subindustries = countBy(list, (c) => [c.subindustry]);
+
     return {
       slug,
       batch: list[0]?.batch ?? slug,
@@ -133,6 +139,7 @@ async function main() {
       hiring: list.filter((c) => c.isHiring).length,
       medianTeamSize: median(teamSizes),
       industries: Object.fromEntries(industries),
+      subindustries: Object.fromEntries(subindustries),
       topTags: topN(tags, 25),
     };
   });
