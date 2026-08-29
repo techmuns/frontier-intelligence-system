@@ -13,6 +13,7 @@ import { chartColorRotation, tokens } from "../lib/theme";
 export interface BarDatum {
   name: string;
   value: number;
+  fullName?: string; // untruncated label, shown in the tooltip when name is shortened for axis space
   flag?: string; // e.g. "partial" — shown in tooltip, dims the bar
 }
 
@@ -37,7 +38,7 @@ function CustomTooltip({ active, payload, valueLabel }: any) {
         boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
       }}
     >
-      <div style={{ fontWeight: 700, color: tokens.textPrimary }}>{d.name}</div>
+      <div style={{ fontWeight: 700, color: tokens.textPrimary }}>{d.fullName ?? d.name}</div>
       <div style={{ color: tokens.textSecondary }}>
         {d.value.toLocaleString()} {valueLabel ?? ""}
       </div>
@@ -70,7 +71,7 @@ export function BarChartCard({ data, layout = "vertical", height = 220, valueLab
             <YAxis
               type="category"
               dataKey="name"
-              width={130}
+              width={108}
               tick={{ fontSize: 11, fill: tokens.textSecondary }}
               axisLine={false}
               tickLine={false}

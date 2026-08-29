@@ -17,12 +17,16 @@ import { BarChartCard, type BarDatum } from "./components/BarChartCard";
 import { CompanyTable } from "./components/CompanyTable";
 import { SignalsPanel } from "./components/SignalsPanel";
 
+function truncateLabel(label: string, max = 16): string {
+  return label.length > max ? `${label.slice(0, max - 1).trimEnd()}…` : label;
+}
+
 export function Dashboard() {
   const { session, ticker, tickerCompany } = useHostContext();
 
   const batchCounts = useMemo(() => companiesByBatch(companies), []);
-  const industries = useMemo(() => topIndustries(companies, 6), []);
-  const tags = useMemo(() => topTags(companies, 6), []);
+  const industries = useMemo(() => topIndustries(companies, 5), []);
+  const tags = useMemo(() => topTags(companies, 5), []);
   const industryCount = useMemo(() => allIndustries(companies).length, []);
   const hiringCount = useMemo(() => companies.filter((c) => c.isHiring).length, []);
   const topTheme = tags[0]?.name ?? industries[0]?.name ?? "AI startups";
@@ -32,8 +36,16 @@ export function Dashboard() {
     value: b.count,
     flag: b.partial ? "Batch still filling — count not final" : undefined,
   }));
-  const industryChartData: BarDatum[] = industries.map((i) => ({ name: i.name, value: i.count }));
-  const tagChartData: BarDatum[] = tags.map((t) => ({ name: t.name, value: t.count }));
+  const industryChartData: BarDatum[] = industries.map((i) => ({
+    name: truncateLabel(i.name),
+    fullName: i.name,
+    value: i.count,
+  }));
+  const tagChartData: BarDatum[] = tags.map((t) => ({
+    name: truncateLabel(t.name),
+    fullName: t.name,
+    value: t.count,
+  }));
 
   // Getter pointing at current dashboard state, reassigned each render so the
   // snapshot handler always reads live values without stale closures.
@@ -161,17 +173,17 @@ export function Dashboard() {
             gridTemplateColumns: "1.1fr 1fr 1fr",
             gap: 8,
             flexShrink: 0,
-            height: 150,
+            height: 210,
           }}
         >
           <Card title="Companies by batch" subtitle="Formation trend">
-            <BarChartCard data={batchChartData} layout="vertical" height={110} valueLabel="companies" />
+            <BarChartCard data={batchChartData} layout="vertical" height={170} valueLabel="companies" />
           </Card>
           <Card title="Top industries" subtitle="By company count">
-            <BarChartCard data={industryChartData} layout="horizontal" height={110} valueLabel="companies" />
+            <BarChartCard data={industryChartData} layout="horizontal" height={170} valueLabel="companies" />
           </Card>
           <Card title="Top tags" subtitle="Founders' own words">
-            <BarChartCard data={tagChartData} layout="horizontal" height={110} valueLabel="companies" />
+            <BarChartCard data={tagChartData} layout="horizontal" height={170} valueLabel="companies" />
           </Card>
         </div>
 
