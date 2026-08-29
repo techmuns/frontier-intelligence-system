@@ -7,6 +7,7 @@ export interface Company {
   website: string | null;
   all_locations: string | null;
   one_liner: string | null;
+  long_description: string | null;
   team_size: number | null;
   industry: string | null;
   subindustry: string | null;

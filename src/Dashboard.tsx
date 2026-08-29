@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toBlob } from "html-to-image";
 import { sdk } from "./lib/sdk";
 import { useHostContext } from "./hooks/useHostContext";
@@ -16,6 +16,7 @@ import { Card } from "./components/Card";
 import { BarChartCard, type BarDatum } from "./components/BarChartCard";
 import { CompanyTable } from "./components/CompanyTable";
 import { SignalsPanel } from "./components/SignalsPanel";
+import { CompanyDetail } from "./components/CompanyDetail";
 
 function truncateLabel(label: string, max = 16): string {
   return label.length > max ? `${label.slice(0, max - 1).trimEnd()}…` : label;
@@ -23,6 +24,11 @@ function truncateLabel(label: string, max = 16): string {
 
 export function Dashboard() {
   const { session, ticker, tickerCompany } = useHostContext();
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const selectedCompany = useMemo(
+    () => (selectedSlug ? companies.find((c) => c.slug === selectedSlug) ?? null : null),
+    [selectedSlug],
+  );
 
   const batchCounts = useMemo(() => companiesByBatch(companies), []);
   const industries = useMemo(() => topIndustries(companies, 5), []);
@@ -52,7 +58,7 @@ export function Dashboard() {
   const snapshotRef = useRef<() => unknown>(() => ({}));
   snapshotRef.current = () => ({
     context: { ticker, dataset: DATASET_SOURCE },
-    selection: {},
+    selection: { selectedCompanySlug: selectedSlug },
     data: {
       totalCompanies: companies.length,
       batchCounts,
@@ -189,11 +195,19 @@ export function Dashboard() {
 
         {/* Main row: table + signals — the primary surface, gets the remaining space */}
         <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "2.2fr 1fr", gap: 8 }}>
-          <Card title="Company explorer" subtitle={`${companies.length} companies · search, filter, sort`} bodyStyle={{ display: "flex", minHeight: 0 }}>
-            <CompanyTable companies={companies} />
+          <Card title="Company explorer" subtitle={`${companies.length} companies · click a row for detail`} bodyStyle={{ display: "flex", minHeight: 0 }}>
+            <CompanyTable companies={companies} selectedSlug={selectedSlug} onSelect={setSelectedSlug} />
           </Card>
-          <Card title="Live signals" subtitle="Recent news via Munshot news search" bodyStyle={{ display: "flex", minHeight: 0 }}>
-            <SignalsPanel token={session.token} ticker={ticker} tickerCompany={tickerCompany} topTheme={topTheme} />
+          <Card
+            title={selectedCompany ? selectedCompany.name : "Live signals"}
+            subtitle={selectedCompany ? "Company detail" : "Recent news via Munshot news search"}
+            bodyStyle={{ display: "flex", minHeight: 0 }}
+          >
+            {selectedCompany ? (
+              <CompanyDetail company={selectedCompany} token={session.token} onClose={() => setSelectedSlug(null)} />
+            ) : (
+              <SignalsPanel token={session.token} ticker={ticker} tickerCompany={tickerCompany} topTheme={topTheme} />
+            )}
           </Card>
         </div>
 

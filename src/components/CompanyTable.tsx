@@ -18,7 +18,13 @@ const selectStyle: React.CSSProperties = {
   color: tokens.textSecondary,
 };
 
-export function CompanyTable({ companies }: { companies: Company[] }) {
+interface CompanyTableProps {
+  companies: Company[];
+  selectedSlug?: string | null;
+  onSelect?: (slug: string) => void;
+}
+
+export function CompanyTable({ companies, selectedSlug, onSelect }: CompanyTableProps) {
   const [search, setSearch] = useState("");
   const [batch, setBatch] = useState("all");
   const [industry, setIndustry] = useState("all");
@@ -158,7 +164,15 @@ export function CompanyTable({ companies }: { companies: Company[] }) {
             </thead>
             <tbody>
               {pageRows.map((c) => (
-                <tr key={c.slug} style={{ borderBottom: `1px solid ${tokens.borderDefault}` }}>
+                <tr
+                  key={c.slug}
+                  onClick={() => onSelect?.(c.slug)}
+                  style={{
+                    borderBottom: `1px solid ${tokens.borderDefault}`,
+                    cursor: onSelect ? "pointer" : "default",
+                    background: c.slug === selectedSlug ? tokens.primaryLight : "transparent",
+                  }}
+                >
                   <td style={{ padding: "8px 10px", fontWeight: 600, color: tokens.textPrimary }}>
                     <a
                       href={c.url}
