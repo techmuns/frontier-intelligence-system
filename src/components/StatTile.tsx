@@ -17,31 +17,35 @@ export function StatTile({ label, value, category, hint }: StatTileProps) {
         background: tokens.cardBackground,
         border: `1px solid ${tokens.borderDefault}`,
         borderRadius: 10,
-        padding: "12px 14px",
+        padding: "7px 12px",
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
       }}
     >
       <div
         style={{
-          display: "inline-block",
-          fontSize: 10,
+          flexShrink: 0,
+          fontSize: 9,
           fontWeight: 700,
-          letterSpacing: 0.4,
+          letterSpacing: 0.3,
           textTransform: "uppercase",
           color: c.text,
           background: c.bg,
           border: `1px solid ${c.border}`,
           borderRadius: 999,
-          padding: "2px 8px",
-          marginBottom: 8,
+          padding: "2px 7px",
         }}
       >
         {label}
       </div>
-      <div style={{ fontSize: 24, fontWeight: 700, color: tokens.textPrimary, lineHeight: 1.1 }}>
+      <div style={{ fontSize: 17, fontWeight: 700, color: tokens.textPrimary, lineHeight: 1.1 }}>
         {value}
       </div>
       {hint && (
-        <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 4 }}>{hint}</div>
+        <div style={{ fontSize: 10, color: tokens.textHint, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+          {hint}
+        </div>
       )}
     </div>
   );

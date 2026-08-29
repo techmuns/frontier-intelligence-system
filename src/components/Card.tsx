@@ -25,19 +25,20 @@ export function Card({ title, subtitle, children, bodyStyle }: CardProps) {
         style={{
           background: tokens.cardHeader,
           borderBottom: `1px solid ${tokens.borderDefault}`,
-          padding: "10px 14px",
+          padding: "6px 12px",
           flexShrink: 0,
+          display: "flex",
+          alignItems: "baseline",
+          gap: 6,
         }}
       >
-        <div style={{ fontSize: 13, fontWeight: 700, color: tokens.textPrimary }}>{title}</div>
-        {subtitle && (
-          <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 1 }}>{subtitle}</div>
-        )}
+        <div style={{ fontSize: 12, fontWeight: 700, color: tokens.textPrimary }}>{title}</div>
+        {subtitle && <div style={{ fontSize: 10, color: tokens.textHint }}>{subtitle}</div>}
       </div>
       <div
         style={{
           background: tokens.cardBodyBg,
-          padding: 12,
+          padding: 8,
           flex: 1,
           minHeight: 0,
           ...bodyStyle,

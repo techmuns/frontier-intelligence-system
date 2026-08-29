@@ -8,6 +8,7 @@ import {
   companiesByBatch,
   topIndustries,
   topTags,
+  allIndustries,
   DATASET_SOURCE,
 } from "./data/companies";
 import { StatTile } from "./components/StatTile";
@@ -20,8 +21,9 @@ export function Dashboard() {
   const { session, ticker, tickerCompany } = useHostContext();
 
   const batchCounts = useMemo(() => companiesByBatch(companies), []);
-  const industries = useMemo(() => topIndustries(companies, 8), []);
-  const tags = useMemo(() => topTags(companies, 8), []);
+  const industries = useMemo(() => topIndustries(companies, 6), []);
+  const tags = useMemo(() => topTags(companies, 6), []);
+  const industryCount = useMemo(() => allIndustries(companies).length, []);
   const hiringCount = useMemo(() => companies.filter((c) => c.isHiring).length, []);
   const topTheme = tags[0]?.name ?? industries[0]?.name ?? "AI startups";
 
@@ -100,17 +102,18 @@ export function Dashboard() {
           flexShrink: 0,
           background: tokens.headerBar,
           borderBottom: `1px solid ${tokens.borderDefault}`,
-          padding: "10px 16px",
+          padding: "6px 14px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          gap: 10,
         }}
       >
-        <div>
-          <div style={{ fontSize: 15, fontWeight: 800, letterSpacing: 0.3, color: tokens.textPrimary }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+          <div style={{ fontSize: 14, fontWeight: 800, letterSpacing: 0.3, color: tokens.textPrimary }}>
             FRONTIER
           </div>
-          <div style={{ fontSize: 10, color: tokens.textHint, fontWeight: 600, letterSpacing: 0.4 }}>
+          <div style={{ fontSize: 9, color: tokens.textHint, fontWeight: 600, letterSpacing: 0.3 }}>
             TECHNOLOGY MARKET INTELLIGENCE — YC WINTER '26 – WINTER '27
           </div>
         </div>
@@ -136,12 +139,12 @@ export function Dashboard() {
       </header>
 
       {/* Body */}
-      <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", gap: 12, padding: 14 }}>
+      <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", gap: 8, padding: 10 }}>
         {/* KPI row */}
-        <div style={{ display: "flex", gap: 10, flexShrink: 0, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 8, flexShrink: 0, flexWrap: "wrap" }}>
           <StatTile label="Companies" value={companies.length.toLocaleString()} category="markets" hint="Winter '26 – Winter '27" />
           <StatTile label="Batches" value={String(batchCounts.length)} category="sector" hint="2 still filling" />
-          <StatTile label="Industries" value={String(industries.length)} category="analytics" hint="top-level YC categories" />
+          <StatTile label="Industries" value={String(industryCount)} category="analytics" hint="top-level YC categories" />
           <StatTile
             label="Hiring now"
             value={`${Math.round((hiringCount / companies.length) * 100)}%`}
@@ -156,23 +159,24 @@ export function Dashboard() {
           style={{
             display: "grid",
             gridTemplateColumns: "1.1fr 1fr 1fr",
-            gap: 10,
+            gap: 8,
             flexShrink: 0,
+            height: 150,
           }}
         >
-          <Card title="Companies by batch" subtitle="Formation trend, Winter '26 → Winter '27">
-            <BarChartCard data={batchChartData} layout="vertical" height={210} valueLabel="companies" />
+          <Card title="Companies by batch" subtitle="Formation trend">
+            <BarChartCard data={batchChartData} layout="vertical" height={110} valueLabel="companies" />
           </Card>
           <Card title="Top industries" subtitle="By company count">
-            <BarChartCard data={industryChartData} layout="horizontal" height={210} valueLabel="companies" />
+            <BarChartCard data={industryChartData} layout="horizontal" height={110} valueLabel="companies" />
           </Card>
-          <Card title="Top tags" subtitle="What founders call it themselves">
-            <BarChartCard data={tagChartData} layout="horizontal" height={210} valueLabel="companies" />
+          <Card title="Top tags" subtitle="Founders' own words">
+            <BarChartCard data={tagChartData} layout="horizontal" height={110} valueLabel="companies" />
           </Card>
         </div>
 
-        {/* Main row: table + signals */}
-        <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "2.2fr 1fr", gap: 10 }}>
+        {/* Main row: table + signals — the primary surface, gets the remaining space */}
+        <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "2.2fr 1fr", gap: 8 }}>
           <Card title="Company explorer" subtitle={`${companies.length} companies · search, filter, sort`} bodyStyle={{ display: "flex", minHeight: 0 }}>
             <CompanyTable companies={companies} />
           </Card>

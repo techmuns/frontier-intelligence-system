@@ -7,7 +7,7 @@ import { EmptyState } from "./StatePanels";
 type SortKey = "name" | "batch" | "industry" | "team_size";
 type SortDir = "asc" | "desc";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 14;
 
 const selectStyle: React.CSSProperties = {
   fontSize: 12,
