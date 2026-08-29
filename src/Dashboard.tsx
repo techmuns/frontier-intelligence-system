@@ -17,6 +17,10 @@ import { BarChartCard, type BarDatum } from "./components/BarChartCard";
 import { CompanyTable } from "./components/CompanyTable";
 import { SignalsPanel } from "./components/SignalsPanel";
 import { CompanyDetail } from "./components/CompanyDetail";
+import { TestModePanel } from "./components/TestModePanel";
+
+const DEV_TOKEN_KEY = "frontier.devToken";
+const DEV_TICKER_KEY = "frontier.devTicker";
 
 function truncateLabel(label: string, max = 16): string {
   return label.length > max ? `${label.slice(0, max - 1).trimEnd()}…` : label;
@@ -24,6 +28,38 @@ function truncateLabel(label: string, max = 16): string {
 
 export function Dashboard() {
   const { session, ticker, tickerCompany } = useHostContext();
+
+  // Standalone preview only (see TestModePanel) — lets this dashboard be
+  // exercised with real data before it's embedded in the actual Munshot
+  // host. A real host session always takes priority over these.
+  const [devToken, setDevToken] = useState<string | null>(() => {
+    try {
+      return sessionStorage.getItem(DEV_TOKEN_KEY);
+    } catch {
+      return null;
+    }
+  });
+  const [devTicker, setDevTicker] = useState<string | null>(() => {
+    try {
+      return sessionStorage.getItem(DEV_TICKER_KEY);
+    } catch {
+      return null;
+    }
+  });
+  function applyDevOverride(token: string | null, tickerValue: string | null) {
+    setDevToken(token);
+    setDevTicker(tickerValue);
+    try {
+      token ? sessionStorage.setItem(DEV_TOKEN_KEY, token) : sessionStorage.removeItem(DEV_TOKEN_KEY);
+      tickerValue ? sessionStorage.setItem(DEV_TICKER_KEY, tickerValue) : sessionStorage.removeItem(DEV_TICKER_KEY);
+    } catch {
+      // sessionStorage unavailable (e.g. restricted iframe) — in-memory state still works for this session
+    }
+  }
+  const effectiveToken = session.token ?? devToken;
+  const effectiveTicker = ticker ?? devTicker;
+  const effectiveTickerCompany = tickerCompany ?? (devTicker ? devTicker : null);
+
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const selectedCompany = useMemo(
     () => (selectedSlug ? companies.find((c) => c.slug === selectedSlug) ?? null : null),
@@ -136,7 +172,7 @@ export function Dashboard() {
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          {ticker ? (
+          {effectiveTicker ? (
             <span
               style={{
                 fontSize: 11,
@@ -148,11 +184,17 @@ export function Dashboard() {
                 padding: "3px 10px",
               }}
             >
-              {tickerCompany ?? ticker}
+              {effectiveTickerCompany ?? effectiveTicker}
             </span>
           ) : (
             <span style={{ fontSize: 11, color: tokens.textHint }}>No ticker selected</span>
           )}
+          <TestModePanel
+            active={!!session.token}
+            devToken={devToken}
+            devTicker={devTicker}
+            onApply={applyDevOverride}
+          />
         </div>
       </header>
 
@@ -204,9 +246,14 @@ export function Dashboard() {
             bodyStyle={{ display: "flex", minHeight: 0 }}
           >
             {selectedCompany ? (
-              <CompanyDetail company={selectedCompany} token={session.token} onClose={() => setSelectedSlug(null)} />
+              <CompanyDetail company={selectedCompany} token={effectiveToken} onClose={() => setSelectedSlug(null)} />
             ) : (
-              <SignalsPanel token={session.token} ticker={ticker} tickerCompany={tickerCompany} topTheme={topTheme} />
+              <SignalsPanel
+                token={effectiveToken}
+                ticker={effectiveTicker}
+                tickerCompany={effectiveTickerCompany}
+                topTheme={topTheme}
+              />
             )}
           </Card>
         </div>
