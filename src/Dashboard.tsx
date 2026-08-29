@@ -9,9 +9,21 @@ import {
   companiesByBatch,
   topIndustries,
   topTags,
+  topCountries,
+  teamSizeDistribution,
+  medianTeamSize,
+  teamSizeReportedCount,
   allIndustries,
   DATASET_SOURCE,
 } from "./data/companies";
+import {
+  tagShareSeries,
+  industryShareSeries,
+  biggestIndustryShifts,
+  shortBatchLabel,
+  trends,
+} from "./data/trends";
+import { TrendChart } from "./components/TrendChart";
 import { StatTile } from "./components/StatTile";
 import { Card } from "./components/Card";
 import { BarChartCard, type BarDatum } from "./components/BarChartCard";
@@ -76,6 +88,7 @@ export function Dashboard() {
   // Use the proxy only as a last resort — a real token always takes priority.
   const useProxy = !effectiveToken && proxyAvailable;
 
+  const [chartView, setChartView] = useState<"snapshot" | "trends" | "composition">("snapshot");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const selectedCompany = useMemo(
     () => (selectedSlug ? companies.find((c) => c.slug === selectedSlug) ?? null : null),
@@ -94,6 +107,36 @@ export function Dashboard() {
     value: b.count,
     flag: b.partial ? "Batch still filling — count not final" : undefined,
   }));
+  // --- Trends view (2022 → now, from bundled per-batch aggregates) ---
+  const aiShare = useMemo(() => tagShareSeries(["AI", "Artificial Intelligence"]), []);
+  const industryOverTime = useMemo(
+    () => industryShareSeries(["B2B", "Industrials", "Fintech", "Healthcare"]),
+    [],
+  );
+  const batchSizeOverTime = useMemo(
+    () =>
+      trends.map((b) => ({
+        label: shortBatchLabel(b.batch),
+        batch: b.batch,
+        total: b.total,
+        partial: b.partial,
+      })),
+    [],
+  );
+  const shifts = useMemo(() => biggestIndustryShifts("winter-2022", "summer-2026", 6), []);
+
+  // --- Composition view (current batches) ---
+  const countryData: BarDatum[] = useMemo(
+    () => topCountries(companies, 6).map((c) => ({ name: truncateLabel(c.name), fullName: c.name, value: c.count })),
+    [],
+  );
+  const teamSizeData: BarDatum[] = useMemo(
+    () => teamSizeDistribution(companies).map((t) => ({ name: t.name, value: t.count })),
+    [],
+  );
+  const teamMedian = useMemo(() => medianTeamSize(companies), []);
+  const teamReported = useMemo(() => teamSizeReportedCount(companies), []);
+
   const industryChartData: BarDatum[] = industries.map((i) => ({
     name: truncateLabel(i.name),
     fullName: i.name,
@@ -230,6 +273,32 @@ export function Dashboard() {
           <StatTile label="Leading signal" value={topTheme} category="heatmaps" hint="most common tag" />
         </div>
 
+        {/* View switcher */}
+        <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
+          {([
+            ["snapshot", "Snapshot"],
+            ["trends", "Trends 2022 →"],
+            ["composition", "Composition"],
+          ] as const).map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => setChartView(key)}
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                padding: "4px 11px",
+                borderRadius: 999,
+                cursor: "pointer",
+                border: `1px solid ${chartView === key ? tokens.primaryBorder : tokens.borderDefault}`,
+                background: chartView === key ? tokens.primaryLight : "#ffffff",
+                color: chartView === key ? tokens.primaryText : tokens.textMuted,
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
         {/* Charts row */}
         <div
           style={{
@@ -240,15 +309,70 @@ export function Dashboard() {
             height: 210,
           }}
         >
-          <Card title="Companies by batch" subtitle="Formation trend">
-            <BarChartCard data={batchChartData} layout="vertical" height={170} valueLabel="companies" />
-          </Card>
-          <Card title="Top industries" subtitle="By company count">
-            <BarChartCard data={industryChartData} layout="horizontal" height={170} valueLabel="companies" />
-          </Card>
-          <Card title="Top tags" subtitle="Founders' own words">
-            <BarChartCard data={tagChartData} layout="horizontal" height={170} valueLabel="companies" />
-          </Card>
+          {chartView === "snapshot" && (
+            <>
+              <Card title="Companies by batch" subtitle="Current cohorts">
+                <BarChartCard data={batchChartData} layout="vertical" height={170} valueLabel="companies" />
+              </Card>
+              <Card title="Top industries" subtitle="By company count">
+                <BarChartCard data={industryChartData} layout="horizontal" height={170} valueLabel="companies" />
+              </Card>
+              <Card title="Top tags" subtitle="Founders' own words">
+                <BarChartCard data={tagChartData} layout="horizontal" height={170} valueLabel="companies" />
+              </Card>
+            </>
+          )}
+
+          {chartView === "trends" && (
+            <>
+              <Card title="AI share of batch" subtitle="% of tagged companies">
+                <TrendChart data={aiShare} series={[{ key: "value", label: "AI-tagged" }]} height={170} />
+              </Card>
+              <Card title="Industry mix over time" subtitle="% of each batch">
+                <TrendChart
+                  data={industryOverTime}
+                  series={[
+                    { key: "B2B", label: "B2B" },
+                    { key: "Industrials", label: "Industrials" },
+                    { key: "Fintech", label: "Fintech" },
+                    { key: "Healthcare", label: "Healthcare" },
+                  ]}
+                  height={170}
+                />
+              </Card>
+              <Card title="Batch size" subtitle="Companies per cohort">
+                <TrendChart
+                  data={batchSizeOverTime}
+                  series={[{ key: "total", label: "Companies" }]}
+                  height={170}
+                  unit=""
+                />
+              </Card>
+            </>
+          )}
+
+          {chartView === "composition" && (
+            <>
+              <Card title="Team size" subtitle={`${teamReported} of ${companies.length} reported · median ${teamMedian ?? "—"}`}>
+                <BarChartCard data={teamSizeData} layout="vertical" height={170} valueLabel="companies" />
+              </Card>
+              <Card title="Where they're based" subtitle="By country">
+                <BarChartCard data={countryData} layout="horizontal" height={170} valueLabel="companies" />
+              </Card>
+              <Card title="Biggest industry shifts" subtitle="Winter 2022 → Summer 2026">
+                <BarChartCard
+                  data={shifts.map((s) => ({
+                    name: truncateLabel(s.name, 14),
+                    fullName: `${s.name}: ${s.fromPct}% → ${s.toPct}%`,
+                    value: s.delta,
+                  }))}
+                  layout="horizontal"
+                  height={170}
+                  valueLabel="pt change"
+                />
+              </Card>
+            </>
+          )}
         </div>
 
         {/* Main row: table + signals — the primary surface, gets the remaining space */}
