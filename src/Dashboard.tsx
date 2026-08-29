@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { toBlob } from "html-to-image";
 import { sdk } from "./lib/sdk";
 import { useHostContext } from "./hooks/useHostContext";
+import { checkProxyAvailable } from "./lib/news";
 import { tokens, categoryColors } from "./lib/theme";
 import {
   companies,
@@ -56,9 +57,24 @@ export function Dashboard() {
       // sessionStorage unavailable (e.g. restricted iframe) — in-memory state still works for this session
     }
   }
+  // Server-side proxy fallback (see worker/index.ts) — testing only, and only
+  // when neither a real host session nor a manually-entered token exists.
+  const [proxyAvailable, setProxyAvailable] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    checkProxyAvailable().then((ok) => {
+      if (!cancelled) setProxyAvailable(ok);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const effectiveToken = session.token ?? devToken;
   const effectiveTicker = ticker ?? devTicker;
   const effectiveTickerCompany = tickerCompany ?? (devTicker ? devTicker : null);
+  // Use the proxy only as a last resort — a real token always takes priority.
+  const useProxy = !effectiveToken && proxyAvailable;
 
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const selectedCompany = useMemo(
@@ -246,13 +262,19 @@ export function Dashboard() {
             bodyStyle={{ display: "flex", minHeight: 0 }}
           >
             {selectedCompany ? (
-              <CompanyDetail company={selectedCompany} token={effectiveToken} onClose={() => setSelectedSlug(null)} />
+              <CompanyDetail
+                company={selectedCompany}
+                token={effectiveToken}
+                useProxy={useProxy}
+                onClose={() => setSelectedSlug(null)}
+              />
             ) : (
               <SignalsPanel
                 token={effectiveToken}
                 ticker={effectiveTicker}
                 tickerCompany={effectiveTickerCompany}
                 topTheme={topTheme}
+                useProxy={useProxy}
               />
             )}
           </Card>

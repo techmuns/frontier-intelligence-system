@@ -8,6 +8,7 @@ interface CompanyDetailProps {
   company: Company;
   token: string | null;
   onClose: () => void;
+  useProxy?: boolean;
 }
 
 type Status = "idle" | "loading" | "error" | "empty" | "ready";
@@ -32,17 +33,17 @@ function Badge({ text, category }: { text: string; category: keyof typeof catego
   );
 }
 
-export function CompanyDetail({ company, token, onClose }: CompanyDetailProps) {
+export function CompanyDetail({ company, token, onClose, useProxy = false }: CompanyDetailProps) {
   const [status, setStatus] = useState<Status>("idle");
   const [results, setResults] = useState<NewsResult[]>([]);
   const [error, setError] = useState("");
   const [retryTick, setRetryTick] = useState(0);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token && !useProxy) return;
     const ctrl = new AbortController();
     setStatus("loading");
-    fetchNewsSignals(token, `${company.name} funding OR product news`, ctrl.signal).then((res) => {
+    fetchNewsSignals(token, `${company.name} funding OR product news`, ctrl.signal, useProxy).then((res) => {
       if (ctrl.signal.aborted) return;
       if (!res.ok) {
         setError(res.error);
@@ -57,7 +58,7 @@ export function CompanyDetail({ company, token, onClose }: CompanyDetailProps) {
       setStatus("ready");
     });
     return () => ctrl.abort();
-  }, [token, company.slug, company.name, retryTick]);
+  }, [token, company.slug, company.name, retryTick, useProxy]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, gap: 10 }}>
@@ -148,7 +149,7 @@ export function CompanyDetail({ company, token, onClose }: CompanyDetailProps) {
       </div>
 
       <div style={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
-        {!token ? (
+        {!token && !useProxy ? (
           <WaitingForSession />
         ) : status === "loading" || status === "idle" ? (
           <LoadingState label="Fetching company signals…" />

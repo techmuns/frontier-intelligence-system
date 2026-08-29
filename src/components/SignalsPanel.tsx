@@ -8,11 +8,12 @@ interface SignalsPanelProps {
   ticker: string | null;
   tickerCompany: string | null;
   topTheme: string;
+  useProxy?: boolean;
 }
 
 type Status = "idle" | "loading" | "error" | "empty" | "ready";
 
-export function SignalsPanel({ token, ticker, tickerCompany, topTheme }: SignalsPanelProps) {
+export function SignalsPanel({ token, ticker, tickerCompany, topTheme, useProxy = false }: SignalsPanelProps) {
   const [status, setStatus] = useState<Status>("idle");
   const [results, setResults] = useState<NewsResult[]>([]);
   const [error, setError] = useState<string>("");
@@ -23,10 +24,10 @@ export function SignalsPanel({ token, ticker, tickerCompany, topTheme }: Signals
     : `${topTheme} startups funding news`;
 
   useEffect(() => {
-    if (!token) return; // waiting-for-session — no call yet
+    if (!token && !useProxy) return; // waiting-for-session — no call yet
     const ctrl = new AbortController();
     setStatus("loading");
-    fetchNewsSignals(token, query, ctrl.signal).then((res) => {
+    fetchNewsSignals(token, query, ctrl.signal, useProxy).then((res) => {
       if (ctrl.signal.aborted) return;
       if (!res.ok) {
         setError(res.error);
@@ -42,9 +43,9 @@ export function SignalsPanel({ token, ticker, tickerCompany, topTheme }: Signals
     });
     return () => ctrl.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, query, retryTick]);
+  }, [token, query, retryTick, useProxy]);
 
-  if (!token) return <WaitingForSession />;
+  if (!token && !useProxy) return <WaitingForSession />;
   if (status === "loading" || status === "idle") return <LoadingState label="Fetching live signals…" />;
   if (status === "error") return <ErrorState message={error || "Signal fetch failed"} onRetry={() => setRetryTick((t) => t + 1)} />;
   if (status === "empty") return <EmptyState message="No recent signals found" hint="Try again shortly — coverage is sparse for this query." />;
