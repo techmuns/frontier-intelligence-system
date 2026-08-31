@@ -21,6 +21,10 @@ export interface Company {
   stage: string | null;
   launched_at: number | null;
   url: string;
+  /** Classified at build time by scripts/build-data.mjs, so the rules live in
+   *  one documented place rather than being re-implemented in the UI. */
+  isAI: boolean;
+  isRobotics: boolean;
 }
 
 export const companies = raw as unknown as Company[];
@@ -86,6 +90,27 @@ export function topTags(list: Company[], limit = 10): NamedCount[] {
   const counts = new Map<string, number>();
   for (const c of list) {
     for (const t of c.tags) counts.set(t, (counts.get(t) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit);
+}
+
+/**
+ * Most common subindustries, with YC's "Parent -> Child" prefix stripped for
+ * display. Preferred over tags for any "what are these companies" chart:
+ * subindustry is populated for essentially every company, whereas tags are
+ * missing for most of some batches.
+ */
+export function topSubindustries(list: Company[], limit = 6): NamedCount[] {
+  const counts = new Map<string, number>();
+  for (const c of list) {
+    if (!c.subindustry) continue;
+    const leaf = c.subindustry.includes("->")
+      ? c.subindustry.split("->").pop()!.trim()
+      : c.subindustry.trim();
+    counts.set(leaf, (counts.get(leaf) ?? 0) + 1);
   }
   return [...counts.entries()]
     .map(([name, count]) => ({ name, count }))

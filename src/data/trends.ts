@@ -15,6 +15,11 @@ export interface BatchTrend {
   /** Robotics companies including those YC files under other verticals —
    *  see the matching rules in scripts/build-data.mjs. */
   roboticsTotal: number;
+  /** Companies carrying YC's "AI" tag. Depends on tag coverage, which
+   *  swings from 23% to 99% by batch — kept only for the method comparison. */
+  aiTagged: number;
+  /** AI companies by one-liner, independent of tag coverage. */
+  aiTotal: number;
   topTags: { name: string; count: number }[];
 }
 
@@ -126,6 +131,35 @@ export function roboticsSeries() {
     partial: b.partial,
     "YC label": b.total === 0 ? null : Math.round((b.roboticsLabelled / b.total) * 1000) / 10,
     Corrected: b.total === 0 ? null : Math.round((b.roboticsTotal / b.total) * 1000) / 10,
+  }));
+}
+
+/** AI share per batch, measured from one-liners (coverage-independent). */
+export function aiSeries() {
+  return trends.map((b) => ({
+    batch: b.batch,
+    label: shortBatchLabel(b.batch),
+    total: b.total,
+    partial: b.partial,
+    "AI share": b.total === 0 ? null : Math.round((b.aiTotal / b.total) * 1000) / 10,
+  }));
+}
+
+/**
+ * Both AI measurements side by side. Exists to make the measurement choice
+ * auditable: the tag-derived line craters in batches YC hasn't finished
+ * tagging, which is the artifact this dashboard avoids by not using tags.
+ */
+export function aiMethodComparison() {
+  return trends.map((b) => ({
+    batch: b.batch,
+    label: shortBatchLabel(b.batch),
+    total: b.total,
+    partial: b.partial,
+    tagCoverage: b.total === 0 ? 0 : Math.round((b.taggedCount / b.total) * 100),
+    "From one-liners": b.total === 0 ? null : Math.round((b.aiTotal / b.total) * 1000) / 10,
+    "From YC tags": b.total === 0 ? null : Math.round((b.aiTagged / b.total) * 1000) / 10,
+    "Tag coverage": b.total === 0 ? null : Math.round((b.taggedCount / b.total) * 1000) / 10,
   }));
 }
 

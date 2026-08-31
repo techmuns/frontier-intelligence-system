@@ -9,6 +9,7 @@ import {
   companiesByBatch,
   topIndustries,
   topTags,
+  topSubindustries,
   topCountries,
   teamSizeDistribution,
   medianTeamSize,
@@ -20,6 +21,8 @@ import {
   industryShareSeries,
   subindustryShareSeries,
   roboticsSeries,
+  aiSeries,
+  aiMethodComparison,
   biggestIndustryShifts,
   trends,
 } from "./data/trends";
@@ -88,7 +91,7 @@ export function Dashboard() {
   // Use the proxy only as a last resort — a real token always takes priority.
   const useProxy = !effectiveToken && proxyAvailable;
 
-  const [chartView, setChartView] = useState<"snapshot" | "trends" | "composition">("snapshot");
+  const [chartView, setChartView] = useState<"snapshot" | "trends" | "composition" | "method">("snapshot");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const selectedCompany = useMemo(
     () => (selectedSlug ? companies.find((c) => c.slug === selectedSlug) ?? null : null),
@@ -124,6 +127,17 @@ export function Dashboard() {
   );
   // YC scatters robotics across verticals, so its own label undercounts it.
   const robotics = useMemo(() => roboticsSeries(), []);
+  const ai = useMemo(() => aiSeries(), []);
+  const aiMethod = useMemo(() => aiMethodComparison(), []);
+  const subindustryChartData: BarDatum[] = useMemo(
+    () =>
+      topSubindustries(companies, 5).map((s) => ({
+        name: truncateLabel(s.name),
+        fullName: s.name,
+        value: s.count,
+      })),
+    [],
+  );
   const shifts = useMemo(() => biggestIndustryShifts("winter-2022", "summer-2026", 6), []);
 
   // Headline for the KPI row. Uses Summer 2026 — the most recent batch that is
@@ -155,11 +169,6 @@ export function Dashboard() {
     name: truncateLabel(i.name),
     fullName: i.name,
     value: i.count,
-  }));
-  const tagChartData: BarDatum[] = tags.map((t) => ({
-    name: truncateLabel(t.name),
-    fullName: t.name,
-    value: t.count,
   }));
 
   // Getter pointing at current dashboard state, reassigned each render so the
@@ -298,6 +307,7 @@ export function Dashboard() {
             ["snapshot", "Snapshot"],
             ["trends", "Trends 2022 →"],
             ["composition", "Composition"],
+            ["method", "Method"],
           ] as const).map(([key, label]) => (
             <button
               key={key}
@@ -336,8 +346,8 @@ export function Dashboard() {
               <Card title="Top industries" subtitle="By company count">
                 <BarChartCard data={industryChartData} layout="horizontal" height={170} valueLabel="companies" />
               </Card>
-              <Card title="Top tags" subtitle="Founders' own words">
-                <BarChartCard data={tagChartData} layout="horizontal" height={170} valueLabel="companies" />
+              <Card title="Top subindustries" subtitle="By company count">
+                <BarChartCard data={subindustryChartData} layout="horizontal" height={170} valueLabel="companies" />
               </Card>
             </>
           )}
@@ -365,6 +375,25 @@ export function Dashboard() {
                   height={170}
                 />
               </Card>
+              <Card title="AI is now table stakes" subtitle="% of batch, from one-liners">
+                <TrendChart data={ai} series={[{ key: "AI share", label: "AI" }]} height={170} />
+              </Card>
+            </>
+          )}
+
+          {chartView === "method" && (
+            <>
+              <Card title="Why not tags" subtitle="AI share measured two ways">
+                <TrendChart
+                  data={aiMethod}
+                  series={[
+                    { key: "From one-liners", label: "One-liners" },
+                    { key: "From YC tags", label: "YC tags" },
+                    { key: "Tag coverage", label: "Tag coverage" },
+                  ]}
+                  height={170}
+                />
+              </Card>
               <Card title="Robotics, undercounted" subtitle="YC's label vs actual, % of batch">
                 <TrendChart
                   data={robotics}
@@ -374,6 +403,27 @@ export function Dashboard() {
                   ]}
                   height={170}
                 />
+              </Card>
+              <Card title="How things are counted" subtitle="Classification rules">
+                <div style={{ fontSize: 11, color: tokens.textSecondary, lineHeight: 1.5, height: 170, overflowY: "auto" }}>
+                  <p style={{ margin: "0 0 7px" }}>
+                    <strong>AI / robotics</strong> counted from each company's own one-line pitch, not YC tags —
+                    tag coverage swings between 23% and 99% per batch, so a tag-based share tracks YC's
+                    bookkeeping more than the market.
+                  </p>
+                  <p style={{ margin: "0 0 7px" }}>
+                    <strong>Robotics</strong> also counts YC's "Manufacturing and Robotics" label, since YC files
+                    many robotics companies under the vertical they serve instead.
+                  </p>
+                  <p style={{ margin: "0 0 7px" }}>
+                    <strong>Ambiguous words excluded</strong> — "autonomous" describes software agents as often as
+                    machines, and including it halved precision.
+                  </p>
+                  <p style={{ margin: 0, color: tokens.textHint }}>
+                    Partial batches are flagged, never smoothed. Unknown values are omitted rather than counted
+                    as zero. Rules live in <code>scripts/build-data.mjs</code>.
+                  </p>
+                </div>
               </Card>
             </>
           )}

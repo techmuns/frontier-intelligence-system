@@ -85,6 +85,23 @@ function isRobotics(company) {
   return ROBOTICS_RE.test(company.one_liner ?? "");
 }
 
+// AI is detected the same way, and for a sharper reason: tags are the only
+// place YC records "AI", and tag coverage swings between 23% and 99% by batch.
+// A tag-derived AI share therefore tracks how thoroughly YC tagged a batch
+// more than what the batch contains — it read as AI collapsing from 60% to
+// 13% and recovering, purely from missing data. One-liners are populated for
+// essentially every company, so this measures the batch instead of the
+// bookkeeping. On the current 654 it finds 58% vs the tags' 35%; the extra
+// matches were checked and are genuine ("World models for robot evals",
+// "Multimodal foundation models", "Datadog for Agent Reliability").
+const AI_RE =
+  /\b(ai|a\.i\.|artificial intelligence|llm|llms|agent|agents|agentic|machine learning|gpt|neural|foundation model\w*|world model\w*|copilot|chatbot)\b/i;
+
+function isAI(company) {
+  if ((company.tags ?? []).some((t) => /^(ai|artificial intelligence)$/i.test(t))) return true;
+  return AI_RE.test(company.one_liner ?? "");
+}
+
 async function fetchBatch(slug) {
   const res = await fetch(`${API}/${slug}.json`);
   if (!res.ok) throw new Error(`Failed to fetch ${slug}: HTTP ${res.status}`);
@@ -124,7 +141,13 @@ async function main() {
     for (const c of byBatch.get(slug)) {
       if (seen.has(c.slug)) continue; // dedupe by YC slug
       seen.add(c.slug);
-      companies.push(Object.fromEntries(FIELDS.map((f) => [f, c[f] ?? null])));
+      // Classification is resolved here, once, so the UI never re-implements
+      // these rules and the two datasets can't drift apart.
+      companies.push({
+        ...Object.fromEntries(FIELDS.map((f) => [f, c[f] ?? null])),
+        isAI: isAI(c),
+        isRobotics: isRobotics(c),
+      });
     }
   }
 
@@ -169,6 +192,9 @@ async function main() {
       // with the other.
       roboticsLabelled: list.filter((c) => (c.subindustry ?? "").includes("Manufacturing and Robotics")).length,
       roboticsTotal: list.filter(isRobotics).length,
+      // Same pairing for AI: what tags alone report, and the corrected count.
+      aiTagged: list.filter((c) => (c.tags ?? []).some((t) => /^(ai|artificial intelligence)$/i.test(t))).length,
+      aiTotal: list.filter(isAI).length,
       topTags: topN(tags, 25),
     };
   });
