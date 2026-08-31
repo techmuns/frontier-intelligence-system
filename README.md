@@ -80,13 +80,29 @@ Two bundled datasets, split by size, both produced by `scripts/build-data.mjs` f
 
 ### Refreshing the data
 
+Automatic. `.github/workflows/refresh-data.yml` re-pulls both datasets **every Monday**
+(and on demand via *Actions → Refresh YC data → Run workflow*), then commits only if
+something actually changed. That push triggers a Workers Builds redeploy, so the live
+dashboard updates itself.
+
+Weekly rather than daily because YC's API refreshes daily but batch composition moves
+slowly — daily runs would mostly produce commit noise.
+
+**The test suite gates the commit.** If YC changes their API shape, or a batch arrives
+in a state that breaks an invariant, the workflow fails and nothing is committed — the
+dashboard keeps serving the last known-good data rather than quietly publishing
+something wrong. Verified by simulating three failure modes (label exceeding the
+corrected count, a batch reporting more AI companies than it has companies, and the
+history being truncated); each is caught.
+
+To do it by hand:
+
 ```bash
 npm run data   # re-pulls and rewrites both files
 npm test       # confirm the invariants still hold
 ```
 
-This is manual and the data will go stale until it's run. Counts shift slightly between
-runs because YC's API refreshes daily.
+Counts shift slightly between runs because YC's API refreshes daily.
 
 ---
 
@@ -171,6 +187,6 @@ currently `news_search` (`POST https://fastapi.muns.io/tools/news-search`).
   does not exist here yet.
 - **Classification is keyword-based.** Defensible and tested, but it is a judgment call
   where tags were at least YC's own classification.
-- **The dataset is a static snapshot**, refreshed only when `npm run data` is run.
+- **The dataset refreshes weekly**, so intra-week changes at YC are not reflected.
 - **The host embed is unverified.** The SDK handshake, real per-user tokens, and ticker
   auto-population cannot be tested outside the real Munshot host.

@@ -1,0 +1,63 @@
+name: Refresh YC data
+
+# Keeps the bundled datasets current without anyone remembering to run
+# `npm run data`. Weekly rather than daily: YC's API refreshes daily, but
+# batch composition moves slowly, so daily runs would mostly produce commit
+# noise. The minute is deliberately off the hour — every scheduled job on
+# GitHub piles onto :00.
+on:
+  schedule:
+    - cron: "17 6 * * 1" # Mondays, 06:17 UTC
+  workflow_dispatch: # and on demand
+
+# Needed to push the refreshed data back to main.
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Re-pull YC datasets
+        run: npm run data
+
+      # The gate. If YC changes the API shape, or a batch arrives in a state
+      # that breaks an invariant (counts exceeding batch totals, duplicate
+      # slugs, the robotics correction dropping below YC's own label), this
+      # fails and nothing is committed — the dashboard keeps serving the last
+      # known-good data instead of quietly publishing something wrong.
+      - name: Verify the refreshed data
+        run: npm test
+
+      - name: Check the build still succeeds
+        run: npm run build
+
+      - name: Commit if the data actually changed
+        run: |
+          if git diff --quiet -- src/data; then
+            echo "No change in YC data — nothing to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data
+          git commit -m "Refresh YC data ($(date -u +%Y-%m-%d))
+
+          Automated weekly pull via scripts/build-data.mjs. Verified by the
+          test suite and a successful build before committing."
+          git push
+          echo "Pushed refreshed data — Workers Builds will redeploy."
