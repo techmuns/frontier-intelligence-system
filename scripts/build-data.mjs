@@ -15,6 +15,13 @@
 // Run: node scripts/build-data.mjs
 
 import { writeFile } from "node:fs/promises";
+import {
+  PARTIAL_BATCH_THRESHOLD,
+  isAI,
+  isRobotics,
+  isRoboticsLabelled,
+  hasAiTag,
+} from "./classify.mjs";
 
 const API = "https://yc-oss.github.io/api/batches";
 
@@ -56,51 +63,8 @@ const FIELDS = [
   "launched_at", "url",
 ];
 
-// A batch materially smaller than its neighbours is still being announced.
-// Its low count is an artifact of timing, not a real decline — the UI must
-// label it so nobody reads it as a downward trend.
-const PARTIAL_BATCH_THRESHOLD = 100;
-
-// YC files robotics companies under whatever vertical they serve — "Robotics
-// for Space R&D" lands in Aviation & Space, "Robots that run autonomous depots"
-// in Energy, "robotics to automate quality inspection" in Climate. Counting
-// only the Manufacturing-and-Robotics label therefore undercounts robotics by
-// roughly a third.
-//
-// So a company counts as robotics if EITHER YC labelled it that way, OR its
-// own one-line pitch names a physical robot. Deliberate choices here:
-//   - only unambiguous physical nouns. "Autonomous" is excluded because it
-//     describes software agents as often as machines, and including it halved
-//     precision (33% vs 51%) for almost no extra recall.
-//   - one_liner only, never long_description. The long text catches companies
-//     that merely mention robots as a customer ("upload acceleration for
-//     1GB-100TB files"); the one-liner is the company's own positioning.
-// Hand-checked against the current 654 companies: all 53 keyword matches were
-// genuine robotics/drone businesses.
-const ROBOTICS_RE =
-  /\b(robot|robots|robotic|robotics|drone|drones|humanoid|actuator|actuators|gripper|manipulator|teleoperat\w*)\b/i;
-
-function isRobotics(company) {
-  if ((company.subindustry ?? "").includes("Manufacturing and Robotics")) return true;
-  return ROBOTICS_RE.test(company.one_liner ?? "");
-}
-
-// AI is detected the same way, and for a sharper reason: tags are the only
-// place YC records "AI", and tag coverage swings between 23% and 99% by batch.
-// A tag-derived AI share therefore tracks how thoroughly YC tagged a batch
-// more than what the batch contains — it read as AI collapsing from 60% to
-// 13% and recovering, purely from missing data. One-liners are populated for
-// essentially every company, so this measures the batch instead of the
-// bookkeeping. On the current 654 it finds 58% vs the tags' 35%; the extra
-// matches were checked and are genuine ("World models for robot evals",
-// "Multimodal foundation models", "Datadog for Agent Reliability").
-const AI_RE =
-  /\b(ai|a\.i\.|artificial intelligence|llm|llms|agent|agents|agentic|machine learning|gpt|neural|foundation model\w*|world model\w*|copilot|chatbot)\b/i;
-
-function isAI(company) {
-  if ((company.tags ?? []).some((t) => /^(ai|artificial intelligence)$/i.test(t))) return true;
-  return AI_RE.test(company.one_liner ?? "");
-}
+// Classification rules and thresholds live in ./classify.mjs so they can be
+// unit-tested without triggering this script's network fetches.
 
 async function fetchBatch(slug) {
   const res = await fetch(`${API}/${slug}.json`);
@@ -190,10 +154,10 @@ async function main() {
       // Both are carried so the UI can show what YC's own taxonomy reports
       // alongside the corrected count, rather than silently replacing one
       // with the other.
-      roboticsLabelled: list.filter((c) => (c.subindustry ?? "").includes("Manufacturing and Robotics")).length,
+      roboticsLabelled: list.filter(isRoboticsLabelled).length,
       roboticsTotal: list.filter(isRobotics).length,
       // Same pairing for AI: what tags alone report, and the corrected count.
-      aiTagged: list.filter((c) => (c.tags ?? []).some((t) => /^(ai|artificial intelligence)$/i.test(t))).length,
+      aiTagged: list.filter(hasAiTag).length,
       aiTotal: list.filter(isAI).length,
       topTags: topN(tags, 25),
     };
