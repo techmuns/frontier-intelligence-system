@@ -25,6 +25,24 @@ export interface Company {
    *  one documented place rather than being re-implemented in the UI. */
   isAI: boolean;
   isRobotics: boolean;
+  /** Stable primitive dimensions (§6-§11), resolved at build time. */
+  dimensions?: CompanyDimensions;
+}
+
+export interface Inference<T> {
+  value?: T;
+  confidence: number;
+  evidence: string | null;
+}
+
+export interface CompanyDimensions {
+  stackPosition: { id: string; label: string; layer: string; confidence: number; evidence: string | null };
+  autonomy: { level: number | null; label: string; confidence: number; evidence: string | null };
+  businessModels: { id: string; label: string; evidence: string; confidence: number }[];
+  physicality: { value: string; confidence: number; evidence: string | null };
+  physicalCapabilities: { id: string; label: string; evidence: string }[];
+  dependsOn: { id: string; label: string; evidence: string; confidence: number }[];
+  supplies: { id: string; label: string; evidence: string; confidence: number }[];
 }
 
 export const companies = raw as unknown as Company[];

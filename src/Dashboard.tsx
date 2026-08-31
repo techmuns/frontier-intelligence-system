@@ -34,6 +34,10 @@ import { CompanyTable } from "./components/CompanyTable";
 import { SignalsPanel } from "./components/SignalsPanel";
 import { CompanyDetail } from "./components/CompanyDetail";
 import { TestModePanel } from "./components/TestModePanel";
+import { FrontierRadar } from "./components/FrontierRadar";
+import { WorldStack } from "./components/WorldStack";
+import { WhiteSpace } from "./components/WhiteSpace";
+import { ThemeExplorer } from "./components/ThemeExplorer";
 
 const DEV_TOKEN_KEY = "frontier.devToken";
 const DEV_TICKER_KEY = "frontier.devTicker";
@@ -91,7 +95,15 @@ export function Dashboard() {
   // Use the proxy only as a last resort — a real token always takes priority.
   const useProxy = !effectiveToken && proxyAvailable;
 
+  type Page = "radar" | "stack" | "themes" | "whitespace" | "companies" | "trends" | "method";
+  const [page, setPage] = useState<Page>("radar");
   const [chartView, setChartView] = useState<"snapshot" | "trends" | "composition" | "method">("snapshot");
+  const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
+
+  function openTheme(id: string) {
+    setSelectedThemeId(id);
+    setPage("themes");
+  }
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const selectedCompany = useMemo(
     () => (selectedSlug ? companies.find((c) => c.slug === selectedSlug) ?? null : null),
@@ -301,26 +313,29 @@ export function Dashboard() {
           />
         </div>
 
-        {/* View switcher */}
-        <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
+        {/* Page navigation (§51 — few, deep views rather than many shallow ones) */}
+        <div style={{ display: "flex", gap: 4, flexShrink: 0, flexWrap: "wrap" }}>
           {([
-            ["snapshot", "Snapshot"],
-            ["trends", "Trends 2022 →"],
-            ["composition", "Composition"],
+            ["radar", "Radar"],
+            ["stack", "World Stack"],
+            ["themes", "Themes"],
+            ["whitespace", "White Space"],
+            ["companies", "Companies"],
+            ["trends", "Trends"],
             ["method", "Method"],
           ] as const).map(([key, label]) => (
             <button
               key={key}
-              onClick={() => setChartView(key)}
+              onClick={() => setPage(key)}
               style={{
                 fontSize: 11,
                 fontWeight: 600,
                 padding: "4px 11px",
                 borderRadius: 999,
                 cursor: "pointer",
-                border: `1px solid ${chartView === key ? tokens.primaryBorder : tokens.borderDefault}`,
-                background: chartView === key ? tokens.primaryLight : "#ffffff",
-                color: chartView === key ? tokens.primaryText : tokens.textMuted,
+                border: `1px solid ${page === key ? tokens.primaryBorder : tokens.borderDefault}`,
+                background: page === key ? tokens.primaryLight : "#ffffff",
+                color: page === key ? tokens.primaryText : tokens.textMuted,
               }}
             >
               {label}
@@ -328,7 +343,59 @@ export function Dashboard() {
           ))}
         </div>
 
-        {/* Charts row */}
+        {page === "radar" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <FrontierRadar onSelectTheme={openTheme} />
+          </div>
+        )}
+
+        {page === "stack" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <WorldStack onSelectLayer={() => setPage("companies")} />
+          </div>
+        )}
+
+        {page === "themes" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <ThemeExplorer selectedId={selectedThemeId} onSelect={setSelectedThemeId} />
+          </div>
+        )}
+
+        {page === "whitespace" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <WhiteSpace onSelectTheme={openTheme} />
+          </div>
+        )}
+
+        {page === "trends" && (
+          <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
+            {([
+              ["snapshot", "Snapshot"],
+              ["trends", "2022 →"],
+              ["composition", "Composition"],
+            ] as const).map(([key, label]) => (
+              <button
+                key={key}
+                onClick={() => setChartView(key)}
+                style={{
+                  fontSize: 10,
+                  fontWeight: 600,
+                  padding: "3px 9px",
+                  borderRadius: 999,
+                  cursor: "pointer",
+                  border: `1px solid ${chartView === key ? tokens.primaryBorder : tokens.borderDefault}`,
+                  background: chartView === key ? "#ffffff" : "transparent",
+                  color: chartView === key ? tokens.primaryText : tokens.textHint,
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Charts row — Trends and Method pages */}
+        {(page === "trends" || page === "method") && (
         <div
           style={{
             display: "grid",
@@ -338,7 +405,7 @@ export function Dashboard() {
             height: 210,
           }}
         >
-          {chartView === "snapshot" && (
+          {page === "trends" && chartView === "snapshot" && (
             <>
               <Card title="Companies by batch" subtitle="Current cohorts">
                 <BarChartCard data={batchChartData} layout="vertical" height={170} valueLabel="companies" />
@@ -352,7 +419,7 @@ export function Dashboard() {
             </>
           )}
 
-          {chartView === "trends" && (
+          {page === "trends" && chartView === "trends" && (
             <>
               <Card title="The rotation" subtitle="Industrials vs Fintech, % of batch">
                 <TrendChart
@@ -381,7 +448,7 @@ export function Dashboard() {
             </>
           )}
 
-          {chartView === "method" && (
+          {page === "method" && (
             <>
               <Card title="Why not tags" subtitle="AI share measured two ways">
                 <TrendChart
@@ -428,7 +495,7 @@ export function Dashboard() {
             </>
           )}
 
-          {chartView === "composition" && (
+          {page === "trends" && chartView === "composition" && (
             <>
               <Card title="Team size" subtitle={`${teamReported} of ${companies.length} reported · median ${teamMedian ?? "—"}`}>
                 <BarChartCard data={teamSizeData} layout="vertical" height={170} valueLabel="companies" />
@@ -451,8 +518,10 @@ export function Dashboard() {
             </>
           )}
         </div>
+        )}
 
-        {/* Main row: table + signals — the primary surface, gets the remaining space */}
+        {/* Company explorer + signals — Companies and Trends pages */}
+        {(page === "companies" || page === "trends") && (
         <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "2.2fr 1fr", gap: 8 }}>
           <Card title="Company explorer" subtitle={`${companies.length} companies · click a row for detail`} bodyStyle={{ display: "flex", minHeight: 0 }}>
             <CompanyTable companies={companies} selectedSlug={selectedSlug} onSelect={setSelectedSlug} />
@@ -480,6 +549,7 @@ export function Dashboard() {
             )}
           </Card>
         </div>
+        )}
 
         {/* Footer / provenance */}
         <div style={{ flexShrink: 0, fontSize: 10, color: tokens.textHint, display: "flex", justifyContent: "space-between" }}>

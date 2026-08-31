@@ -22,6 +22,10 @@ import {
   isRoboticsLabelled,
   hasAiTag,
 } from "./classify.mjs";
+import { classifyCompany, CLASSIFIER_VERSION, INDUSTRY_TERMS } from "./dimensions.mjs";
+import { discoverThemes, THEME_ENGINE_VERSION } from "./themes.mjs";
+import { scoreTheme, MOMENTUM_FORMULA } from "./momentum.mjs";
+import { buildMatrix, findEmptyCells, dependencyGaps, WHITESPACE_VERSION } from "./whitespace.mjs";
 
 const API = "https://yc-oss.github.io/api/batches";
 
@@ -107,11 +111,11 @@ async function main() {
       seen.add(c.slug);
       // Classification is resolved here, once, so the UI never re-implements
       // these rules and the two datasets can't drift apart.
-      companies.push({
+      companies.push(withDimensions({
         ...Object.fromEntries(FIELDS.map((f) => [f, c[f] ?? null])),
         isAI: isAI(c),
         isRobotics: isRobotics(c),
-      });
+      }));
     }
   }
 
@@ -163,11 +167,187 @@ async function main() {
     };
   });
 
+  // --- Intelligence layer (§6-§11 dimensions, §12 themes, §18 momentum,
+  // §24-§25 white space). Runs over EVERY batch, not just the current ones:
+  // momentum is meaningless without the historical baseline.
+  const allCompanies = [];
+  const seenAll = new Set();
+  for (const slug of TREND_BATCHES) {
+    for (const c of byBatch.get(slug)) {
+      if (seenAll.has(c.slug)) continue;
+      seenAll.add(c.slug);
+      allCompanies.push({ ...c, dimensions: classifyCompany(c) });
+    }
+  }
+  console.log(`\nClassified ${allCompanies.length} companies across ${TREND_BATCHES.length} batches.`);
+
+  const intelligence = buildIntelligence(allCompanies, trends);
+
   await writeFile("src/data/yc-companies.json", JSON.stringify(companies));
   await writeFile("src/data/yc-trends.json", JSON.stringify(trends));
+  await writeFile("src/data/intelligence.json", JSON.stringify(intelligence));
 
   console.log(`\nWrote ${companies.length} full company records.`);
   console.log(`Wrote aggregates for ${trends.length} batches (${trends.reduce((s, t) => s + t.total, 0)} companies observed).`);
+  console.log(`Wrote ${intelligence.themes.length} discovered themes, ${intelligence.dependencyGaps.length} dependency gaps.`);
+}
+
+// Attach dimension classification to the bundled current-batch records too,
+// so the company detail view can show them without re-running the rules.
+function withDimensions(company) {
+  return { ...company, dimensions: classifyCompany(company) };
+}
+
+function buildIntelligence(allCompanies, trends) {
+  const batchOrder = trends.map((t) => t.batch);
+  const totalsByBatch = Object.fromEntries(trends.map((t) => [t.batch, t.total]));
+  const recentBatches = batchOrder.slice(-4);
+
+  // Momentum is computed only over cohorts big enough for a share to be
+  // meaningful. A 1-company batch gives whatever theme it lands in a 100%
+  // share, which detonates the second derivative and floats noise to the top
+  // of the rankings — the §16 partial-batch trap arriving via a derivative.
+  const MIN_COHORT_FOR_MOMENTUM = 50;
+  const momentumBatches = trends
+    .filter((t) => t.total >= MIN_COHORT_FOR_MOMENTUM)
+    .map((t) => t.batch);
+
+  // --- §12 Dynamic themes, discovered from company text ---
+  const { themes, unassigned, params } = discoverThemes(allCompanies, { maxThemes: 40 });
+  const bySlug = new Map(allCompanies.map((c) => [c.slug, c]));
+
+  // --- §18/§19 Momentum per theme, over the full batch history ---
+  const scored = themes.map((theme) => {
+    const members = theme.companySlugs.map((s) => bySlug.get(s)).filter(Boolean);
+
+    // Full history for display, but only the sound cohorts for scoring.
+    const counts = batchOrder.map((b) => members.filter((m) => m.batch === b).length);
+    const shares = batchOrder.map((b, i) => (totalsByBatch[b] ? counts[i] / totalsByBatch[b] : 0));
+
+    const scoringCounts = momentumBatches.map((b) => members.filter((m) => m.batch === b).length);
+    const scoringShares = momentumBatches.map((b, i) => scoringCounts[i] / totalsByBatch[b]);
+
+    const autonomyByBatch = momentumBatches.map((b) => {
+      const levels = members
+        .filter((m) => m.batch === b)
+        .map((m) => m.dimensions.autonomy.level)
+        .filter((l) => l !== null);
+      return levels.length ? levels.reduce((a, x) => a + x, 0) / levels.length : null;
+    });
+
+    const sectors = new Set(members.map((m) => m.industry).filter(Boolean));
+
+    const momentum = scoreTheme({
+      shares: scoringShares,
+      counts: scoringCounts,
+      autonomy: autonomyByBatch,
+      sectorCount: sectors.size,
+    });
+
+    // Capability demand for this theme drives §25.
+    const capabilityDemand = {};
+    for (const m of members) {
+      for (const dep of m.dimensions.dependsOn ?? []) {
+        capabilityDemand[dep.label] = (capabilityDemand[dep.label] ?? 0) + 1;
+      }
+    }
+
+    return {
+      ...theme,
+      counts,
+      shares: shares.map((s) => Math.round(s * 10000) / 10000),
+      momentum,
+      sectors: [...sectors],
+      autonomyMean: avgOf(members.map((m) => m.dimensions.autonomy.level)),
+      capabilityDemand,
+      // Competition proxy: how many companies already occupy the theme.
+      competition: members.length,
+    };
+  }).sort((a, b) => b.momentum.score - a.momentum.score);
+
+  // --- §6-§11 Dimension distributions, current vs earliest cohort ---
+  const dimensionShift = buildDimensionShift(allCompanies, batchOrder);
+
+  // --- §24 White space matrices ---
+  const industryOf = (c) => c.industry ?? null;
+  const autonomyOf = (c) => (c.dimensions.autonomy.level !== null ? `L${c.dimensions.autonomy.level} ${c.dimensions.autonomy.label}` : null);
+  const stackOf = (c) => c.dimensions.stackPosition.label;
+
+  const sectorAutonomy = buildMatrix(allCompanies, industryOf, autonomyOf);
+  const sectorStack = buildMatrix(allCompanies, industryOf, stackOf);
+
+  return {
+    generatedAt: new Date().toISOString(),
+    versions: {
+      classifier: CLASSIFIER_VERSION,
+      themes: THEME_ENGINE_VERSION,
+      momentum: MOMENTUM_FORMULA.version,
+      whitespace: WHITESPACE_VERSION,
+    },
+    batchOrder,
+    themeParams: params,
+    momentumBatches,
+    themesUnassigned: unassigned,
+    themes: scored,
+    dimensionShift,
+    momentumFormula: MOMENTUM_FORMULA,
+    matrices: {
+      sectorAutonomy: { ...sectorAutonomy, empty: findEmptyCells(sectorAutonomy) },
+      sectorStack: { ...sectorStack, empty: findEmptyCells(sectorStack) },
+    },
+    dependencyGaps: dependencyGaps(allCompanies, { recentBatches }),
+  };
+}
+
+/** §29 "where is the world moving" — the big directional splits, earliest
+ *  full cohort vs most recent full cohort. */
+function buildDimensionShift(allCompanies, batchOrder) {
+  const first = batchOrder[0];
+  // Last batch big enough to be worth comparing (partial cohorts are noise).
+  const last = [...batchOrder].reverse().find((b) => allCompanies.filter((c) => c.batch === b).length >= 100);
+
+  const axes = [
+    { id: "infra_vs_app", label: "Infrastructure vs Application", a: "Infrastructure", b: "Application",
+      test: (c) => ["foundational", "intelligence", "data", "infrastructure"].includes(c.dimensions.stackPosition.layer) ? "Infrastructure"
+        : ["applications", "operating_systems", "operators"].includes(c.dimensions.stackPosition.layer) ? "Application" : null },
+    { id: "horiz_vs_vert", label: "Horizontal vs Vertical", a: "Horizontal", b: "Vertical",
+      test: (c) => c.dimensions.stackPosition.id === "horizontal_application" ? "Horizontal"
+        : c.dimensions.stackPosition.id === "vertical_application" ? "Vertical" : null },
+    { id: "digital_vs_physical", label: "Digital vs Physical", a: "Digital", b: "Physical",
+      test: (c) => c.dimensions.physicality.value === "Digital" ? "Digital"
+        : c.dimensions.physicality.value === "Physical" ? "Physical" : null },
+    { id: "copilot_vs_autonomous", label: "Copilot vs Autonomous", a: "Copilot", b: "Autonomous",
+      test: (c) => { const l = c.dimensions.autonomy.level; return l === null ? null : l <= 1 ? "Copilot" : l >= 3 ? "Autonomous" : null; } },
+    { id: "software_vs_operator", label: "Software vs AI-Native Operator", a: "Software", b: "Operator",
+      test: (c) => c.dimensions.stackPosition.id === "ai_native_operator" ? "Operator"
+        : c.dimensions.stackPosition.layer === "applications" ? "Software" : null },
+  ];
+
+  return axes.map((axis) => {
+    const at = (batch) => {
+      const pool = allCompanies.filter((c) => c.batch === batch);
+      const labelled = pool.map(axis.test).filter(Boolean);
+      const bCount = labelled.filter((x) => x === axis.b).length;
+      return { batch, n: labelled.length, bShare: labelled.length ? bCount / labelled.length : null };
+    };
+    const from = at(first);
+    const to = at(last);
+    return {
+      id: axis.id,
+      label: axis.label,
+      poles: [axis.a, axis.b],
+      from,
+      to,
+      deltaPct: from.bShare !== null && to.bShare !== null
+        ? Math.round((to.bShare - from.bShare) * 1000) / 10
+        : null,
+    };
+  });
+}
+
+function avgOf(values) {
+  const v = values.filter((x) => typeof x === "number");
+  return v.length ? Math.round((v.reduce((a, b) => a + b, 0) / v.length) * 100) / 100 : null;
 }
 
 function median(nums) {
