@@ -26,6 +26,7 @@ import { classifyCompany, CLASSIFIER_VERSION, INDUSTRY_TERMS } from "./dimension
 import { discoverThemes, THEME_ENGINE_VERSION } from "./themes.mjs";
 import { scoreTheme, MOMENTUM_FORMULA } from "./momentum.mjs";
 import { buildMatrix, findEmptyCells, dependencyGaps, WHITESPACE_VERSION } from "./whitespace.mjs";
+import { detectTransitions, detectSignals, findNonObvious, SIGNALS_VERSION } from "./signals.mjs";
 
 const API = "https://yc-oss.github.io/api/batches";
 
@@ -254,6 +255,13 @@ function buildIntelligence(allCompanies, trends) {
 
     return {
       ...theme,
+      // Kept for §26: the transition detector needs per-cohort autonomy with
+      // sample sizes, so it can ignore windows too thin to claim movement.
+      autonomyByBatch: momentumBatches.map((b, i) => {
+        const inBatch = members.filter((m) => m.batch === b);
+        const levels = inBatch.map((m) => m.dimensions.autonomy.level).filter((l) => l !== null);
+        return { batch: b, n: levels.length, mean: levels.length ? levels.reduce((a, x) => a + x, 0) / levels.length : null };
+      }),
       counts,
       shares: shares.map((s) => Math.round(s * 10000) / 10000),
       momentum,
@@ -276,6 +284,20 @@ function buildIntelligence(allCompanies, trends) {
   const sectorAutonomy = buildMatrix(allCompanies, industryOf, autonomyOf);
   const sectorStack = buildMatrix(allCompanies, industryOf, stackOf);
 
+  // §32 — human role × industry, valued by company count and mean autonomy.
+  const laborMap = buildLaborMap(allCompanies);
+
+  const gaps = dependencyGaps(allCompanies, { recentBatches });
+  const transitions = detectTransitions(scored);
+  const nonObvious = findNonObvious({ themes: scored, dependencyGaps: gaps, transitions });
+  const signals = detectSignals({
+    themes: scored,
+    transitions,
+    dependencyGaps: gaps,
+    dimensionShift,
+    batchOrder,
+  });
+
   return {
     generatedAt: new Date().toISOString(),
     versions: {
@@ -283,6 +305,7 @@ function buildIntelligence(allCompanies, trends) {
       themes: THEME_ENGINE_VERSION,
       momentum: MOMENTUM_FORMULA.version,
       whitespace: WHITESPACE_VERSION,
+      signals: SIGNALS_VERSION,
     },
     batchOrder,
     themeParams: params,
@@ -295,7 +318,17 @@ function buildIntelligence(allCompanies, trends) {
       sectorAutonomy: { ...sectorAutonomy, empty: findEmptyCells(sectorAutonomy) },
       sectorStack: { ...sectorStack, empty: findEmptyCells(sectorStack) },
     },
-    dependencyGaps: dependencyGaps(allCompanies, { recentBatches }),
+    dependencyGaps: gaps,
+    // §32 Digital Labor Map — which jobs are becoming software.
+    laborMap,
+    // §34 Infrastructure Map — capabilities, and which themes lean on each.
+    infrastructureMap: buildInfrastructureMap(allCompanies, scored),
+    // §35 Physical AI Map — the physical chain, by industry.
+    physicalMap: buildPhysicalMap(allCompanies),
+    // §26 / §40 / §41
+    transitions,
+    signals,
+    nonObvious,
   };
 }
 
@@ -341,6 +374,114 @@ function buildDimensionShift(allCompanies, batchOrder) {
       deltaPct: from.bShare !== null && to.bShare !== null
         ? Math.round((to.bShare - from.bShare) * 1000) / 10
         : null,
+    };
+  });
+}
+
+/** §32 — roles as rows, industries as columns. A cell carries both how many
+ *  companies target that job in that industry and how far up the autonomy
+ *  ladder they sit, because "crowded" and "being fully replaced" are
+ *  different facts about the same job. */
+function buildLaborMap(allCompanies) {
+  const cells = new Map();
+  const roleTotals = new Map();
+  const industryTotals = new Map();
+
+  for (const c of allCompanies) {
+    const role = c.dimensions.humanRole;
+    if (!role?.id) continue;
+    const industry = c.industry ?? c.dimensions.inferredIndustry?.label;
+    if (!industry) continue;
+
+    const key = `${role.label}||${industry}`;
+    const cell = cells.get(key) ?? { count: 0, autonomySum: 0, autonomyN: 0, examples: [] };
+    cell.count += 1;
+    const lvl = c.dimensions.autonomy.level;
+    if (lvl !== null) {
+      cell.autonomySum += lvl;
+      cell.autonomyN += 1;
+    }
+    if (cell.examples.length < 3) cell.examples.push(c.name);
+    cells.set(key, cell);
+
+    roleTotals.set(role.label, (roleTotals.get(role.label) ?? 0) + 1);
+    industryTotals.set(industry, (industryTotals.get(industry) ?? 0) + 1);
+  }
+
+  return {
+    roles: [...roleTotals.keys()].sort((a, b) => roleTotals.get(b) - roleTotals.get(a)),
+    industries: [...industryTotals.keys()].sort((a, b) => industryTotals.get(b) - industryTotals.get(a)),
+    roleTotals: Object.fromEntries(roleTotals),
+    industryTotals: Object.fromEntries(industryTotals),
+    cells: Object.fromEntries(
+      [...cells.entries()].map(([k, v]) => [k, {
+        count: v.count,
+        autonomy: v.autonomyN ? Math.round((v.autonomySum / v.autonomyN) * 10) / 10 : null,
+        examples: v.examples,
+      }]),
+    ),
+  };
+}
+
+/** §34 — infrastructure broken into capabilities rather than one "AI infra"
+ *  bucket, with the application themes that depend on each. */
+function buildInfrastructureMap(allCompanies, themes) {
+  const byCapability = new Map();
+
+  for (const c of allCompanies) {
+    for (const sup of c.dimensions.supplies ?? []) {
+      const entry = byCapability.get(sup.id) ?? { id: sup.id, label: sup.label, suppliers: [], dependentThemes: [] };
+      if (entry.suppliers.length < 5) entry.suppliers.push({ name: c.name, one_liner: c.one_liner });
+      entry.supplyCount = (entry.supplyCount ?? 0) + 1;
+      byCapability.set(sup.id, entry);
+    }
+  }
+
+  for (const theme of themes) {
+    for (const [label, count] of Object.entries(theme.capabilityDemand)) {
+      const match = [...byCapability.values()].find((e) => e.label === label);
+      if (match && count >= 3) {
+        match.dependentThemes.push({ id: theme.id, label: theme.label, dependents: count, momentum: theme.momentum.score });
+      }
+    }
+  }
+
+  return [...byCapability.values()]
+    .map((e) => ({
+      ...e,
+      supplyCount: e.supplyCount ?? 0,
+      dependentThemes: e.dependentThemes.sort((a, b) => b.dependents - a.dependents).slice(0, 5),
+    }))
+    .sort((a, b) => b.dependentThemes.length - a.dependentThemes.length);
+}
+
+/** §35 — the physical chain, and which industries each stage shows up in. */
+function buildPhysicalMap(allCompanies) {
+  const CHAIN = [
+    { id: "physical_data", label: "Physical Data" },
+    { id: "simulation", label: "Simulation" },
+    { id: "world_model", label: "World Models" },
+    { id: "sensing", label: "Sensing" },
+    { id: "control", label: "Control" },
+    { id: "actuator", label: "Actuators" },
+    { id: "robot", label: "Robots" },
+    { id: "fleet", label: "Autonomous Fleets" },
+  ];
+
+  return CHAIN.map((stage) => {
+    const members = allCompanies.filter((c) =>
+      (c.dimensions.physicalCapabilities ?? []).some((p) => p.id === stage.id),
+    );
+    const industries = {};
+    for (const m of members) {
+      const ind = m.industry ?? m.dimensions.inferredIndustry?.label;
+      if (ind) industries[ind] = (industries[ind] ?? 0) + 1;
+    }
+    return {
+      ...stage,
+      count: members.length,
+      industries,
+      examples: members.slice(0, 4).map((m) => ({ name: m.name, one_liner: m.one_liner })),
     };
   });
 }

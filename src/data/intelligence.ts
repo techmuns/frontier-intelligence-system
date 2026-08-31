@@ -82,6 +82,54 @@ export interface Intelligence {
   };
   matrices: { sectorAutonomy: Matrix; sectorStack: Matrix };
   dependencyGaps: DependencyGap[];
+  laborMap: {
+    roles: string[];
+    industries: string[];
+    roleTotals: Record<string, number>;
+    industryTotals: Record<string, number>;
+    cells: Record<string, { count: number; autonomy: number | null; examples: string[] }>;
+  };
+  infrastructureMap: {
+    id: string;
+    label: string;
+    supplyCount: number;
+    suppliers: { name: string; one_liner: string | null }[];
+    dependentThemes: { id: string; label: string; dependents: number; momentum: number }[];
+  }[];
+  physicalMap: {
+    id: string;
+    label: string;
+    count: number;
+    industries: Record<string, number>;
+    examples: { name: string; one_liner: string | null }[];
+  }[];
+  transitions: {
+    themeId: string;
+    themeLabel: string;
+    from: number;
+    to: number;
+    move: number;
+    direction: "ascending" | "descending";
+    fromLabel: string;
+    toLabel: string;
+    companiesObserved: number;
+    windows: number;
+  }[];
+  signals: {
+    type: string;
+    severity: "high" | "medium" | "low";
+    confidence: number;
+    title: string;
+    explanation: string;
+    evidence: Record<string, unknown>;
+    themes: string[];
+    detectedAt: string;
+  }[];
+  nonObvious: {
+    insights: { kind: string; title: string; explanation: string; evidence: Record<string, unknown> }[];
+    nearMisses: { theme: string; capability: string; share: number; ratio: number; momentum: number; failed: string }[];
+    criteria: { minDependencyShare: number; minGapRatio: number; minMomentum: number; maxCompetition: number; note: string };
+  };
 }
 
 export const intelligence = raw as unknown as Intelligence;

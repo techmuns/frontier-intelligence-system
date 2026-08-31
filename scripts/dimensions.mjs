@@ -220,6 +220,56 @@ export const AUTONOMY_LEVELS = [
 ];
 
 // ---------------------------------------------------------------------------
+// DIMENSION C — Economic domain (§8): the human role and workflow being
+// automated. Powers the Digital Labor Map (§32) — "which jobs are becoming
+// software".
+// ---------------------------------------------------------------------------
+// Deliberately roles, not job titles: "the thing a person used to do", which
+// is what makes a row of the labour map meaningful. Extensible by adding an
+// entry, per §8's "do not hardcode the universe of industries".
+
+export const HUMAN_ROLES = [
+  { id: "sdr", label: "Sales Rep / SDR", patterns: [/\b(sdr|bdr|sales rep\w*|outbound|prospect\w*|cold (call|email)|lead gen\w*)\b/] },
+  { id: "support_agent", label: "Support Agent", patterns: [/\b(support (agent|rep|team)|helpdesk|customer service|tickets?|contact cent(er|re))\b/] },
+  { id: "recruiter", label: "Recruiter", patterns: [/\b(recruit\w*|sourcing candidates?|talent acquisition|screening (candidates?|applicants?)|interview\w*)\b/] },
+  { id: "accountant", label: "Accountant / Bookkeeper", patterns: [/\b(accountant|bookkeep\w*|reconcil\w*|ledger|month-?end close|audit\w*|tax prep\w*)\b/] },
+  { id: "analyst", label: "Analyst", patterns: [/\b(analyst|analysis|research\w*|due diligence|financial model\w*|underwrit\w*)\b/] },
+  { id: "lawyer", label: "Lawyer / Paralegal", patterns: [/\b(lawyer|attorney|paralegal|legal (work|review|research)|contract review|litigation)\b/] },
+  { id: "engineer", label: "Software Engineer", patterns: [/\b(software engineer|developers?|coding|codebase|pull requests?|code review|debugging)\b/] },
+  { id: "clinician", label: "Clinician", patterns: [/\b(doctor|physician|nurse|clinician|radiologist|diagnos\w*|patient (care|intake))\b/] },
+  { id: "medical_coder", label: "Medical Biller / Coder", patterns: [/\b(medical (billing|coder|coding)|claims? (processing|denial)|prior auth\w*|revenue cycle)\b/] },
+  { id: "marketer", label: "Marketer", patterns: [/\b(marketer|marketing|campaigns?|content (creation|marketing)|seo|copywrit\w*|ad creative)\b/] },
+  { id: "ops_coordinator", label: "Operations Coordinator", patterns: [/\b(operations? (coordinator|manager|team)|scheduling|dispatch\w*|logistics coordinat\w*|back ?office)\b/] },
+  { id: "buyer_procurement", label: "Buyer / Procurement", patterns: [/\b(procure\w*|purchasing|sourcing (suppliers?|vendors?)|rfq|rfp|vendor manage\w*)\b/] },
+  { id: "inspector", label: "Inspector / QA", patterns: [/\b(inspect\w*|quality (control|assurance|inspection)|defect detect\w*|compliance check)\b/] },
+  { id: "warehouse_worker", label: "Warehouse / Picker", patterns: [/\b(warehouse|picking|packing|palleti[sz]\w*|order fulfil\w*|unloading)\b/] },
+  { id: "driver", label: "Driver / Operator", patterns: [/\b(driver|driving|haul\w*|autonomous (truck|vehicle)|last-?mile deliver\w*|machine operator)\b/] },
+  { id: "field_technician", label: "Field Technician", patterns: [/\b(field (technician|service)|maintenance|repairs?|installation|hvac|electrician|plumb\w*)\b/] },
+  { id: "farmer", label: "Farm Worker / Agronomist", patterns: [/\b(farm\w*|agronom\w*|crop scout\w*|harvest\w*|livestock|herd\w*)\b/] },
+  { id: "designer", label: "Designer", patterns: [/\b(designer|design (work|assets?)|creative|3d model\w*|cad\b)\b/] },
+  { id: "teacher", label: "Teacher / Tutor", patterns: [/\b(teacher|tutor\w*|instructor|grading|curriculum|lesson)\b/] },
+  { id: "scientist", label: "Scientist / Researcher", patterns: [/\b(scientist|wetlab|experiments?|assay|drug discovery|protein|molecul\w*)\b/] },
+  { id: "trader", label: "Trader / PM", patterns: [/\b(trader|trading (desk|strateg\w*)|portfolio manage\w*|quant\w*|execution)\b/] },
+  { id: "insurance_broker", label: "Insurance Broker / Underwriter", patterns: [/\b(broker\w*|underwrit\w*|policy (quote|binding)|claims? adjust\w*)\b/] },
+];
+
+// Workflows are the unit below a role — the actual process being automated.
+export const WORKFLOWS = [
+  { id: "intake", label: "Intake & Triage", patterns: [/\b(intake|triage|routing|qualif\w*|screening)\b/] },
+  { id: "document_processing", label: "Document Processing", patterns: [/\b(documents?|paperwork|forms?|pdfs?|extract\w* (data|information)|ocr)\b/] },
+  { id: "outreach", label: "Outreach & Follow-up", patterns: [/\b(outreach|follow-?ups?|sequences?|nurtur\w*|reminders?)\b/] },
+  { id: "scheduling", label: "Scheduling & Dispatch", patterns: [/\b(schedul\w*|calendar|dispatch\w*|route planning|booking)\b/] },
+  { id: "reconciliation", label: "Reconciliation & Close", patterns: [/\b(reconcil\w*|month-?end|close the books|matching (invoices?|transactions?))\b/] },
+  { id: "review_approval", label: "Review & Approval", patterns: [/\b(review\w*|approv\w*|sign-?off|verif\w*|audit trail)\b/] },
+  { id: "reporting", label: "Reporting", patterns: [/\b(report\w*|dashboards?|filings?|disclosur\w*|compliance report)\b/] },
+  { id: "negotiation", label: "Negotiation & Quoting", patterns: [/\b(negotiat\w*|quotes?|quoting|pricing|bids?|proposals?)\b/] },
+  { id: "inspection", label: "Inspection & Monitoring", patterns: [/\b(inspect\w*|monitor\w*|detect\w*|surveil\w*|anomal\w*)\b/] },
+  { id: "fulfilment", label: "Fulfilment & Delivery", patterns: [/\b(fulfil\w*|deliver\w*|shipping|picking|packing|dispatch)\b/] },
+  { id: "onboarding", label: "Onboarding", patterns: [/\b(onboard\w*|kyc|provision\w*|setup|activation)\b/] },
+  { id: "research_analysis", label: "Research & Analysis", patterns: [/\b(research\w*|analy[sz]\w*|due diligence|diligence|benchmark\w*)\b/] },
+];
+
+// ---------------------------------------------------------------------------
 // DIMENSION D — Value capture model (§9). A company may match several.
 // ---------------------------------------------------------------------------
 
@@ -334,6 +384,20 @@ export function classifyCompany(company) {
 
   const stack = firstMatch(STACK_POSITIONS, text);
   const autonomy = firstMatch(AUTONOMY_LEVELS, text);
+  const role = firstMatch(HUMAN_ROLES, text);
+  const workflow = firstMatch(WORKFLOWS, text);
+
+  // Industry from the company's own words. YC's own `industry` field is kept
+  // separately by the caller; this one exists so the labour map works for
+  // companies whose YC category says nothing about who they serve.
+  let inferredIndustry = null;
+  for (const [name, pattern] of Object.entries(INDUSTRY_TERMS)) {
+    const m = text.match(pattern);
+    if (m) {
+      inferredIndustry = { label: name, evidence: m[0], confidence: CONF.keyword };
+      break;
+    }
+  }
   const models = allMatches(BUSINESS_MODELS, text);
   const physicalHit = text.match(PHYSICAL_RE);
   const physicalCaps = allMatches(PHYSICAL_CAPABILITIES, text);
@@ -365,6 +429,15 @@ export function classifyCompany(company) {
     autonomy: autonomy
       ? { level: autonomy.rule.level, label: autonomy.rule.label, confidence: CONF.keyword, evidence: autonomy.evidence }
       : { level: null, label: "Unknown", confidence: CONF.none, evidence: null },
+
+    // §8 — the economic domain: whose job, which workflow, which industry
+    humanRole: role
+      ? { id: role.rule.id, label: role.rule.label, confidence: CONF.keyword, evidence: role.evidence }
+      : { id: null, label: "Unknown", confidence: CONF.none, evidence: null },
+    workflow: workflow
+      ? { id: workflow.rule.id, label: workflow.rule.label, confidence: CONF.keyword, evidence: workflow.evidence }
+      : { id: null, label: "Unknown", confidence: CONF.none, evidence: null },
+    inferredIndustry,
 
     // §9 — how value is captured (multiple allowed)
     businessModels: models.slice(0, 3).map((m) => ({ id: m.rule.id, label: m.rule.label, evidence: m.evidence, confidence: CONF.keyword })),
