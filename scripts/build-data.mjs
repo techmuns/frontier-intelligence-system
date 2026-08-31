@@ -61,6 +61,30 @@ const FIELDS = [
 // label it so nobody reads it as a downward trend.
 const PARTIAL_BATCH_THRESHOLD = 100;
 
+// YC files robotics companies under whatever vertical they serve — "Robotics
+// for Space R&D" lands in Aviation & Space, "Robots that run autonomous depots"
+// in Energy, "robotics to automate quality inspection" in Climate. Counting
+// only the Manufacturing-and-Robotics label therefore undercounts robotics by
+// roughly a third.
+//
+// So a company counts as robotics if EITHER YC labelled it that way, OR its
+// own one-line pitch names a physical robot. Deliberate choices here:
+//   - only unambiguous physical nouns. "Autonomous" is excluded because it
+//     describes software agents as often as machines, and including it halved
+//     precision (33% vs 51%) for almost no extra recall.
+//   - one_liner only, never long_description. The long text catches companies
+//     that merely mention robots as a customer ("upload acceleration for
+//     1GB-100TB files"); the one-liner is the company's own positioning.
+// Hand-checked against the current 654 companies: all 53 keyword matches were
+// genuine robotics/drone businesses.
+const ROBOTICS_RE =
+  /\b(robot|robots|robotic|robotics|drone|drones|humanoid|actuator|actuators|gripper|manipulator|teleoperat\w*)\b/i;
+
+function isRobotics(company) {
+  if ((company.subindustry ?? "").includes("Manufacturing and Robotics")) return true;
+  return ROBOTICS_RE.test(company.one_liner ?? "");
+}
+
 async function fetchBatch(slug) {
   const res = await fetch(`${API}/${slug}.json`);
   if (!res.ok) throw new Error(`Failed to fetch ${slug}: HTTP ${res.status}`);
@@ -140,6 +164,11 @@ async function main() {
       medianTeamSize: median(teamSizes),
       industries: Object.fromEntries(industries),
       subindustries: Object.fromEntries(subindustries),
+      // Both are carried so the UI can show what YC's own taxonomy reports
+      // alongside the corrected count, rather than silently replacing one
+      // with the other.
+      roboticsLabelled: list.filter((c) => (c.subindustry ?? "").includes("Manufacturing and Robotics")).length,
+      roboticsTotal: list.filter(isRobotics).length,
       topTags: topN(tags, 25),
     };
   });

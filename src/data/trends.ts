@@ -10,6 +10,11 @@ export interface BatchTrend {
   medianTeamSize: number | null;
   industries: Record<string, number>;
   subindustries: Record<string, number>;
+  /** Companies YC files under "Manufacturing and Robotics". */
+  roboticsLabelled: number;
+  /** Robotics companies including those YC files under other verticals —
+   *  see the matching rules in scripts/build-data.mjs. */
+  roboticsTotal: number;
   topTags: { name: string; count: number }[];
 }
 
@@ -106,6 +111,22 @@ export function subindustryShareSeries(spec: { key: string; source: string }[]) 
     }
     return row;
   });
+}
+
+/**
+ * Robotics share per batch, both as YC labels it and as corrected for the
+ * companies YC files under other verticals. Both lines are plotted so the
+ * correction is visible rather than asserted.
+ */
+export function roboticsSeries() {
+  return trends.map((b) => ({
+    batch: b.batch,
+    label: shortBatchLabel(b.batch),
+    total: b.total,
+    partial: b.partial,
+    "YC label": b.total === 0 ? null : Math.round((b.roboticsLabelled / b.total) * 1000) / 10,
+    Corrected: b.total === 0 ? null : Math.round((b.roboticsTotal / b.total) * 1000) / 10,
+  }));
 }
 
 /** Industries ranked by how much their share moved between two batches. */

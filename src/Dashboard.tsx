@@ -19,8 +19,8 @@ import {
 import {
   industryShareSeries,
   subindustryShareSeries,
+  roboticsSeries,
   biggestIndustryShifts,
-  shortBatchLabel,
   trends,
 } from "./data/trends";
 import { TrendChart } from "./components/TrendChart";
@@ -122,16 +122,8 @@ export function Dashboard() {
       ]),
     [],
   );
-  const batchSizeOverTime = useMemo(
-    () =>
-      trends.map((b) => ({
-        label: shortBatchLabel(b.batch),
-        batch: b.batch,
-        total: b.total,
-        partial: b.partial,
-      })),
-    [],
-  );
+  // YC scatters robotics across verticals, so its own label undercounts it.
+  const robotics = useMemo(() => roboticsSeries(), []);
   const shifts = useMemo(() => biggestIndustryShifts("winter-2022", "summer-2026", 6), []);
 
   // Headline for the KPI row. Uses Summer 2026 — the most recent batch that is
@@ -373,12 +365,14 @@ export function Dashboard() {
                   height={170}
                 />
               </Card>
-              <Card title="Batch size" subtitle="Companies per cohort">
+              <Card title="Robotics, undercounted" subtitle="YC's label vs actual, % of batch">
                 <TrendChart
-                  data={batchSizeOverTime}
-                  series={[{ key: "total", label: "Companies" }]}
+                  data={robotics}
+                  series={[
+                    { key: "Corrected", label: "Actual" },
+                    { key: "YC label", label: "YC label" },
+                  ]}
                   height={170}
-                  unit=""
                 />
               </Card>
             </>
