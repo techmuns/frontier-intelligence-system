@@ -59,6 +59,24 @@ export function Dashboard() {
   const research = useResearch();
   const companies = research.companies;
 
+  // The Research tab is only offered when a database is actually bound.
+  // Showing a permanently-empty tab that explains how to provision one would
+  // make a complete dashboard look unfinished to everyone who is not setting
+  // it up; it appears by itself the moment one exists.
+  const navPages: [Page, string][] = [
+    ["radar", "Radar"],
+    ["stack", "World Stack"],
+    ["themes", "Themes"],
+    ["maps", "Maps"],
+    ["signals", "Signals"],
+    ["whitespace", "White Space"],
+    ["velocity", "Velocity"],
+    ["companies", "Companies"],
+    ["trends", "Trends"],
+    ["method", "Method"],
+    ...(research.status.database ? ([["research", "Research"]] as [Page, string][]) : []),
+  ];
+
   // Standalone preview only (see TestModePanel) — lets this dashboard be
   // exercised with real data before it's embedded in the actual Munshot
   // host. A real host session always takes priority over these.
@@ -336,19 +354,7 @@ export function Dashboard() {
 
         {/* Page navigation (§51 — few, deep views rather than many shallow ones) */}
         <div style={{ display: "flex", gap: 4, flexShrink: 0, flexWrap: "wrap" }}>
-          {([
-            ["radar", "Radar"],
-            ["stack", "World Stack"],
-            ["themes", "Themes"],
-            ["maps", "Maps"],
-            ["signals", "Signals"],
-            ["whitespace", "White Space"],
-            ["velocity", "Velocity"],
-            ["companies", "Companies"],
-            ["trends", "Trends"],
-            ["method", "Method"],
-            ["research", "Research"],
-          ] as const).map(([key, label]) => (
+          {navPages.map(([key, label]) => (
             <button
               key={key}
               onClick={() => setPage(key)}
