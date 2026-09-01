@@ -41,6 +41,12 @@ jobs:
       - name: Collect external observations
         run: npm run enrich
         continue-on-error: true
+        env:
+          # Actions mints this automatically — no secret to configure and no
+          # cost. Without it the GitHub adapter skips entirely (60 req/hr
+          # unauthenticated cannot cover ~650 companies), which is why the
+          # store had no GitHub coverage at all.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Rebuild with the new observations
         run: npm run data

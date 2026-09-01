@@ -156,8 +156,10 @@ after the failure would be nulls meaning "we stopped looking". The 1,318 bad
 rows have been purged. Guarded by tests, including one that confirms both the
 preflight and mid-run guards independently hold the behaviour.
 
-The weekly Action supplies a free token, so this runs at full rate in CI and
-no-ops locally.
+The weekly Action passes the `GITHUB_TOKEN` that Actions mints automatically,
+so this runs at full rate in CI at no cost and no-ops locally. That wiring was
+missing until now, which is the immediate reason GitHub coverage is 0 — the
+step ran without a token every week and skipped itself.
 
 **Deliberately not used:** Crunchbase and PitchBook (paid), Product Hunt
 (OAuth-only now), SEC EDGAR Form D (free and official, but name-only matching
