@@ -8,4 +8,27 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application"
   }
+
+  // --- D1 (optional) -------------------------------------------------------
+  // The research layer (§47 overrides, notes, audit) needs a D1 database.
+  // It is left commented out ON PURPOSE: Workers Builds deploys every push to
+  // main, and a binding naming a database_id that does not exist in your
+  // account fails the deploy. The Worker treats a missing DB as "research
+  // features unavailable" and keeps serving the dashboard, so leaving this off
+  // costs nothing.
+  //
+  // To switch it on:
+  //   1. npx wrangler d1 create frontier-db
+  //   2. paste the printed database_id below and uncomment this block
+  //   3. npx wrangler d1 migrations apply frontier-db --remote
+  //   4. npx wrangler secret put ADMIN_TOKEN     (writes stay off without it)
+  //
+  // "d1_databases": [
+  //   {
+  //     "binding": "DB",
+  //     "database_name": "frontier-db",
+  //     "database_id": "<paste-from-step-1>",
+  //     "migrations_dir": "migrations"
+  //   }
+  // ]
 }

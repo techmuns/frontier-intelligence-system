@@ -5,7 +5,6 @@ import { useHostContext } from "./hooks/useHostContext";
 import { checkProxyAvailable } from "./lib/news";
 import { tokens, categoryColors } from "./lib/theme";
 import {
-  companies,
   companiesByBatch,
   topIndustries,
   topTags,
@@ -41,6 +40,8 @@ import { ThemeExplorer } from "./components/ThemeExplorer";
 import { SignalsView } from "./components/SignalsView";
 import { MapsView } from "./components/MapsView";
 import { VelocityView } from "./components/VelocityView";
+import { ResearchView } from "./components/ResearchView";
+import { useResearch } from "./hooks/useResearch";
 
 const DEV_TOKEN_KEY = "frontier.devToken";
 const DEV_TICKER_KEY = "frontier.devTicker";
@@ -51,6 +52,12 @@ function truncateLabel(label: string, max = 16): string {
 
 export function Dashboard() {
   const { session, ticker, tickerCompany } = useHostContext();
+
+  // Human corrections (§47) layered over the build-time classification. Falls
+  // back to the bundled data when no research database is bound, so every
+  // aggregate below reads the same list whether or not D1 exists.
+  const research = useResearch();
+  const companies = research.companies;
 
   // Standalone preview only (see TestModePanel) — lets this dashboard be
   // exercised with real data before it's embedded in the actual Munshot
@@ -98,7 +105,18 @@ export function Dashboard() {
   // Use the proxy only as a last resort — a real token always takes priority.
   const useProxy = !effectiveToken && proxyAvailable;
 
-  type Page = "radar" | "stack" | "themes" | "maps" | "signals" | "whitespace" | "velocity" | "companies" | "trends" | "method";
+  type Page =
+    | "radar"
+    | "stack"
+    | "themes"
+    | "maps"
+    | "signals"
+    | "whitespace"
+    | "velocity"
+    | "companies"
+    | "trends"
+    | "method"
+    | "research";
   const [page, setPage] = useState<Page>("radar");
   const [chartView, setChartView] = useState<"snapshot" | "trends" | "composition" | "method">("snapshot");
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
@@ -110,14 +128,14 @@ export function Dashboard() {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const selectedCompany = useMemo(
     () => (selectedSlug ? companies.find((c) => c.slug === selectedSlug) ?? null : null),
-    [selectedSlug],
+    [companies, selectedSlug],
   );
 
-  const batchCounts = useMemo(() => companiesByBatch(companies), []);
-  const industries = useMemo(() => topIndustries(companies, 5), []);
-  const tags = useMemo(() => topTags(companies, 5), []);
-  const industryCount = useMemo(() => allIndustries(companies).length, []);
-  const hiringCount = useMemo(() => companies.filter((c) => c.isHiring).length, []);
+  const batchCounts = useMemo(() => companiesByBatch(companies), [companies]);
+  const industries = useMemo(() => topIndustries(companies, 5), [companies]);
+  const tags = useMemo(() => topTags(companies, 5), [companies]);
+  const industryCount = useMemo(() => allIndustries(companies).length, [companies]);
+  const hiringCount = useMemo(() => companies.filter((c) => c.isHiring).length, [companies]);
   const topTheme = tags[0]?.name ?? industries[0]?.name ?? "AI startups";
 
   const batchChartData: BarDatum[] = batchCounts.map((b) => ({
@@ -151,7 +169,7 @@ export function Dashboard() {
         fullName: s.name,
         value: s.count,
       })),
-    [],
+    [companies],
   );
   const shifts = useMemo(() => biggestIndustryShifts("winter-2022", "summer-2026", 6), []);
 
@@ -171,14 +189,14 @@ export function Dashboard() {
   // --- Composition view (current batches) ---
   const countryData: BarDatum[] = useMemo(
     () => topCountries(companies, 6).map((c) => ({ name: truncateLabel(c.name), fullName: c.name, value: c.count })),
-    [],
+    [companies],
   );
   const teamSizeData: BarDatum[] = useMemo(
     () => teamSizeDistribution(companies).map((t) => ({ name: t.name, value: t.count })),
-    [],
+    [companies],
   );
-  const teamMedian = useMemo(() => medianTeamSize(companies), []);
-  const teamReported = useMemo(() => teamSizeReportedCount(companies), []);
+  const teamMedian = useMemo(() => medianTeamSize(companies), [companies]);
+  const teamReported = useMemo(() => teamSizeReportedCount(companies), [companies]);
 
   const industryChartData: BarDatum[] = industries.map((i) => ({
     name: truncateLabel(i.name),
@@ -329,6 +347,7 @@ export function Dashboard() {
             ["companies", "Companies"],
             ["trends", "Trends"],
             ["method", "Method"],
+            ["research", "Research"],
           ] as const).map(([key, label]) => (
             <button
               key={key}
@@ -357,7 +376,7 @@ export function Dashboard() {
 
         {page === "stack" && (
           <div style={{ flex: 1, minHeight: 0 }}>
-            <WorldStack onSelectLayer={() => setPage("companies")} />
+            <WorldStack companies={companies} onSelectLayer={() => setPage("companies")} />
           </div>
         )}
 
@@ -382,6 +401,20 @@ export function Dashboard() {
         {page === "velocity" && (
           <div style={{ flex: 1, minHeight: 0 }}>
             <VelocityView />
+          </div>
+        )}
+
+        {page === "research" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <ResearchView
+              status={research.status}
+              companies={companies}
+              overrides={research.overrides}
+              applied={research.applied}
+              ignored={research.ignored}
+              loading={research.loading}
+              onReload={research.reload}
+            />
           </div>
         )}
 

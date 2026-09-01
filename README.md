@@ -150,6 +150,66 @@ appears).
 
 ---
 
+## The research layer (Cloudflare D1) — optional
+
+Every classification on this dashboard is produced by keyword rules. That is defensible
+only if a human who disagrees can overrule one **and have the dashboard show the
+corrected value**. The research layer is that: a D1 database holding human corrections,
+notes, and an audit trail, layered over the build-time data at read time.
+
+**It is off until you switch it on, and the dashboard works fully without it.** The
+Worker treats a missing `DB` binding as "research features unavailable" rather than an
+error, and the Research tab shows the setup commands instead of a broken form. That is
+deliberate — a D1 outage should degrade one panel, not the site.
+
+```bash
+npx wrangler d1 create frontier-db
+# paste the printed database_id into wrangler.jsonc and uncomment the d1_databases block
+npx wrangler d1 migrations apply frontier-db --remote
+npx wrangler secret put ADMIN_TOKEN     # writes stay disabled without this
+```
+
+`ADMIN_TOKEN` is required, not optional. The deployed URL is public, so an unguarded
+write endpoint would let anyone rewrite the classifications the dashboard reports.
+**With no token configured the API is read-only** — it fails closed rather than
+defaulting to open.
+
+### Nothing is ever updated in place
+
+Every table in `migrations/0001_init.sql` is append-only, and "current state" is the
+latest row. A correction does not erase the verdict it replaces; a retraction does not
+erase evidence that the correction was once made. This is what makes it possible to ask
+later what the dataset looked like at a past date, and to reproduce a past ranking with
+the formula that generated it — neither is possible once history has been overwritten.
+
+| Table | Holds |
+| --- | --- |
+| `classification_overrides` | A human correcting a machine verdict, with reason and author |
+| `theme_edits` | Rename / merge / split / approve on discovered themes; superseded, never deleted |
+| `research_notes` | Free-text context that isn't a field correction |
+| `metric_observations` | The observation history, queryable rather than only diffable in git |
+| `score_history` | Scores tagged with the formula version that produced them |
+| `audit_log` | Every write, including retractions |
+
+### Only six fields can be overridden
+
+`src/data/overrides.ts` holds the allowlist — `isAI`, `isRobotics`, `industry`,
+`subindustry`, `stackPosition`, `autonomy`. An override naming anything else is
+**ignored and shown as ignored**, never applied.
+
+That matters more than it looks. Without the allowlist, an override with a typo
+(`is_ai`) would be accepted by the API, written to the audit log, and change nothing —
+indistinguishable from a correction that worked. The same applies to values: `"maybe"`
+for a boolean is rejected rather than coerced, because `Boolean("false")` is `true` and
+`Number("high")` is `NaN`, and either would apply a value nobody typed. All of it is
+unit-tested, including the case where two corrections to the same field disagree (the
+newest wins).
+
+An override cannot invent structure it does not have: correcting `stackPosition` on a
+company the classifier never placed on the stack is a no-op, not a fabricated dimension.
+
+---
+
 ## Measurement decisions
 
 These matter more than the code. Two traps in this dataset produce confident, completely
@@ -201,17 +261,21 @@ Summer 2026 is the newest batch worth quoting.
 scripts/
   classify.mjs      Classification rules — single source of truth, unit-tested
   build-data.mjs    Fetches YC data, applies classification, writes both datasets
+  enrich.mjs        Runs the external adapters, appends to the observation store
+migrations/
+  0001_init.sql     D1 schema — append-only throughout
 worker/
-  index.ts          Serves static assets + the /api news proxy
+  index.ts          Static assets + the /api news proxy + the research API
 src/
   lib/sdk.ts        Munshot SDK client (verbatim from the skill)
   lib/theme.ts      Design tokens (verbatim from the skill's ui-standards)
   lib/news.ts       news_search datasource wrapper
-  hooks/            useHostContext (verbatim from the skill)
-  data/             Bundled datasets + typed accessors and series helpers
+  lib/research.ts   Research API client — degrades to "unavailable", never throws
+  hooks/            useHostContext (verbatim), useResearch (overrides + status)
+  data/             Bundled datasets, typed accessors, override application
   components/       Presentational only
   Dashboard.tsx     Layout, view switching, host request handlers
-tests/              Unit tests for classification and derived series
+tests/              Unit tests for classification, derived series and overrides
 ```
 
 Classification runs **once**, at build time, and is baked into the data as
@@ -230,7 +294,9 @@ currently `news_search` (`POST https://fastapi.muns.io/tools/news-search`).
   the momentum/velocity/whitespace ideas in the original brief need a data source that
   does not exist here yet.
 - **Classification is keyword-based.** Defensible and tested, but it is a judgment call
-  where tags were at least YC's own classification.
+  where tags were at least YC's own classification. The research layer above exists so a
+  human can overrule it on the record; nobody has, so every value currently shown is the
+  classifier's own.
 - **The dataset refreshes weekly**, so intra-week changes at YC are not reflected.
 - **The host embed is unverified.** The SDK handshake, real per-user tokens, and ticker
   auto-population cannot be tested outside the real Munshot host.

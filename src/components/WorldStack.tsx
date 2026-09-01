@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { companies } from "../data/companies";
+import { companies as staticCompanies, type Company } from "../data/companies";
 import { STACK_LAYERS, PHYSICAL_LAYERS } from "../data/intelligence";
 import { tokens, chartColorRotation } from "../lib/theme";
 import { Card } from "./Card";
@@ -22,7 +22,7 @@ interface LayerRow {
   examples: string[];
 }
 
-function useLayerRows(layerDefs: { id: string; label: string }[]): LayerRow[] {
+function useLayerRows(companies: Company[], layerDefs: { id: string; label: string }[]): LayerRow[] {
   return useMemo(() => {
     const total = companies.length;
     return layerDefs.map((def) => {
@@ -35,7 +35,7 @@ function useLayerRows(layerDefs: { id: string; label: string }[]): LayerRow[] {
         examples: members.slice(0, 3).map((m) => m.name),
       };
     });
-  }, [layerDefs]);
+  }, [companies, layerDefs]);
 }
 
 function StackBand({ row, index, max, onSelect }: { row: LayerRow; index: number; max: number; onSelect: (layer: string) => void }) {
@@ -68,12 +68,20 @@ function StackBand({ row, index, max, onSelect }: { row: LayerRow; index: number
   );
 }
 
-export function WorldStack({ onSelectLayer }: { onSelectLayer: (layer: string) => void }) {
-  const digital = useLayerRows(STACK_LAYERS);
-  const physical = useLayerRows(PHYSICAL_LAYERS);
+export function WorldStack({
+  onSelectLayer,
+  // Defaults to the bundled data so this view still stands alone; the
+  // dashboard passes the list with human corrections applied.
+  companies = staticCompanies,
+}: {
+  onSelectLayer: (layer: string) => void;
+  companies?: Company[];
+}) {
+  const digital = useLayerRows(companies, STACK_LAYERS);
+  const physical = useLayerRows(companies, PHYSICAL_LAYERS);
   const other = useMemo(
     () => companies.filter((c) => (c.dimensions?.stackPosition.layer ?? "other") === "other").length,
-    [],
+    [companies],
   );
 
   const max = Math.max(...digital.map((d) => d.count), ...physical.map((p) => p.count), 1);
