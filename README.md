@@ -104,6 +104,50 @@ npm test       # confirm the invariants still hold
 
 Counts shift slightly between runs because YC's API refreshes daily.
 
+### External signals (§44 adapters)
+
+`npm run enrich` collects observations from free, keyless public sources and
+**appends** them to `src/data/observations.json` — never overwrites. One run is
+a snapshot; successive runs are a series, which is what makes growth and
+acceleration computable (§21). The weekly workflow runs this automatically.
+
+| Adapter | Signal | Cost | Matched on | Coverage |
+| --- | --- | --- | --- | --- |
+| Tranco | Daily web rank | Free, no key | Exact domain | ~16% — seed-stage domains sit outside the top-1M |
+| Hacker News | Mentions, points | Free, no key | Exact domain | ~100% (zero is a real reading) |
+| ~~Greenhouse / Lever~~ | ~~Open roles~~ | Free, no key | Guessed slug | **Disabled — misattributes** (see below) |
+| GitHub | Org stars, repos | Free (5k/hr with token) | Org website verified against domain | Dev-tool companies only |
+
+**Entity resolution is the hard part, not the sources.** Matching companies by
+NAME produces garbage — searching SEC filings for "Clay" returns 1,755 hits
+including *California BanCorp*, and "Perplexity" returns SPV vehicles rather
+than the company. Matching on the company's **domain**, which YC provides,
+returns the real thing. So every adapter joins on domain where it can; the two
+that cannot (jobs by slug, GitHub by org name) carry lower confidence and
+verify what they can — the GitHub adapter accepts an org only if its profile
+website resolves to the company's domain.
+
+A failed lookup is recorded as `null` (unknown), never as zero.
+
+**The jobs adapter is disabled, and why matters.** Open roles would be a good
+free proxy for headcount growth, but neither Greenhouse nor Lever can be looked
+up by domain, so the board slug has to be guessed — and short names collide.
+Measured against real data: *Clara* (YC, 9 people, askclara.com) matched a
+Brazilian company advertising 117 roles in São Paulo; *Nex* (YC, 5 people,
+nex.ai) matched a Hong Kong company with 44. Those are not missing values,
+which would be harmless — they are confident numbers attached to the wrong
+company, which is worse than no signal. The adapter stays in the tree behind
+`enabled: false` and switches on if board ownership can ever be verified rather
+than guessed.
+
+GitHub self-skips without a `GITHUB_TOKEN`; the weekly Action supplies one
+free, so it runs at full rate in CI and no-ops locally.
+
+**Deliberately not used:** Crunchbase and PitchBook (paid), Product Hunt
+(OAuth-only now), SEC EDGAR Form D (free and official, but name-only matching
+would fabricate funding events — revisit if a domain-based resolution path
+appears).
+
 ---
 
 ## Measurement decisions

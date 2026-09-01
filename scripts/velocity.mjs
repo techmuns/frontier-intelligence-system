@@ -23,7 +23,7 @@ export const ARCHETYPES = [
       /\b(developers?|engineers?|sdk|api|open[- ]source|codebase|cli|library|framework)\b/i.test(
         `${c.one_liner ?? ""} ${c.long_description ?? ""}`,
       ),
-    metrics: ["hn_points", "hn_mentions", "web_rank"],
+    metrics: ["github_stars", "hn_points", "hn_mentions", "web_rank"],
   },
   {
     id: "robotics_deeptech",

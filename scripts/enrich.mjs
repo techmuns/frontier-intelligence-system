@@ -14,8 +14,14 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { ADAPTER as tranco } from "./adapters/tranco.mjs";
 import { ADAPTER as hackernews } from "./adapters/hackernews.mjs";
+import { ADAPTER as jobs } from "./adapters/jobs.mjs";
+import { ADAPTER as github } from "./adapters/github.mjs";
 
-const ADAPTERS = [tranco, hackernews];
+// github self-skips without a GITHUB_TOKEN; the weekly Action supplies one
+// for free, so it runs at full rate in CI and quietly no-ops locally.
+// An adapter can declare itself disabled when its entity resolution is not
+// trustworthy — a wrong value is worse than a missing one (§45).
+const ADAPTERS = [tranco, hackernews, jobs, github].filter((a) => a.enabled !== false);
 const STORE = "src/data/observations.json";
 
 // One value per company per metric per day. Re-running on the same day
