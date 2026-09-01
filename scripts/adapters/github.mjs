@@ -39,11 +39,21 @@ function hostOf(url) {
   }
 }
 
+// Set when GitHub stops answering mid-run. The run's results are then thrown
+// away wholesale rather than kept: the companies processed before the failure
+// are fine, but the ones after would be nulls that mean "we stopped looking".
+let authFailedMidRun = false;
+
 /** Find the org whose profile website matches the company's domain. */
 async function resolveOrg(company, domain) {
+  if (authFailedMidRun) return null;
   const query = encodeURIComponent(`${company.name} type:org`);
   try {
     const res = await fetch(`${API}/search/users?q=${query}&per_page=5`, { headers: headers() });
+    if (res.status === 401 || res.status === 403) {
+      authFailedMidRun = true;
+      return null;
+    }
     if (!res.ok) return null;
     const body = await res.json();
     for (const item of body?.items ?? []) {
@@ -78,11 +88,53 @@ async function orgTotals(login) {
   }
 }
 
-export async function collect(companies, { limit = Infinity } = {}) {
+/**
+ * Confirms the credentials actually work before collecting anything.
+ *
+ * This exists because of a real failure. A GITHUB_TOKEN that was present but
+ * invalid made every lookup return 401, which the collector below could not
+ * distinguish from "this company has no GitHub org" — so it wrote 1,318 null
+ * readings into the observation store. A null is supposed to mean "we looked
+ * and it genuinely is not there" (§45). Recording "we never looked" the same
+ * way turns a broken credential into a finding: that no YC company has open
+ * source. Nothing about the data would have looked wrong.
+ *
+ * So the adapter now proves it can read GitHub first, and collects NOTHING at
+ * all if it cannot. No observations beats wrong observations.
+ */
+async function credentialsUsable() {
   if (!process.env.GITHUB_TOKEN) {
     console.log("    (skipped — no GITHUB_TOKEN; 60 req/hr unauthenticated is too low for this many companies)");
-    return [];
+    return false;
   }
+  try {
+    const res = await fetch(`${API}/rate_limit`, { headers: headers() });
+    if (res.status === 401) {
+      console.log("    (skipped — GITHUB_TOKEN was rejected: 401 Bad credentials. Recording nothing rather than nulls.)");
+      return false;
+    }
+    if (!res.ok) {
+      console.log(`    (skipped — GitHub rate_limit check returned HTTP ${res.status})`);
+      return false;
+    }
+    const core = (await res.json())?.resources?.core;
+    // Verification costs up to ~2 requests per candidate org. Starting a run
+    // that will exhaust the budget partway through produces nulls for whatever
+    // is left in the list, which is the same lie in a smaller quantity.
+    if ((core?.remaining ?? 0) < 500) {
+      console.log(`    (skipped — only ${core?.remaining ?? 0} GitHub requests left this hour; a partial run would record nulls)`);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.log(`    (skipped — could not reach GitHub: ${err.message})`);
+    return false;
+  }
+}
+
+export async function collect(companies, { limit = Infinity } = {}) {
+  authFailedMidRun = false;
+  if (!(await credentialsUsable())) return [];
 
   const targets = companies
     .map((c) => ({ company: c, domain: domainOf(c) }))
@@ -108,6 +160,11 @@ export async function collect(companies, { limit = Infinity } = {}) {
     },
     { concurrency: 2, delayMs: 400 },
   );
+
+  if (authFailedMidRun) {
+    console.log("    (discarded — GitHub started rejecting requests part-way through; a partial run would record nulls)");
+    return [];
+  }
 
   return nested.flat();
 }

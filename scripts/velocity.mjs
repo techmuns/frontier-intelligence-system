@@ -91,6 +91,12 @@ export function computeVelocity(companies, observations) {
   const dates = new Set(observations.map((o) => o.observedAt.slice(0, 10)));
   const hasHistory = dates.size >= 2;
 
+  // Which metrics any adapter actually attempted this run. A metric nobody
+  // collected is a different statement from a metric that was collected and
+  // came back empty for one company, and collapsing the two would let a
+  // switched-off adapter read as "none of these companies has open source".
+  const attempted = new Set(observations.map((o) => o.metric));
+
   // Build per-archetype populations first, so each company is ranked against
   // its own kind rather than the whole cohort (§20).
   const populations = new Map();
@@ -115,7 +121,13 @@ export function computeVelocity(companies, observations) {
     for (const metric of archetype.metrics) {
       const series = metrics[metric];
       if (!series?.length) {
-        components[metric] = { available: false, reason: "no observation resolved for this company" };
+        components[metric] = {
+          available: false,
+          collected: attempted.has(metric),
+          reason: attempted.has(metric)
+            ? "looked up, nothing resolved for this company"
+            : "not collected — no adapter supplied this metric",
+        };
         continue;
       }
       const latest = series.at(-1).value;
@@ -144,6 +156,9 @@ export function computeVelocity(companies, observations) {
       // Standing, not velocity — named honestly. It becomes a velocity score
       // once the growth components below have data.
       standingScore: scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null,
+      // True when every metric this archetype is scored on came back empty.
+      // Such a company scores 0 for want of evidence, not for want of traction.
+      noEvidence: scores.length === 0 || archetype.metrics.every((m) => !metrics[m]?.some((p) => p.value > 0)),
       components,
       growth,
       growthAvailable: hasHistory,

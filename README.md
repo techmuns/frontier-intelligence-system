@@ -116,7 +116,7 @@ acceleration computable (§21). The weekly workflow runs this automatically.
 | Tranco | Daily web rank | Free, no key | Exact domain | ~16% — seed-stage domains sit outside the top-1M |
 | Hacker News | Mentions, points | Free, no key | Exact domain | ~100% (zero is a real reading) |
 | ~~Greenhouse / Lever~~ | ~~Open roles~~ | Free, no key | Guessed slug | **Disabled — misattributes** (see below) |
-| GitHub | Org stars, repos | Free (5k/hr with token) | Org website verified against domain | Dev-tool companies only |
+| GitHub | Org stars, repos | Free (5k/hr with token) | Org website verified against domain | **Currently 0 — needs a valid token** |
 
 **Entity resolution is the hard part, not the sources.** Matching companies by
 NAME produces garbage — searching SEC filings for "Clay" returns 1,755 hits
@@ -140,8 +140,24 @@ company, which is worse than no signal. The adapter stays in the tree behind
 `enabled: false` and switches on if board ownership can ever be verified rather
 than guessed.
 
-GitHub self-skips without a `GITHUB_TOKEN`; the weekly Action supplies one
-free, so it runs at full rate in CI and no-ops locally.
+**A failed lookup must never become data, and that was a real bug.** A
+`GITHUB_TOKEN` that was *present but invalid* returned 401 for every call. The
+adapter could not tell that apart from "this company has no GitHub org", so it
+wrote **1,318 null readings** into the observation store. A null is supposed to
+mean *we looked and it genuinely is not there*; recording *we never looked* the
+same way turned a broken credential into the finding that no YC company does
+open source — and nothing about the data looked wrong.
+
+The adapter now proves it can read GitHub before collecting anything, and
+collects **nothing at all** if it cannot: no token, a rejected token, or too
+little rate-limit budget to finish. If GitHub starts refusing part-way through
+a run, the whole run is discarded rather than half-kept, because the companies
+after the failure would be nulls meaning "we stopped looking". The 1,318 bad
+rows have been purged. Guarded by tests, including one that confirms both the
+preflight and mid-run guards independently hold the behaviour.
+
+The weekly Action supplies a free token, so this runs at full rate in CI and
+no-ops locally.
 
 **Deliberately not used:** Crunchbase and PitchBook (paid), Product Hunt
 (OAuth-only now), SEC EDGAR Form D (free and official, but name-only matching
@@ -239,6 +255,15 @@ Two constraints, both settled by testing rather than assumption:
   including it halved precision (33% → 51%) for almost no extra recall.
 - **One-liners only, never long descriptions.** The long text matches companies that
   merely mention robots as customers ("global upload acceleration for 1GB-100TB files").
+
+### Most companies have no external signal
+
+172 of 659 companies resolve anything from an external source. The other 487
+show **—** in the Velocity table, never 0. A seed-stage company nobody has
+posted about on Hacker News and whose domain sits outside the top 1M is not a
+company performing badly, and a 0 would say the second thing. The score column
+is greyed with the reason on hover, and the coverage is stated in the panel
+header rather than left to be inferred from a table of zeros.
 
 ### Partial batches
 

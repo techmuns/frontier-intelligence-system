@@ -32,11 +32,16 @@ export function VelocityView() {
 
   const hasHistory = (observationMeta?.dates?.length ?? 0) >= 2;
 
+  // How many companies any external source could actually say something about.
+  // Without this the table reads as a ranking of 659 companies, when it is
+  // really a ranking of 172 with 487 tied at the bottom for lack of evidence.
+  const withSignal = useMemo(() => velocity.filter((v) => !v.noEvidence).length, [velocity]);
+
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1.55fr 1fr", gap: 8, height: "100%", minHeight: 0 }}>
       <Card
         title={hasHistory ? "Company velocity" : "Company standing"}
-        subtitle={`§38 · ranked within archetype · ${velocity.length} companies scored`}
+        subtitle={`§38 · ranked within archetype · ${withSignal} of ${velocity.length} companies have a signal`}
         bodyStyle={{ display: "flex", flexDirection: "column", minHeight: 0, gap: 7 }}
       >
         <div style={{ display: "flex", gap: 4, flexWrap: "wrap", flexShrink: 0 }}>
@@ -90,8 +95,19 @@ export function VelocityView() {
                   <tr key={v.slug} style={{ borderBottom: `1px solid ${tokens.borderDefault}` }}>
                     <td style={{ padding: "6px 8px", fontWeight: 600, color: tokens.textPrimary }}>{v.name}</td>
                     <td style={{ padding: "6px 8px", color: tokens.textHint, fontSize: 10 }}>{v.archetypeLabel}</td>
-                    <td style={{ padding: "6px 8px", textAlign: "right", fontWeight: 700, color: tokens.primaryText }}>
-                      {v.standingScore}
+                    <td
+                      style={{
+                        padding: "6px 8px",
+                        textAlign: "right",
+                        fontWeight: 700,
+                        color: v.noEvidence ? tokens.textHint : tokens.primaryText,
+                      }}
+                      // A 0 here means nothing was found, not that the company
+                      // is going nowhere. Shown greyed with the reason on hover
+                      // rather than as a confident zero.
+                      title={v.noEvidence ? "No external signal resolved for this company — not a measured zero" : undefined}
+                    >
+                      {v.noEvidence ? "—" : v.standingScore}
                     </td>
                     <td style={{ padding: "6px 8px", textAlign: "right", color: tokens.textSecondary }}>
                       {hn?.available ? hn.latest : "—"}
@@ -145,6 +161,12 @@ export function VelocityView() {
             <strong>Web rank is inverted</strong> — rank 1 is the largest site — so a lower number
             scores higher.
           </p>
+          <p style={{ margin: "0 0 7px" }}>
+            <strong>Most companies have no signal at all.</strong> {withSignal} of {velocity.length}
+            {" "}resolved anything from an external source; the remaining {velocity.length - withSignal} show
+            {" "}<strong>—</strong> rather than 0. A seed-stage company nobody has posted about is not a
+            company performing badly, and scoring it 0 would say the second thing.
+          </p>
           <p style={{ margin: "0 0 7px", color: tokens.textHint }}>
             {observationMeta?.resolved?.toLocaleString()} of{" "}
             {observationMeta?.total?.toLocaleString()} observations resolved. Web rank resolves for
@@ -164,6 +186,9 @@ export function VelocityView() {
           <div style={{ fontSize: 10, color: tokens.textHint, lineHeight: 1.5 }}>
             ARR, headcount, funding rounds and customer counts have no free public source. Those
             parts of §20–§22 stay unavailable rather than being estimated.
+            {" "}GitHub stars are collected only when a working token is present: an invalid one
+            previously wrote 1,318 empty readings, which would have read as "no YC company has open
+            source" rather than as a broken credential.
           </div>
         </div>
       </Card>

@@ -132,7 +132,22 @@ export interface Intelligence {
     archetype: string;
     archetypeLabel: string;
     standingScore: number | null;
-    components: Record<string, { available: boolean; latest?: number; percentileInArchetype?: number; observations?: number; reason?: string }>;
+    /** True when no external source resolved anything for this company. Its
+     *  score is 0 for want of evidence, not for want of traction. */
+    noEvidence: boolean;
+    components: Record<
+      string,
+      {
+        available: boolean;
+        /** False when no adapter attempted this metric at all — distinct from
+         *  attempted and empty for this particular company. */
+        collected?: boolean;
+        latest?: number;
+        percentileInArchetype?: number;
+        observations?: number;
+        reason?: string;
+      }
+    >;
     growth: Record<string, number | null> | null;
     growthAvailable: boolean;
     metricsResolved: number;
