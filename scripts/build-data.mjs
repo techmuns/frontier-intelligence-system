@@ -27,6 +27,8 @@ import { discoverThemes, THEME_ENGINE_VERSION } from "./themes.mjs";
 import { scoreTheme, MOMENTUM_FORMULA } from "./momentum.mjs";
 import { buildMatrix, findEmptyCells, dependencyGaps, WHITESPACE_VERSION } from "./whitespace.mjs";
 import { detectTransitions, detectSignals, findNonObvious, SIGNALS_VERSION } from "./signals.mjs";
+import { computeVelocity, VELOCITY_VERSION } from "./velocity.mjs";
+import { readFile } from "node:fs/promises";
 
 const API = "https://yc-oss.github.io/api/batches";
 
@@ -182,7 +184,17 @@ async function main() {
   }
   console.log(`\nClassified ${allCompanies.length} companies across ${TREND_BATCHES.length} batches.`);
 
-  const intelligence = buildIntelligence(allCompanies, trends);
+  // Company velocity needs the observation store the adapters populate
+  // (scripts/enrich.mjs). Absent, velocity is simply unavailable rather than
+  // fabricated — the dashboard says so.
+  let observations = [];
+  try {
+    observations = JSON.parse(await readFile("src/data/observations.json", "utf8")).observations ?? [];
+  } catch {
+    console.log("No observation store yet — run `npm run enrich` to populate company velocity.");
+  }
+
+  const intelligence = buildIntelligence(allCompanies, trends, companies, observations);
 
   await writeFile("src/data/yc-companies.json", JSON.stringify(companies));
   await writeFile("src/data/yc-trends.json", JSON.stringify(trends));
@@ -199,7 +211,7 @@ function withDimensions(company) {
   return { ...company, dimensions: classifyCompany(company) };
 }
 
-function buildIntelligence(allCompanies, trends) {
+function buildIntelligence(allCompanies, trends, currentCompanies, observations) {
   const batchOrder = trends.map((t) => t.batch);
   const totalsByBatch = Object.fromEntries(trends.map((t) => [t.batch, t.total]));
   const recentBatches = batchOrder.slice(-4);
@@ -306,6 +318,7 @@ function buildIntelligence(allCompanies, trends) {
       momentum: MOMENTUM_FORMULA.version,
       whitespace: WHITESPACE_VERSION,
       signals: SIGNALS_VERSION,
+      velocity: VELOCITY_VERSION,
     },
     batchOrder,
     themeParams: params,
@@ -329,6 +342,15 @@ function buildIntelligence(allCompanies, trends) {
     transitions,
     signals,
     nonObvious,
+    // §20-§22 Company velocity, from the adapter observation store.
+    velocity: computeVelocity(currentCompanies, observations)
+      .filter((v) => v.standingScore !== null)
+      .sort((a, b) => b.standingScore - a.standingScore),
+    observationMeta: {
+      total: observations.length,
+      dates: [...new Set(observations.map((o) => o.observedAt.slice(0, 10)))].sort(),
+      resolved: observations.filter((o) => o.value !== null).length,
+    },
   };
 }
 

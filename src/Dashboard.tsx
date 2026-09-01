@@ -40,6 +40,7 @@ import { WhiteSpace } from "./components/WhiteSpace";
 import { ThemeExplorer } from "./components/ThemeExplorer";
 import { SignalsView } from "./components/SignalsView";
 import { MapsView } from "./components/MapsView";
+import { VelocityView } from "./components/VelocityView";
 
 const DEV_TOKEN_KEY = "frontier.devToken";
 const DEV_TICKER_KEY = "frontier.devTicker";
@@ -97,7 +98,7 @@ export function Dashboard() {
   // Use the proxy only as a last resort — a real token always takes priority.
   const useProxy = !effectiveToken && proxyAvailable;
 
-  type Page = "radar" | "stack" | "themes" | "maps" | "signals" | "whitespace" | "companies" | "trends" | "method";
+  type Page = "radar" | "stack" | "themes" | "maps" | "signals" | "whitespace" | "velocity" | "companies" | "trends" | "method";
   const [page, setPage] = useState<Page>("radar");
   const [chartView, setChartView] = useState<"snapshot" | "trends" | "composition" | "method">("snapshot");
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
@@ -324,6 +325,7 @@ export function Dashboard() {
             ["maps", "Maps"],
             ["signals", "Signals"],
             ["whitespace", "White Space"],
+            ["velocity", "Velocity"],
             ["companies", "Companies"],
             ["trends", "Trends"],
             ["method", "Method"],
@@ -374,6 +376,12 @@ export function Dashboard() {
         {page === "signals" && (
           <div style={{ flex: 1, minHeight: 0 }}>
             <SignalsView onSelectTheme={openTheme} />
+          </div>
+        )}
+
+        {page === "velocity" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <VelocityView />
           </div>
         )}
 

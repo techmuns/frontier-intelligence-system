@@ -125,6 +125,19 @@ export interface Intelligence {
     themes: string[];
     detectedAt: string;
   }[];
+  velocity: {
+    slug: string;
+    name: string;
+    batch: string;
+    archetype: string;
+    archetypeLabel: string;
+    standingScore: number | null;
+    components: Record<string, { available: boolean; latest?: number; percentileInArchetype?: number; observations?: number; reason?: string }>;
+    growth: Record<string, number | null> | null;
+    growthAvailable: boolean;
+    metricsResolved: number;
+  }[];
+  observationMeta: { total: number; dates: string[]; resolved: number };
   nonObvious: {
     insights: { kind: string; title: string; explanation: string; evidence: Record<string, unknown> }[];
     nearMisses: { theme: string; capability: string; share: number; ratio: number; momentum: number; failed: string }[];

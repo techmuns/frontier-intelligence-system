@@ -34,6 +34,17 @@ jobs:
       - name: Re-pull YC datasets
         run: npm run data
 
+      # Appends a new dated layer of external observations. This is what turns
+      # standing into velocity: one run is a snapshot, successive runs are a
+      # series. Failures here must not abort the refresh — a flaky third-party
+      # endpoint should not block the YC data from updating.
+      - name: Collect external observations
+        run: npm run enrich
+        continue-on-error: true
+
+      - name: Rebuild with the new observations
+        run: npm run data
+
       # The gate. If YC changes the API shape, or a batch arrives in a state
       # that breaks an invariant (counts exceeding batch totals, duplicate
       # slugs, the robotics correction dropping below YC's own label), this
