@@ -20,7 +20,7 @@ export interface BarDatum {
 interface BarChartCardProps {
   data: BarDatum[];
   layout?: "horizontal" | "vertical"; // "horizontal" = bars run left-to-right (categories on Y)
-  height?: number;
+  height?: number | string;
   valueLabel?: string;
 }
 
@@ -34,7 +34,7 @@ function CustomTooltip({ active, payload, valueLabel }: any) {
         border: `1px solid ${tokens.borderDefault}`,
         borderRadius: 8,
         padding: "8px 10px",
-        fontSize: 12,
+        fontSize: 14,
         boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
       }}
     >
@@ -43,7 +43,7 @@ function CustomTooltip({ active, payload, valueLabel }: any) {
         {d.value.toLocaleString()} {valueLabel ?? ""}
       </div>
       {d.flag && (
-        <div style={{ color: tokens.textHint, marginTop: 2, fontSize: 11 }}>{d.flag}</div>
+        <div style={{ color: tokens.textHint, marginTop: 2, fontSize: 13 }}>{d.flag}</div>
       )}
     </div>
   );
@@ -67,12 +67,12 @@ export function BarChartCard({ data, layout = "vertical", height = 220, valueLab
         />
         {isHorizontal ? (
           <>
-            <XAxis type="number" tick={{ fontSize: 11, fill: tokens.textMuted }} axisLine={false} tickLine={false} />
+            <XAxis type="number" tick={{ fontSize: 13, fill: tokens.textMuted }} axisLine={false} tickLine={false} />
             <YAxis
               type="category"
               dataKey="name"
               width={108}
-              tick={{ fontSize: 11, fill: tokens.textSecondary }}
+              tick={{ fontSize: 13, fill: tokens.textSecondary }}
               axisLine={false}
               tickLine={false}
             />
@@ -81,11 +81,11 @@ export function BarChartCard({ data, layout = "vertical", height = 220, valueLab
           <>
             <XAxis
               dataKey="name"
-              tick={{ fontSize: 11, fill: tokens.textSecondary }}
+              tick={{ fontSize: 13, fill: tokens.textSecondary }}
               axisLine={false}
               tickLine={false}
             />
-            <YAxis tick={{ fontSize: 11, fill: tokens.textMuted }} axisLine={false} tickLine={false} />
+            <YAxis tick={{ fontSize: 13, fill: tokens.textMuted }} axisLine={false} tickLine={false} />
           </>
         )}
         <Tooltip cursor={{ fill: "rgba(79,70,229,0.06)" }} content={<CustomTooltip valueLabel={valueLabel} />} />

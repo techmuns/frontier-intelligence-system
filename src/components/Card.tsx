@@ -32,8 +32,8 @@ export function Card({ title, subtitle, children, bodyStyle }: CardProps) {
           gap: 6,
         }}
       >
-        <div style={{ fontSize: 12, fontWeight: 700, color: tokens.textPrimary }}>{title}</div>
-        {subtitle && <div style={{ fontSize: 10, color: tokens.textHint }}>{subtitle}</div>}
+        <div style={{ fontSize: 14, fontWeight: 700, color: tokens.textPrimary }}>{title}</div>
+        {subtitle && <div style={{ fontSize: 12, color: tokens.textHint }}>{subtitle}</div>}
       </div>
       <div
         style={{

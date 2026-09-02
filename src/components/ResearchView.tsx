@@ -34,7 +34,7 @@ const ADMIN_TOKEN_KEY = "frontier.adminToken";
 const AUTHOR_KEY = "frontier.author";
 
 const inputStyle: React.CSSProperties = {
-  fontSize: 11,
+  fontSize: 13,
   padding: "5px 8px",
   borderRadius: 6,
   border: `1px solid ${tokens.borderDefault}`,
@@ -45,7 +45,7 @@ const inputStyle: React.CSSProperties = {
 };
 
 const labelStyle: React.CSSProperties = {
-  fontSize: 9,
+  fontSize: 11,
   fontWeight: 700,
   letterSpacing: 0.3,
   textTransform: "uppercase",
@@ -152,7 +152,7 @@ export function ResearchView({
   if (!status.database) {
     return (
       <Card title="Research layer" subtitle="Not provisioned">
-        <div style={{ padding: 14, fontSize: 12, color: tokens.textSecondary, lineHeight: 1.6, overflowY: "auto", height: "100%" }}>
+        <div style={{ padding: 14, fontSize: 14, color: tokens.textSecondary, lineHeight: 1.6, overflowY: "auto", height: "100%" }}>
           <p style={{ margin: "0 0 10px" }}>
             Classifications on this dashboard are produced by keyword rules. This panel is where a
             human overrules one — with a reason and a name attached — and where those corrections are
@@ -166,7 +166,7 @@ export function ResearchView({
               borderRadius: 8,
               background: "#ffffff",
               border: `1px solid ${tokens.borderDefault}`,
-              fontSize: 10.5,
+              fontSize: 12.5,
               lineHeight: 1.7,
               overflowX: "auto",
               color: tokens.textSecondary,
@@ -177,7 +177,7 @@ export function ResearchView({
 npx wrangler d1 migrations apply frontier-db --remote
 npx wrangler secret put ADMIN_TOKEN`}
           </pre>
-          <p style={{ margin: 0, fontSize: 11, color: tokens.textHint }}>
+          <p style={{ margin: 0, fontSize: 13, color: tokens.textHint }}>
             Everything else on this dashboard works without it — the research layer stores human
             corrections, it does not serve the data.
           </p>
@@ -247,7 +247,7 @@ npx wrangler secret put ADMIN_TOKEN`}
                   </option>
                 ))}
               </datalist>
-              <div style={{ fontSize: 10, marginTop: 3, color: target ? categoryColors.tools.text : tokens.textHint }}>
+              <div style={{ fontSize: 12, marginTop: 3, color: target ? categoryColors.tools.text : tokens.textHint }}>
                 {slug.trim() ? (target ? `${target.name} — ${target.batch}` : "No company with that slug") : " "}
               </div>
             </div>
@@ -275,7 +275,7 @@ npx wrangler secret put ADMIN_TOKEN`}
             </div>
 
             {target && (
-              <div style={{ fontSize: 10.5, color: tokens.textMuted }}>
+              <div style={{ fontSize: 12.5, color: tokens.textMuted }}>
                 Currently: <strong style={{ color: tokens.textPrimary }}>{currentValue}</strong>
                 {applied.has(`${target.slug}|${field}`) && (
                   <span style={{ color: categoryColors.india.text }}> · already overridden</span>
@@ -321,7 +321,7 @@ npx wrangler secret put ADMIN_TOKEN`}
             {message && (
               <div
                 style={{
-                  fontSize: 11,
+                  fontSize: 13,
                   padding: "5px 8px",
                   borderRadius: 6,
                   background: message.ok ? categoryColors.tools.bg : tokens.errorBg,
@@ -400,7 +400,7 @@ npx wrangler secret put ADMIN_TOKEN`}
 
 function buttonStyle(disabled: boolean): React.CSSProperties {
   return {
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: 700,
     padding: "6px 12px",
     borderRadius: 6,
@@ -428,9 +428,9 @@ function Row({
   return (
     <div
       style={{
-        padding: "6px 10px",
+        padding: "9px 12px",
         borderBottom: `1px solid ${tokens.borderDefault}`,
-        fontSize: 11,
+        fontSize: 13,
         display: "flex",
         flexDirection: "column",
         gap: 2,
@@ -440,10 +440,10 @@ function Row({
         <span style={{ fontWeight: 700, color: tone === "warn" ? categoryColors.crypto.text : tokens.textPrimary }}>
           {left}
         </span>
-        <span style={{ color: tokens.textHint, fontSize: 10 }}>{right}</span>
+        <span style={{ color: tokens.textHint, fontSize: 12 }}>{right}</span>
       </div>
       <div style={{ color: tokens.textSecondary }}>{mid}</div>
-      {hint && <div style={{ color: tokens.textHint, fontSize: 10 }}>{hint}</div>}
+      {hint && <div style={{ color: tokens.textHint, fontSize: 12 }}>{hint}</div>}
     </div>
   );
 }

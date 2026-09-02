@@ -26,7 +26,7 @@ export function StatTile({ label, value, category, hint }: StatTileProps) {
       <div
         style={{
           flexShrink: 0,
-          fontSize: 9,
+          fontSize: 11,
           fontWeight: 700,
           letterSpacing: 0.3,
           textTransform: "uppercase",
@@ -39,11 +39,11 @@ export function StatTile({ label, value, category, hint }: StatTileProps) {
       >
         {label}
       </div>
-      <div style={{ fontSize: 17, fontWeight: 700, color: tokens.textPrimary, lineHeight: 1.1 }}>
+      <div style={{ fontSize: 20, fontWeight: 700, color: tokens.textPrimary, lineHeight: 1.1 }}>
         {value}
       </div>
       {hint && (
-        <div style={{ fontSize: 10, color: tokens.textHint, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+        <div style={{ fontSize: 12, color: tokens.textHint, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
           {hint}
         </div>
       )}

@@ -282,6 +282,27 @@ Summer 2026 is the newest batch worth quoting.
 
 ---
 
+## Layout
+
+Sized for a full browser window, not a widget. The first version used 9-11px
+type throughout and fixed row caps, which on a real screen put every tab's
+content in the top third and left the rest blank. Three rules now hold it
+together, verified by screenshotting every tab rather than by eye:
+
+- **One type scale**, `type` in `src/lib/theme.ts`. Body text is 13px, not 9px.
+  The skill's `ui-standards.md` specifies colour only, so sizing is this
+  project's decision to make and to keep in one place.
+- **Cards fill their column.** Where a card holds few items — the five
+  directional axes, the stack bands — the items share the height instead of
+  stacking at the top. Where it holds a table, the table stretches.
+- **Row caps are set by what fits, not by what is convenient.** A theme now
+  carries 18 example companies rather than 4, because the panel showing them
+  is a full column tall.
+
+Where a column still ends early it is because the data ends there — the
+physical stack has two layers, and §41 has no qualifying insights. Those are
+findings, not layout bugs, and are labelled as such.
+
 ## Architecture
 
 ```

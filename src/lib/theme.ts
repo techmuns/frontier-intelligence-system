@@ -25,6 +25,32 @@ export const chartColorRotation: string[] = [
   categoryColors.sector.text,
 ];
 
+// Type scale.
+//
+// The first version of this dashboard was sized for a small embedded widget —
+// almost everything was 9-11px. Viewed full-screen that reads as unreadably
+// small text crammed into the top third of the page. These are the sizes the
+// UI actually uses; changing them here moves the whole dashboard together
+// rather than leaving components to drift apart.
+//
+// Not from the skill's ui-standards, which specifies colour only.
+export const type = {
+  /** Table micro-labels, axis captions, provenance lines. */
+  micro: 11,
+  /** Secondary labels, hints, footnotes. */
+  small: 12,
+  /** Default body and table text. */
+  body: 13,
+  /** Card titles, emphasised rows. */
+  title: 14,
+  /** Section headings inside a card. */
+  heading: 17,
+  /** KPI tile labels. */
+  statLabel: 12,
+  /** KPI tile numbers. */
+  stat: 32,
+} as const;
+
 export const tokens = {
   primary: "#4f46e5",
   primaryLight: "#eef2ff",

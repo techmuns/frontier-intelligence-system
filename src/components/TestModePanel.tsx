@@ -9,7 +9,7 @@ interface TestModePanelProps {
 }
 
 const inputStyle: React.CSSProperties = {
-  fontSize: 11,
+  fontSize: 13,
   padding: "4px 7px",
   borderRadius: 6,
   border: `1px solid ${tokens.borderDefault}`,
@@ -33,7 +33,7 @@ export function TestModePanel({ active, devToken, devTicker, onApply }: TestMode
       <button
         onClick={() => setOpen((o) => !o)}
         style={{
-          fontSize: 10,
+          fontSize: 12,
           fontWeight: 600,
           color: tokens.textHint,
           background: "transparent",
@@ -64,7 +64,7 @@ export function TestModePanel({ active, devToken, devTicker, onApply }: TestMode
             gap: 6,
           }}
         >
-          <div style={{ fontSize: 10, color: tokens.textHint, lineHeight: 1.4 }}>
+          <div style={{ fontSize: 12, color: tokens.textHint, lineHeight: 1.4 }}>
             Standalone preview only — not used once a real Munshot session connects.
           </div>
           <input
@@ -86,7 +86,7 @@ export function TestModePanel({ active, devToken, devTicker, onApply }: TestMode
                 setOpen(false);
               }}
               style={{
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: 600,
                 color: "#ffffff",
                 background: tokens.primary,
@@ -106,7 +106,7 @@ export function TestModePanel({ active, devToken, devTicker, onApply }: TestMode
                 setOpen(false);
               }}
               style={{
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: 600,
                 color: tokens.textMuted,
                 background: "#ffffff",

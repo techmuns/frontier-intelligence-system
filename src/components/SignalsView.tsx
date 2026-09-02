@@ -47,31 +47,31 @@ export function SignalsView({ onSelectTheme }: { onSelectTheme: (id: string) => 
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "baseline" }}>
-              <span style={{ fontSize: 11, fontWeight: 700, color: tokens.textPrimary }}>{s.title}</span>
-              <span style={{ fontSize: 9, color: tokens.textHint, whiteSpace: "nowrap" }}>
+              <span style={{ fontSize: 13, fontWeight: 700, color: tokens.textPrimary }}>{s.title}</span>
+              <span style={{ fontSize: 11, color: tokens.textHint, whiteSpace: "nowrap" }}>
                 {TYPE_LABEL[s.type] ?? s.type} · conf {s.confidence}
               </span>
             </div>
-            <div style={{ fontSize: 10, color: tokens.textSecondary, lineHeight: 1.45 }}>{s.explanation}</div>
+            <div style={{ fontSize: 12, color: tokens.textSecondary, lineHeight: 1.45 }}>{s.explanation}</div>
           </div>
         ))}
       </Card>
 
-      <div style={{ display: "grid", gridTemplateRows: "1fr 1fr", gap: 8, minHeight: 0 }}>
+      <div style={{ display: "grid", gridTemplateRows: "minmax(0, auto) 1fr", gap: 8, minHeight: 0 }}>
         <Card title="What most people will miss" subtitle="§41 · intersections, not commentary" bodyStyle={{ overflowY: "auto" }}>
           {insights.length > 0 ? (
             insights.map((n, i) => (
               <div key={i} style={{ marginBottom: 9 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: tokens.textPrimary }}>{n.title}</div>
-                <div style={{ fontSize: 10, color: tokens.textSecondary, lineHeight: 1.45 }}>{n.explanation}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: tokens.textPrimary }}>{n.title}</div>
+                <div style={{ fontSize: 12, color: tokens.textSecondary, lineHeight: 1.45 }}>{n.explanation}</div>
               </div>
             ))
           ) : (
             <div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: tokens.textSecondary, marginBottom: 4 }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: tokens.textSecondary, marginBottom: 4 }}>
                 Nothing crossed the bar this cycle.
               </div>
-              <div style={{ fontSize: 10, color: tokens.textHint, lineHeight: 1.5, marginBottom: 8 }}>
+              <div style={{ fontSize: 12, color: tokens.textHint, lineHeight: 1.5, marginBottom: 8 }}>
                 An insight qualifies only where two independent signals intersect — a theme with
                 momentum ≥ {criteria?.minMomentum} that also has ≥{" "}
                 {Math.round((criteria?.minDependencyShare ?? 0.2) * 100)}% of its companies leaning on a
@@ -81,11 +81,11 @@ export function SignalsView({ onSelectTheme }: { onSelectTheme: (id: string) => 
               </div>
               {nearMisses.length > 0 && (
                 <>
-                  <div style={{ fontSize: 9, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", marginBottom: 3 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", marginBottom: 3 }}>
                     Closest near-misses
                   </div>
                   {nearMisses.map((n, i) => (
-                    <div key={i} style={{ fontSize: 10, color: tokens.textSecondary, padding: "2px 0" }}>
+                    <div key={i} style={{ fontSize: 12, color: tokens.textSecondary, padding: "2px 0" }}>
                       {n.theme} / {n.capability} —{" "}
                       <span style={{ color: tokens.textHint }}>
                         {Math.round(n.share * 100)}% depend, {n.ratio}× gap, momentum {n.momentum} · failed on{" "}
@@ -99,9 +99,13 @@ export function SignalsView({ onSelectTheme }: { onSelectTheme: (id: string) => 
           )}
         </Card>
 
-        <Card title="Transitions" subtitle="§26 · autonomy centre of gravity" bodyStyle={{ overflowY: "auto" }}>
+        <Card
+          title="Transitions"
+          subtitle="§26 · autonomy centre of gravity"
+          bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}
+        >
           {transitions.length === 0 && (
-            <div style={{ fontSize: 10, color: tokens.textHint }}>
+            <div style={{ fontSize: 12, color: tokens.textHint }}>
               No theme has enough cohort history to claim a movement yet.
             </div>
           )}
@@ -112,10 +116,10 @@ export function SignalsView({ onSelectTheme }: { onSelectTheme: (id: string) => 
               style={{ marginBottom: 7, cursor: "pointer" }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 6 }}>
-                <span style={{ fontSize: 11, fontWeight: 600, color: tokens.textPrimary }}>{t.themeLabel}</span>
+                <span style={{ fontSize: 13, fontWeight: 600, color: tokens.textPrimary }}>{t.themeLabel}</span>
                 <span
                   style={{
-                    fontSize: 10,
+                    fontSize: 12,
                     fontWeight: 700,
                     color: t.direction === "ascending" ? categoryColors.tools.text : categoryColors.heatmaps.text,
                   }}
@@ -124,10 +128,10 @@ export function SignalsView({ onSelectTheme }: { onSelectTheme: (id: string) => 
                   {t.move}
                 </span>
               </div>
-              <div style={{ fontSize: 10, color: tokens.textSecondary }}>
+              <div style={{ fontSize: 12, color: tokens.textSecondary }}>
                 {t.fromLabel} → {t.toLabel}
               </div>
-              <div style={{ fontSize: 9, color: tokens.textHint }}>
+              <div style={{ fontSize: 11, color: tokens.textHint }}>
                 {t.companiesObserved} companies across {t.windows} cohorts
               </div>
             </div>

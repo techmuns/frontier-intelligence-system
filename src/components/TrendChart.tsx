@@ -17,7 +17,8 @@ export interface TrendSeries {
 interface TrendChartProps {
   data: Record<string, unknown>[];
   series: TrendSeries[];
-  height?: number;
+  /** Number of px, or "100%" to fill a card that already has a definite height. */
+  height?: number | string;
   unit?: string;
 }
 
@@ -31,7 +32,7 @@ function TrendTooltip({ active, payload, label, unit }: any) {
         border: `1px solid ${tokens.borderDefault}`,
         borderRadius: 8,
         padding: "8px 10px",
-        fontSize: 12,
+        fontSize: 14,
         boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
       }}
     >
@@ -43,12 +44,12 @@ function TrendTooltip({ active, payload, label, unit }: any) {
         </div>
       ))}
       {row.lowCoverage && (
-        <div style={{ color: tokens.textHint, fontSize: 10, marginTop: 3, maxWidth: 190 }}>
+        <div style={{ color: tokens.textHint, fontSize: 12, marginTop: 3, maxWidth: 190 }}>
           Only {row.taggedCount} of {row.total} companies tagged — thin evidence.
         </div>
       )}
       {row.partial && (
-        <div style={{ color: tokens.textHint, fontSize: 10, marginTop: 3, maxWidth: 190 }}>
+        <div style={{ color: tokens.textHint, fontSize: 12, marginTop: 3, maxWidth: 190 }}>
           Batch still filling — not a final count.
         </div>
       )}
@@ -63,12 +64,12 @@ export function TrendChart({ data, series, height = 170, unit = "%" }: TrendChar
         <CartesianGrid strokeDasharray="3 3" stroke={tokens.borderDefault} vertical={false} />
         <XAxis
           dataKey="label"
-          tick={{ fontSize: 10, fill: tokens.textMuted }}
+          tick={{ fontSize: 12, fill: tokens.textMuted }}
           axisLine={false}
           tickLine={false}
           interval={0}
         />
-        <YAxis tick={{ fontSize: 10, fill: tokens.textMuted }} axisLine={false} tickLine={false} />
+        <YAxis tick={{ fontSize: 12, fill: tokens.textMuted }} axisLine={false} tickLine={false} />
         <Tooltip content={<TrendTooltip unit={unit} />} />
         {series.map((s, i) => (
           <Line

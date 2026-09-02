@@ -503,7 +503,7 @@ function buildPhysicalMap(allCompanies) {
       ...stage,
       count: members.length,
       industries,
-      examples: members.slice(0, 4).map((m) => ({ name: m.name, one_liner: m.one_liner })),
+      examples: members.slice(0, 18).map((m) => ({ name: m.name, one_liner: m.one_liner })),
     };
   });
 }

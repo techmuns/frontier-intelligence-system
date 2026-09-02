@@ -297,10 +297,10 @@ export function Dashboard() {
         }}
       >
         <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-          <div style={{ fontSize: 14, fontWeight: 800, letterSpacing: 0.3, color: tokens.textPrimary }}>
+          <div style={{ fontSize: 17, fontWeight: 800, letterSpacing: 0.3, color: tokens.textPrimary }}>
             FRONTIER
           </div>
-          <div style={{ fontSize: 9, color: tokens.textHint, fontWeight: 600, letterSpacing: 0.3 }}>
+          <div style={{ fontSize: 11, color: tokens.textHint, fontWeight: 600, letterSpacing: 0.3 }}>
             TECHNOLOGY MARKET INTELLIGENCE — YC WINTER '26 – WINTER '27
           </div>
         </div>
@@ -308,7 +308,7 @@ export function Dashboard() {
           {effectiveTicker ? (
             <span
               style={{
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: 700,
                 color: tokens.primaryText,
                 background: tokens.primaryLight,
@@ -320,7 +320,7 @@ export function Dashboard() {
               {effectiveTickerCompany ?? effectiveTicker}
             </span>
           ) : (
-            <span style={{ fontSize: 11, color: tokens.textHint }}>No ticker selected</span>
+            <span style={{ fontSize: 13, color: tokens.textHint }}>No ticker selected</span>
           )}
           <TestModePanel
             active={!!session.token}
@@ -359,7 +359,7 @@ export function Dashboard() {
               key={key}
               onClick={() => setPage(key)}
               style={{
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: 600,
                 padding: "4px 11px",
                 borderRadius: 999,
@@ -441,7 +441,7 @@ export function Dashboard() {
                 key={key}
                 onClick={() => setChartView(key)}
                 style={{
-                  fontSize: 10,
+                  fontSize: 12,
                   fontWeight: 600,
                   padding: "3px 9px",
                   borderRadius: 999,
@@ -460,13 +460,11 @@ export function Dashboard() {
         {/* Charts row — Trends and Method pages */}
         {(page === "trends" || page === "method") && (
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.1fr 1fr 1fr",
-            gap: 8,
-            flexShrink: 0,
-            height: 210,
-          }}
+          style={
+            page === "method"
+              ? { display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr", gap: 8, flex: 1, minHeight: 0 }
+              : { display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr", gap: 8, flexShrink: 0, height: 210 }
+          }
         >
           {page === "trends" && chartView === "snapshot" && (
             <>
@@ -521,7 +519,7 @@ export function Dashboard() {
                     { key: "From YC tags", label: "YC tags" },
                     { key: "Tag coverage", label: "Tag coverage" },
                   ]}
-                  height={170}
+                  height="100%"
                 />
               </Card>
               <Card title="Robotics, undercounted" subtitle="YC's label vs actual, % of batch">
@@ -531,11 +529,11 @@ export function Dashboard() {
                     { key: "Corrected", label: "Actual" },
                     { key: "YC label", label: "YC label" },
                   ]}
-                  height={170}
+                  height="100%"
                 />
               </Card>
               <Card title="How things are counted" subtitle="Classification rules">
-                <div style={{ fontSize: 11, color: tokens.textSecondary, lineHeight: 1.5, height: 170, overflowY: "auto" }}>
+                <div style={{ fontSize: 13, color: tokens.textSecondary, lineHeight: 1.6, height: "100%", overflowY: "auto" }}>
                   <p style={{ margin: "0 0 7px" }}>
                     <strong>AI / robotics</strong> counted from each company's own one-line pitch, not YC tags —
                     tag coverage swings between 23% and 99% per batch, so a tag-based share tracks YC's
@@ -561,10 +559,10 @@ export function Dashboard() {
           {page === "trends" && chartView === "composition" && (
             <>
               <Card title="Team size" subtitle={`${teamReported} of ${companies.length} reported · median ${teamMedian ?? "—"}`}>
-                <BarChartCard data={teamSizeData} layout="vertical" height={170} valueLabel="companies" />
+                <BarChartCard data={teamSizeData} layout="vertical" height="100%" valueLabel="companies" />
               </Card>
               <Card title="Where they're based" subtitle="By country">
-                <BarChartCard data={countryData} layout="horizontal" height={170} valueLabel="companies" />
+                <BarChartCard data={countryData} layout="horizontal" height="100%" valueLabel="companies" />
               </Card>
               <Card title="Biggest industry shifts" subtitle="Winter 2022 → Summer 2026">
                 <BarChartCard
@@ -574,7 +572,7 @@ export function Dashboard() {
                     value: s.delta,
                   }))}
                   layout="horizontal"
-                  height={170}
+                  height="100%"
                   valueLabel="pt change"
                 />
               </Card>
@@ -586,13 +584,17 @@ export function Dashboard() {
         {/* Company explorer + signals — Companies and Trends pages */}
         {(page === "companies" || page === "trends") && (
         <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "2.2fr 1fr", gap: 8 }}>
-          <Card title="Company explorer" subtitle={`${companies.length} companies · click a row for detail`} bodyStyle={{ display: "flex", minHeight: 0 }}>
+          <Card
+            title="Company explorer"
+            subtitle={`${companies.length} companies · click a row for detail`}
+            bodyStyle={{ display: "flex", flexDirection: "column", minHeight: 0 }}
+          >
             <CompanyTable companies={companies} selectedSlug={selectedSlug} onSelect={setSelectedSlug} />
           </Card>
           <Card
             title={selectedCompany ? selectedCompany.name : "Live signals"}
             subtitle={selectedCompany ? "Company detail" : "Recent news via Munshot news search"}
-            bodyStyle={{ display: "flex", minHeight: 0 }}
+            bodyStyle={{ display: "flex", flexDirection: "column", minHeight: 0 }}
           >
             {selectedCompany ? (
               <CompanyDetail
@@ -615,7 +617,7 @@ export function Dashboard() {
         )}
 
         {/* Footer / provenance */}
-        <div style={{ flexShrink: 0, fontSize: 10, color: tokens.textHint, display: "flex", justifyContent: "space-between" }}>
+        <div style={{ flexShrink: 0, fontSize: 12, color: tokens.textHint, display: "flex", justifyContent: "space-between" }}>
           <span>
             Source: {DATASET_SOURCE.label} · captured {DATASET_SOURCE.capturedAt}
           </span>

@@ -23,17 +23,17 @@ function MomentumBreakdown({ theme }: { theme: Theme }) {
   return (
     <div>
       <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 6 }}>
-        <span style={{ fontSize: 26, fontWeight: 800, color: tokens.primaryText, lineHeight: 1 }}>
+        <span style={{ fontSize: 32, fontWeight: 800, color: tokens.primaryText, lineHeight: 1 }}>
           {theme.momentum.score}
         </span>
-        <span style={{ fontSize: 10, color: tokens.textHint }}>
+        <span style={{ fontSize: 12, color: tokens.textHint }}>
           / 100 · {theme.momentum.evidenceBasis.formulaVersion}
         </span>
       </div>
 
       {available.map(([id, c], i) => (
         <div key={id} style={{ marginBottom: 5 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
             <span style={{ color: tokens.textSecondary }}>{c.label}</span>
             <span style={{ color: tokens.textMuted }}>
               {c.raw}/100 × {c.effectiveWeight} = <strong style={{ color: tokens.textPrimary }}>{c.contribution}</strong>
@@ -46,16 +46,16 @@ function MomentumBreakdown({ theme }: { theme: Theme }) {
       ))}
 
       <div style={{ marginTop: 8, paddingTop: 6, borderTop: `1px solid ${tokens.borderDefault}` }}>
-        <div style={{ fontSize: 9, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", marginBottom: 3 }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", marginBottom: 3 }}>
           Specified but unavailable
         </div>
         {missing.map(([id, c]) => (
-          <div key={id} style={{ fontSize: 9, color: tokens.textHint, marginBottom: 3, lineHeight: 1.4 }}>
+          <div key={id} style={{ fontSize: 11, color: tokens.textHint, marginBottom: 3, lineHeight: 1.4 }}>
             <strong style={{ color: tokens.textMuted }}>{c.label}</strong> ({Math.round(c.weight * 100)}% of the
             specified formula) — {c.reason}
           </div>
         ))}
-        <div style={{ fontSize: 9, color: categoryColors.crypto.text, marginTop: 4, lineHeight: 1.45 }}>
+        <div style={{ fontSize: 11, color: categoryColors.crypto.text, marginTop: 4, lineHeight: 1.45 }}>
           This score is computed from {theme.momentum.evidenceBasis.availableWeight}% of the specified
           formula; the missing {theme.momentum.evidenceBasis.redistributedWeight}% is redistributed
           across the components above rather than assumed.
@@ -91,7 +91,7 @@ export function ThemeExplorer({ selectedId, onSelect }: { selectedId: string | n
 
   if (!theme) return null;
 
-  const capabilities = Object.entries(theme.capabilityDemand).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const capabilities = Object.entries(theme.capabilityDemand).sort((a, b) => b[1] - a[1]).slice(0, 16);
 
   return (
     <div style={{ display: "grid", gridTemplateColumns: "0.85fr 1.3fr 1fr", gap: 8, height: "100%", minHeight: 0 }}>
@@ -101,7 +101,7 @@ export function ThemeExplorer({ selectedId, onSelect }: { selectedId: string | n
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Filter themes…"
           style={{
-            fontSize: 11,
+            fontSize: 13,
             padding: "5px 8px",
             borderRadius: 6,
             border: `1px solid ${tokens.borderDefault}`,
@@ -123,36 +123,36 @@ export function ThemeExplorer({ selectedId, onSelect }: { selectedId: string | n
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", gap: 6 }}>
-                <span style={{ fontSize: 10, color: tokens.textPrimary, fontWeight: t.id === theme.id ? 700 : 500 }}>
+                <span style={{ fontSize: 12, color: tokens.textPrimary, fontWeight: t.id === theme.id ? 700 : 500 }}>
                   {t.label}
                 </span>
-                <span style={{ fontSize: 10, fontWeight: 700, color: tokens.primaryText }}>{t.momentum.score}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: tokens.primaryText }}>{t.momentum.score}</span>
               </div>
-              <div style={{ fontSize: 9, color: tokens.textHint }}>{t.size} companies</div>
+              <div style={{ fontSize: 11, color: tokens.textHint }}>{t.size} companies</div>
             </div>
           ))}
         </div>
       </Card>
 
       <Card title={theme.label} subtitle={`${theme.size} companies · ${theme.sectors.length} sectors`} bodyStyle={{ overflowY: "auto" }}>
-        <div style={{ fontSize: 10, color: tokens.textHint, marginBottom: 6 }}>
+        <div style={{ fontSize: 12, color: tokens.textHint, marginBottom: 6 }}>
           Defined by the terms that distinguish it: {theme.terms.join(", ")}
         </div>
 
         <div style={{ marginBottom: 8 }}>
-          <TrendChart data={history} series={[{ key: "Share of cohort", label: "Share of cohort" }]} height={130} />
+          <TrendChart data={history} series={[{ key: "Share of cohort", label: "Share of cohort" }]} height={200} />
         </div>
 
-        <div style={{ fontSize: 10, fontWeight: 700, color: tokens.textPrimary, marginBottom: 3 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: tokens.textPrimary, marginBottom: 3 }}>
           Companies in this theme
         </div>
         {theme.examples.map((e) => (
-          <div key={e.name} style={{ fontSize: 10, color: tokens.textSecondary, padding: "3px 0", borderBottom: `1px solid ${tokens.borderDefault}` }}>
+          <div key={e.name} style={{ fontSize: 12, color: tokens.textSecondary, padding: "3px 0", borderBottom: `1px solid ${tokens.borderDefault}` }}>
             <strong style={{ color: tokens.textPrimary }}>{e.name}</strong> — {e.one_liner ?? "—"}
           </div>
         ))}
 
-        <div style={{ fontSize: 9, color: tokens.textHint, marginTop: 6, lineHeight: 1.45 }}>
+        <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 6, lineHeight: 1.45, flexShrink: 0 }}>
           Themes are discovered by clustering company descriptions, not defined in advance — a
           category nobody has named yet appears here on its own once enough companies describe it.
         </div>
@@ -163,11 +163,11 @@ export function ThemeExplorer({ selectedId, onSelect }: { selectedId: string | n
 
         {capabilities.length > 0 && (
           <div style={{ marginTop: 10, paddingTop: 7, borderTop: `1px solid ${tokens.borderDefault}` }}>
-            <div style={{ fontSize: 9, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", marginBottom: 4 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", marginBottom: 4 }}>
               What this theme depends on
             </div>
             {capabilities.map(([label, count]) => (
-              <div key={label} style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: tokens.textSecondary, padding: "1px 0" }}>
+              <div key={label} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: tokens.textSecondary, padding: "1px 0" }}>
                 <span>{label}</span>
                 <span style={{ color: tokens.textHint }}>{count}</span>
               </div>

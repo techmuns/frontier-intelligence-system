@@ -178,7 +178,7 @@ function buildTheme(memberIndexes, companies, vectors) {
     size: members.length,
     companySlugs: members.map((c) => c.slug),
     // Kept so a theme can be shown with real evidence rather than asserted.
-    examples: members.slice(0, 4).map((c) => ({ name: c.name, one_liner: c.one_liner })),
+    examples: members.slice(0, 18).map((c) => ({ name: c.name, one_liner: c.one_liner })),
     batches: countBy(members, (c) => c.batch),
   };
 }

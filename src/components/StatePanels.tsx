@@ -25,7 +25,7 @@ export function LoadingState({ label = "Loading…" }: { label?: string }) {
           animation: "frontier-spin 0.7s linear infinite",
         }}
       />
-      <div style={{ fontSize: 12, color: tokens.textHint }}>{label}</div>
+      <div style={{ fontSize: 14, color: tokens.textHint }}>{label}</div>
     </div>
   );
 }
@@ -33,8 +33,8 @@ export function LoadingState({ label = "Loading…" }: { label?: string }) {
 export function EmptyState({ message, hint }: { message: string; hint?: string }) {
   return (
     <div style={base}>
-      <div style={{ fontSize: 12, fontWeight: 600, color: tokens.textMuted }}>{message}</div>
-      {hint && <div style={{ fontSize: 11, color: tokens.textHint }}>{hint}</div>}
+      <div style={{ fontSize: 14, fontWeight: 600, color: tokens.textMuted }}>{message}</div>
+      {hint && <div style={{ fontSize: 13, color: tokens.textHint }}>{hint}</div>}
     </div>
   );
 }
@@ -52,18 +52,18 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 14,
+          fontSize: 17,
           fontWeight: 700,
         }}
       >
         !
       </div>
-      <div style={{ fontSize: 12, fontWeight: 600, color: tokens.textSecondary }}>{message}</div>
+      <div style={{ fontSize: 14, fontWeight: 600, color: tokens.textSecondary }}>{message}</div>
       {onRetry && (
         <button
           onClick={onRetry}
           style={{
-            fontSize: 11,
+            fontSize: 13,
             fontWeight: 600,
             color: tokens.primaryText,
             background: tokens.primaryLight,
@@ -82,7 +82,7 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
 
 export function WaitingForSession() {
   return (
-    <div style={{ padding: 16, textAlign: "center", color: tokens.textHint, fontSize: 12 }}>
+    <div style={{ padding: 16, textAlign: "center", color: tokens.textHint, fontSize: 14 }}>
       Waiting for session…
     </div>
   );

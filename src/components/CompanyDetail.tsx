@@ -18,7 +18,7 @@ function Badge({ text, category }: { text: string; category: keyof typeof catego
   return (
     <span
       style={{
-        fontSize: 10,
+        fontSize: 12,
         fontWeight: 600,
         color: c.text,
         background: c.bg,
@@ -54,7 +54,7 @@ export function CompanyDetail({ company, token, onClose, useProxy = false }: Com
         setStatus("empty");
         return;
       }
-      setResults(res.results.slice(0, 4));
+      setResults(res.results.slice(0, 8));
       setStatus("ready");
     });
     return () => ctrl.abort();
@@ -68,7 +68,7 @@ export function CompanyDetail({ company, token, onClose, useProxy = false }: Com
             href={company.url}
             target="_blank"
             rel="noreferrer"
-            style={{ fontSize: 14, fontWeight: 700, color: tokens.textPrimary, textDecoration: "none" }}
+            style={{ fontSize: 17, fontWeight: 700, color: tokens.textPrimary, textDecoration: "none" }}
           >
             {company.name}
           </a>
@@ -77,7 +77,7 @@ export function CompanyDetail({ company, token, onClose, useProxy = false }: Com
               href={company.website}
               target="_blank"
               rel="noreferrer"
-              style={{ display: "block", fontSize: 11, color: tokens.primaryText, textDecoration: "none", marginTop: 2 }}
+              style={{ display: "block", fontSize: 13, color: tokens.primaryText, textDecoration: "none", marginTop: 2 }}
             >
               {company.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
             </a>
@@ -86,7 +86,7 @@ export function CompanyDetail({ company, token, onClose, useProxy = false }: Com
         <button
           onClick={onClose}
           style={{
-            fontSize: 11,
+            fontSize: 13,
             fontWeight: 600,
             color: tokens.textMuted,
             background: "#ffffff",
@@ -109,17 +109,17 @@ export function CompanyDetail({ company, token, onClose, useProxy = false }: Com
         {company.nonprofit && <Badge text="Nonprofit" category="heatmaps" />}
       </div>
 
-      <div style={{ flexShrink: 0, fontSize: 12, color: tokens.textSecondary, lineHeight: 1.4 }}>
+      <div style={{ flexShrink: 0, fontSize: 14, color: tokens.textSecondary, lineHeight: 1.4 }}>
         {company.long_description || company.one_liner || "No description available."}
       </div>
 
-      <div style={{ flexShrink: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, fontSize: 11 }}>
+      <div style={{ flexShrink: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, fontSize: 13 }}>
         <div>
-          <div style={{ color: tokens.textHint, fontSize: 9, textTransform: "uppercase", fontWeight: 700 }}>Team size</div>
+          <div style={{ color: tokens.textHint, fontSize: 11, textTransform: "uppercase", fontWeight: 700 }}>Team size</div>
           <div style={{ color: tokens.textPrimary, fontWeight: 600 }}>{company.team_size ?? "Unknown"}</div>
         </div>
         <div>
-          <div style={{ color: tokens.textHint, fontSize: 9, textTransform: "uppercase", fontWeight: 700 }}>Location</div>
+          <div style={{ color: tokens.textHint, fontSize: 11, textTransform: "uppercase", fontWeight: 700 }}>Location</div>
           <div style={{ color: tokens.textPrimary, fontWeight: 600 }}>{company.all_locations ?? "Unknown"}</div>
         </div>
       </div>
@@ -130,7 +130,7 @@ export function CompanyDetail({ company, token, onClose, useProxy = false }: Com
             <span
               key={t}
               style={{
-                fontSize: 10,
+                fontSize: 12,
                 color: tokens.textMuted,
                 background: tokens.cardBodyBg,
                 border: `1px solid ${tokens.borderDefault}`,
@@ -144,7 +144,7 @@ export function CompanyDetail({ company, token, onClose, useProxy = false }: Com
         </div>
       )}
 
-      <div style={{ flexShrink: 0, fontSize: 11, fontWeight: 700, color: tokens.textPrimary, borderTop: `1px solid ${tokens.borderDefault}`, paddingTop: 8 }}>
+      <div style={{ flexShrink: 0, fontSize: 13, fontWeight: 700, color: tokens.textPrimary, borderTop: `1px solid ${tokens.borderDefault}`, paddingTop: 8 }}>
         Live signals for {company.name}
       </div>
 
@@ -174,11 +174,11 @@ export function CompanyDetail({ company, token, onClose, useProxy = false }: Com
                   background: "#ffffff",
                 }}
               >
-                <div style={{ fontSize: 11, fontWeight: 600, color: tokens.textPrimary, lineHeight: 1.3 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: tokens.textPrimary, lineHeight: 1.3 }}>
                   {r.title ?? "Untitled"}
                 </div>
                 {r.source && (
-                  <div style={{ fontSize: 10, color: tokens.textHint, marginTop: 2 }}>{r.source}</div>
+                  <div style={{ fontSize: 12, color: tokens.textHint, marginTop: 2 }}>{r.source}</div>
                 )}
               </a>
             ))}

@@ -26,7 +26,7 @@ export function VelocityView() {
   );
 
   const rows = useMemo(
-    () => (archetype === "all" ? velocity : velocity.filter((v) => v.archetypeLabel === archetype)).slice(0, 40),
+    () => (archetype === "all" ? velocity : velocity.filter((v) => v.archetypeLabel === archetype)).slice(0, 120),
     [velocity, archetype],
   );
 
@@ -50,7 +50,7 @@ export function VelocityView() {
               key={a}
               onClick={() => setArchetype(a)}
               style={{
-                fontSize: 10,
+                fontSize: 12,
                 fontWeight: 600,
                 padding: "3px 9px",
                 borderRadius: 999,
@@ -66,7 +66,7 @@ export function VelocityView() {
         </div>
 
         <div style={{ flex: 1, minHeight: 0, overflowY: "auto", border: `1px solid ${tokens.borderDefault}`, borderRadius: 8 }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11 }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead style={{ position: "sticky", top: 0, background: tokens.cardHeader, zIndex: 1 }}>
               <tr style={{ borderBottom: `1px solid ${tokens.borderDefault}` }}>
                 {["Company", "Archetype", "Score", "HN pts", "Web rank"].map((h, i) => (
@@ -74,8 +74,8 @@ export function VelocityView() {
                     key={h}
                     style={{
                       textAlign: i > 1 ? "right" : "left",
-                      padding: "6px 8px",
-                      fontSize: 9,
+                      padding: "9px 10px",
+                      fontSize: 11,
                       fontWeight: 700,
                       color: tokens.textMuted,
                       textTransform: "uppercase",
@@ -93,11 +93,11 @@ export function VelocityView() {
                 const web = v.components?.web_rank;
                 return (
                   <tr key={v.slug} style={{ borderBottom: `1px solid ${tokens.borderDefault}` }}>
-                    <td style={{ padding: "6px 8px", fontWeight: 600, color: tokens.textPrimary }}>{v.name}</td>
-                    <td style={{ padding: "6px 8px", color: tokens.textHint, fontSize: 10 }}>{v.archetypeLabel}</td>
+                    <td style={{ padding: "9px 10px", fontWeight: 600, color: tokens.textPrimary }}>{v.name}</td>
+                    <td style={{ padding: "9px 10px", color: tokens.textHint, fontSize: 12 }}>{v.archetypeLabel}</td>
                     <td
                       style={{
-                        padding: "6px 8px",
+                        padding: "9px 10px",
                         textAlign: "right",
                         fontWeight: 700,
                         color: v.noEvidence ? tokens.textHint : tokens.primaryText,
@@ -109,10 +109,10 @@ export function VelocityView() {
                     >
                       {v.noEvidence ? "—" : v.standingScore}
                     </td>
-                    <td style={{ padding: "6px 8px", textAlign: "right", color: tokens.textSecondary }}>
+                    <td style={{ padding: "9px 10px", textAlign: "right", color: tokens.textSecondary }}>
                       {hn?.available ? hn.latest : "—"}
                     </td>
-                    <td style={{ padding: "6px 8px", textAlign: "right", color: tokens.textSecondary }}>
+                    <td style={{ padding: "9px 10px", textAlign: "right", color: tokens.textSecondary }}>
                       {web?.available ? web.latest?.toLocaleString() : "—"}
                     </td>
                   </tr>
@@ -134,10 +134,10 @@ export function VelocityView() {
               marginBottom: 9,
             }}
           >
-            <div style={{ fontSize: 11, fontWeight: 700, color: categoryColors.crypto.text, marginBottom: 3 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: categoryColors.crypto.text, marginBottom: 3 }}>
               This is standing, not yet velocity
             </div>
-            <div style={{ fontSize: 10, color: tokens.textSecondary, lineHeight: 1.5 }}>
+            <div style={{ fontSize: 12, color: tokens.textSecondary, lineHeight: 1.5 }}>
               The observation store holds {observationMeta?.dates?.length ?? 0} date
               {(observationMeta?.dates?.length ?? 0) === 1 ? "" : "s"}. Growth and acceleration (§21)
               need at least two, so they are reported as unavailable rather than as zero — a company
@@ -147,7 +147,7 @@ export function VelocityView() {
           </div>
         )}
 
-        <div style={{ fontSize: 10, color: tokens.textSecondary, lineHeight: 1.55 }}>
+        <div style={{ fontSize: 12, color: tokens.textSecondary, lineHeight: 1.55 }}>
           <p style={{ margin: "0 0 7px" }}>
             <strong>Archetype first.</strong> §20 forbids comparing unlike businesses on the same
             metrics, so each company is scored only against others of its kind — a developer-tools
@@ -180,10 +180,10 @@ export function VelocityView() {
         </div>
 
         <div style={{ marginTop: 9, paddingTop: 7, borderTop: `1px solid ${tokens.borderDefault}` }}>
-          <div style={{ fontSize: 9, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", marginBottom: 4 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", marginBottom: 4 }}>
             Still missing
           </div>
-          <div style={{ fontSize: 10, color: tokens.textHint, lineHeight: 1.5 }}>
+          <div style={{ fontSize: 12, color: tokens.textHint, lineHeight: 1.5 }}>
             ARR, headcount, funding rounds and customer counts have no free public source. Those
             parts of §20–§22 stay unavailable rather than being estimated.
             {" "}GitHub stars are collected only when a working token is present: an invalid one

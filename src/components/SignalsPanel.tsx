@@ -38,7 +38,7 @@ export function SignalsPanel({ token, ticker, tickerCompany, topTheme, useProxy 
         setStatus("empty");
         return;
       }
-      setResults(res.results.slice(0, 6));
+      setResults(res.results.slice(0, 10));
       setStatus("ready");
     });
     return () => ctrl.abort();
@@ -53,7 +53,7 @@ export function SignalsPanel({ token, ticker, tickerCompany, topTheme, useProxy 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8, height: "100%", overflowY: "auto" }}>
       {!ticker && (
-        <div style={{ fontSize: 11, color: tokens.textHint, marginBottom: 2 }}>
+        <div style={{ fontSize: 13, color: tokens.textHint, marginBottom: 2 }}>
           No ticker selected — showing signals for the top theme ({topTheme}).
         </div>
       )}
@@ -72,13 +72,13 @@ export function SignalsPanel({ token, ticker, tickerCompany, topTheme, useProxy 
             background: "#ffffff",
           }}
         >
-          <div style={{ fontSize: 12, fontWeight: 600, color: tokens.textPrimary, lineHeight: 1.3 }}>
+          <div style={{ fontSize: 14, fontWeight: 600, color: tokens.textPrimary, lineHeight: 1.3 }}>
             {r.title ?? "Untitled"}
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
             <span
               style={{
-                fontSize: 10,
+                fontSize: 12,
                 fontWeight: 600,
                 color: categoryColors.markets.text,
                 background: categoryColors.markets.bg,
@@ -88,7 +88,7 @@ export function SignalsPanel({ token, ticker, tickerCompany, topTheme, useProxy 
             >
               {r.source ?? "web"}
             </span>
-            {r.age && <span style={{ fontSize: 10, color: tokens.textHint }}>{r.age}</span>}
+            {r.age && <span style={{ fontSize: 12, color: tokens.textHint }}>{r.age}</span>}
           </div>
         </a>
       ))}

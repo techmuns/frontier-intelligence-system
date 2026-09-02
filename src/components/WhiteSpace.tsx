@@ -27,22 +27,22 @@ const QUADRANT_COLORS: Record<Quadrant, string> = {
 };
 
 function Heatmap({ matrix, title }: { matrix: typeof intelligence.matrices.sectorAutonomy; title: string }) {
-  const rows = matrix.rows.slice(0, 10);
-  const cols = matrix.cols.slice(0, 8);
+  const rows = matrix.rows.slice(0, 14);
+  const cols = matrix.cols.slice(0, 10);
   const max = Math.max(...Object.values(matrix.cells), 1);
 
   return (
-    <div style={{ overflowX: "auto" }}>
-      <table style={{ borderCollapse: "collapse", fontSize: 10 }}>
+    <div style={{ overflowX: "auto", flex: 1, minHeight: 0, display: "flex" }}>
+      <table style={{ borderCollapse: "collapse", fontSize: 13, width: "100%", height: "100%" }}>
         <thead>
           <tr>
-            <th style={{ textAlign: "left", padding: "3px 6px", color: tokens.textMuted, fontWeight: 700, fontSize: 9 }}>
+            <th style={{ textAlign: "left", padding: "3px 6px", color: tokens.textMuted, fontWeight: 700, fontSize: 11 }}>
               {title}
             </th>
             {cols.map((c) => (
               <th
                 key={c}
-                style={{ padding: "3px 4px", color: tokens.textMuted, fontWeight: 600, fontSize: 9, whiteSpace: "nowrap", maxWidth: 62, overflow: "hidden", textOverflow: "ellipsis" }}
+                style={{ padding: "3px 4px", color: tokens.textMuted, fontWeight: 600, fontSize: 11, whiteSpace: "nowrap", maxWidth: 62, overflow: "hidden", textOverflow: "ellipsis" }}
                 title={c}
               >
                 {c.length > 12 ? `${c.slice(0, 11)}…` : c}
@@ -106,33 +106,33 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
       <Card
         title="Themes by momentum and competition"
         subtitle="§37 · quadrants are prompts to investigate, not verdicts"
-        bodyStyle={{ overflowY: "auto" }}
+        bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column" }}
       >
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridAutoRows: "1fr", gap: 6, flex: 1, minHeight: 0 }}>
           {(["attack", "crowded", "early", "low"] as Quadrant[]).map((q) => (
-            <div key={q} style={{ border: `1px solid ${tokens.borderDefault}`, borderRadius: 8, padding: 7, background: "#ffffff" }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: QUADRANT_COLORS[q], marginBottom: 1 }}>
+            <div key={q} style={{ border: `1px solid ${tokens.borderDefault}`, borderRadius: 8, padding: 9, background: "#ffffff", overflowY: "auto", minHeight: 0 }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: QUADRANT_COLORS[q], marginBottom: 1 }}>
                 {QUADRANT_LABELS[q].label}
                 <span style={{ color: tokens.textHint, fontWeight: 600 }}> · {grouped[q].length}</span>
               </div>
-              <div style={{ fontSize: 9, color: tokens.textHint, marginBottom: 5 }}>{QUADRANT_LABELS[q].hint}</div>
-              {grouped[q].slice(0, 5).map((t) => (
+              <div style={{ fontSize: 11, color: tokens.textHint, marginBottom: 5 }}>{QUADRANT_LABELS[q].hint}</div>
+              {grouped[q].slice(0, 12).map((t) => (
                 <div
                   key={t.id}
                   onClick={() => onSelectTheme(t.id)}
-                  style={{ fontSize: 10, color: tokens.textSecondary, cursor: "pointer", padding: "2px 0", borderTop: `1px solid ${tokens.borderDefault}` }}
+                  style={{ fontSize: 12, color: tokens.textSecondary, cursor: "pointer", padding: "2px 0", borderTop: `1px solid ${tokens.borderDefault}` }}
                 >
                   <span style={{ fontWeight: 700, color: tokens.primaryText }}>{t.momentum.score}</span>{" "}
                   {t.label} <span style={{ color: tokens.textHint }}>({t.competition})</span>
                 </div>
               ))}
               {grouped[q].length === 0 && (
-                <div style={{ fontSize: 9, color: tokens.textHint }}>None</div>
+                <div style={{ fontSize: 11, color: tokens.textHint }}>None</div>
               )}
             </div>
           ))}
         </div>
-        <div style={{ fontSize: 9, color: tokens.textHint, marginTop: 7, lineHeight: 1.5 }}>
+        <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 7, lineHeight: 1.5 }}>
           Competition is the count of companies already in the theme; the split is the median across
           all {intelligence.themes.length} themes ({median}). There is no funding or traction data
           here, so "economic prize" from §37 is deliberately absent rather than estimated.
@@ -153,7 +153,7 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
               key={key}
               onClick={() => setMatrixKey(key)}
               style={{
-                fontSize: 10,
+                fontSize: 12,
                 fontWeight: 600,
                 padding: "3px 9px",
                 borderRadius: 999,
@@ -170,12 +170,12 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
 
         <Heatmap matrix={matrix} title={matrixKey === "sectorAutonomy" ? "Sector \\ Autonomy" : "Sector \\ Stack"} />
 
-        <div>
-          <div style={{ fontSize: 10, fontWeight: 700, color: tokens.textPrimary, marginBottom: 3 }}>
+        <div style={{ flexShrink: 0 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: tokens.textPrimary, marginBottom: 3 }}>
             Emptier than expected
           </div>
-          {matrix.empty.slice(0, 6).map((e) => (
-            <div key={`${e.row}||${e.col}`} style={{ fontSize: 10, color: tokens.textSecondary, padding: "2px 0" }}>
+          {matrix.empty.slice(0, 16).map((e) => (
+            <div key={`${e.row}||${e.col}`} style={{ fontSize: 12, color: tokens.textSecondary, padding: "2px 0" }}>
               <span style={{ color: categoryColors.heatmaps.text, fontWeight: 700 }}>{e.observed}</span>
               <span style={{ color: tokens.textHint }}> vs {e.expected} expected · </span>
               {e.row} × {e.col}
@@ -183,7 +183,7 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
           ))}
         </div>
 
-        <div style={{ fontSize: 9, color: tokens.textHint, lineHeight: 1.5, borderTop: `1px solid ${tokens.borderDefault}`, paddingTop: 6 }}>
+        <div style={{ fontSize: 11, color: tokens.textHint, lineHeight: 1.5, borderTop: `1px solid ${tokens.borderDefault}`, paddingTop: 6, flexShrink: 0 }}>
           An empty cell is a <strong>question, not an opportunity</strong> (§24). It may be overlooked —
           or technically impossible, illegal, served by an incumbent, or simply have no buyer. This
           system has no evidence to tell those apart, so it does not try.

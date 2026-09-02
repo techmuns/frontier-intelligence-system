@@ -10,8 +10,8 @@ type SortDir = "asc" | "desc";
 const PAGE_SIZE = 14;
 
 const selectStyle: React.CSSProperties = {
-  fontSize: 12,
-  padding: "6px 8px",
+  fontSize: 14,
+  padding: "9px 10px",
   borderRadius: 6,
   border: `1px solid ${tokens.borderDefault}`,
   background: "#ffffff",
@@ -83,7 +83,7 @@ export function CompanyTable({ companies, selectedSlug, onSelect }: CompanyTable
         style={{
           textAlign: "left",
           padding: "8px 10px",
-          fontSize: 11,
+          fontSize: 13,
           fontWeight: 700,
           color: active ? tokens.primaryText : tokens.textMuted,
           textTransform: "uppercase",
@@ -147,17 +147,17 @@ export function CompanyTable({ companies, selectedSlug, onSelect }: CompanyTable
         <EmptyState message="No companies match these filters" hint="Try clearing the search or filters." />
       ) : (
         <div style={{ flex: 1, minHeight: 0, overflowY: "auto", border: `1px solid ${tokens.borderDefault}`, borderRadius: 8 }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
             <thead style={{ position: "sticky", top: 0, background: tokens.cardHeader, zIndex: 1 }}>
               <tr style={{ borderBottom: `1px solid ${tokens.borderDefault}` }}>
                 {headerCell("Company", "name", "22%")}
-                <th style={{ textAlign: "left", padding: "8px 10px", fontSize: 11, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase" }}>
+                <th style={{ textAlign: "left", padding: "8px 10px", fontSize: 13, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase" }}>
                   Description
                 </th>
                 {headerCell("Batch", "batch", "13%")}
                 {headerCell("Industry", "industry", "16%")}
                 {headerCell("Team", "team_size", "7%")}
-                <th style={{ textAlign: "left", padding: "8px 10px", fontSize: 11, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", width: "8%" }}>
+                <th style={{ textAlign: "left", padding: "8px 10px", fontSize: 13, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", width: "8%" }}>
                   Hiring
                 </th>
               </tr>
@@ -191,7 +191,7 @@ export function CompanyTable({ companies, selectedSlug, onSelect }: CompanyTable
                     {c.industry && (
                       <span
                         style={{
-                          fontSize: 11,
+                          fontSize: 13,
                           fontWeight: 600,
                           color: categoryColors.analytics.text,
                           background: categoryColors.analytics.bg,
@@ -207,9 +207,9 @@ export function CompanyTable({ companies, selectedSlug, onSelect }: CompanyTable
                   <td style={{ padding: "8px 10px", color: tokens.textSecondary }}>{c.team_size ?? "—"}</td>
                   <td style={{ padding: "8px 10px" }}>
                     {c.isHiring ? (
-                      <span style={{ color: categoryColors.tools.text, fontWeight: 700, fontSize: 11 }}>Yes</span>
+                      <span style={{ color: categoryColors.tools.text, fontWeight: 700, fontSize: 13 }}>Yes</span>
                     ) : (
-                      <span style={{ color: tokens.textHint, fontSize: 11 }}>—</span>
+                      <span style={{ color: tokens.textHint, fontSize: 13 }}>—</span>
                     )}
                   </td>
                 </tr>
@@ -225,7 +225,7 @@ export function CompanyTable({ companies, selectedSlug, onSelect }: CompanyTable
           alignItems: "center",
           justifyContent: "space-between",
           marginTop: 8,
-          fontSize: 11,
+          fontSize: 13,
           color: tokens.textHint,
           flexShrink: 0,
         }}
@@ -256,7 +256,7 @@ export function CompanyTable({ companies, selectedSlug, onSelect }: CompanyTable
 
 function pagerButtonStyle(disabled: boolean): React.CSSProperties {
   return {
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: 600,
     padding: "4px 10px",
     borderRadius: 6,

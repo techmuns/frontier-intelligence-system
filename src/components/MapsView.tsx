@@ -19,8 +19,8 @@ type Measure = "count" | "autonomy";
 function LaborMap() {
   const [measure, setMeasure] = useState<Measure>("count");
   const map = intelligence.laborMap;
-  const roles = map.roles.slice(0, 12);
-  const industries = map.industries.slice(0, 9);
+  const roles = map.roles.slice(0, 20);
+  const industries = map.industries.slice(0, 12);
 
   const maxCount = Math.max(...Object.values(map.cells).map((c) => c.count), 1);
 
@@ -39,7 +39,7 @@ function LaborMap() {
             key={key}
             onClick={() => setMeasure(key)}
             style={{
-              fontSize: 10,
+              fontSize: 12,
               fontWeight: 600,
               padding: "3px 9px",
               borderRadius: 999,
@@ -54,15 +54,15 @@ function LaborMap() {
         ))}
       </div>
 
-      <table style={{ borderCollapse: "collapse", fontSize: 10 }}>
+      <table style={{ borderCollapse: "collapse", fontSize: 13, width: "100%" }}>
         <thead>
           <tr>
-            <th style={{ textAlign: "left", padding: "3px 6px", fontSize: 9, color: tokens.textMuted }}>Role \ Industry</th>
+            <th style={{ textAlign: "left", padding: "3px 6px", fontSize: 11, color: tokens.textMuted }}>Role \ Industry</th>
             {industries.map((ind) => (
               <th
                 key={ind}
                 title={ind}
-                style={{ padding: "3px 3px", fontSize: 9, color: tokens.textMuted, fontWeight: 600, maxWidth: 58, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                style={{ padding: "3px 3px", fontSize: 11, color: tokens.textMuted, fontWeight: 600, maxWidth: 58, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
               >
                 {ind.length > 10 ? `${ind.slice(0, 9)}…` : ind}
               </th>
@@ -111,7 +111,7 @@ function LaborMap() {
         </tbody>
       </table>
 
-      <div style={{ fontSize: 9, color: tokens.textHint, lineHeight: 1.45 }}>
+      <div style={{ fontSize: 11, color: tokens.textHint, lineHeight: 1.45 }}>
         Roles are inferred from what each company says it does, so a company automating no
         identifiable role is absent rather than assigned one. Autonomy is the mean ladder position
         (0 information → 6 AI-native company); "—" means no company in that cell stated enough to place it.
@@ -125,20 +125,20 @@ function InfrastructureMap() {
 
   return (
     <Card title="Infrastructure" subtitle="§34 · capabilities, not one AI-infra bucket" bodyStyle={{ overflowY: "auto" }}>
-      {caps.slice(0, 14).map((c, i) => (
+      {caps.slice(0, 24).map((c, i) => (
         <div key={c.id} style={{ marginBottom: 7, paddingBottom: 6, borderBottom: `1px solid ${tokens.borderDefault}` }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: tokens.textPrimary }}>{c.label}</span>
-            <span style={{ fontSize: 10, color: chartColorRotation[i % chartColorRotation.length], fontWeight: 700 }}>
+            <span style={{ fontSize: 13, fontWeight: 700, color: tokens.textPrimary }}>{c.label}</span>
+            <span style={{ fontSize: 12, color: chartColorRotation[i % chartColorRotation.length], fontWeight: 700 }}>
               {c.supplyCount} suppliers
             </span>
           </div>
           {c.dependentThemes.length > 0 ? (
-            <div style={{ fontSize: 9, color: tokens.textHint, lineHeight: 1.4 }}>
+            <div style={{ fontSize: 11, color: tokens.textHint, lineHeight: 1.4 }}>
               Depended on by: {c.dependentThemes.map((t) => `${t.label} (${t.dependents})`).join(" · ")}
             </div>
           ) : (
-            <div style={{ fontSize: 9, color: tokens.textHint }}>No theme shows concentrated demand for this yet.</div>
+            <div style={{ fontSize: 11, color: tokens.textHint }}>No theme shows concentrated demand for this yet.</div>
           )}
         </div>
       ))}
@@ -155,8 +155,8 @@ function PhysicalMap() {
       {chain.map((stage, i) => (
         <div key={stage.id} style={{ marginBottom: 7 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-            <span style={{ fontSize: 11, fontWeight: 600, color: tokens.textPrimary }}>{stage.label}</span>
-            <span style={{ fontSize: 10, color: tokens.textMuted }}>{stage.count}</span>
+            <span style={{ fontSize: 13, fontWeight: 600, color: tokens.textPrimary }}>{stage.label}</span>
+            <span style={{ fontSize: 12, color: tokens.textMuted }}>{stage.count}</span>
           </div>
           <div style={{ height: 12, background: tokens.cardBodyBg, borderRadius: 3, border: `1px solid ${tokens.borderDefault}`, overflow: "hidden" }}>
             <div
@@ -169,7 +169,7 @@ function PhysicalMap() {
             />
           </div>
           {Object.keys(stage.industries).length > 0 && (
-            <div style={{ fontSize: 9, color: tokens.textHint, marginTop: 1 }}>
+            <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 1 }}>
               {Object.entries(stage.industries)
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 4)
@@ -179,7 +179,7 @@ function PhysicalMap() {
           )}
         </div>
       ))}
-      <div style={{ fontSize: 9, color: tokens.textHint, marginTop: 4, lineHeight: 1.45 }}>
+      <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 4, lineHeight: 1.45 }}>
         A company appears at every stage it describes, not just one — a robotics company that also
         builds its own simulation is counted in both, because that is what owning more of the chain
         looks like.

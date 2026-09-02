@@ -14,7 +14,7 @@ function ShiftBar({ shift }: { shift: (typeof intelligence.dimensionShift)[numbe
   const delta = shift.deltaPct;
   if (delta === null || shift.to.bShare === null || shift.from.bShare === null) {
     return (
-      <div style={{ fontSize: 11, color: tokens.textHint }}>
+      <div style={{ fontSize: 13, color: tokens.textHint }}>
         {shift.label} — not enough classified companies to compare
       </div>
     );
@@ -26,17 +26,17 @@ function ShiftBar({ shift }: { shift: (typeof intelligence.dimensionShift)[numbe
   const accent = moving ? categoryColors.heatmaps.text : categoryColors.markets.text;
 
   return (
-    <div style={{ marginBottom: 9 }}>
+    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minHeight: 54 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 3 }}>
-        <span style={{ fontSize: 11, color: tokens.textSecondary, fontWeight: 600 }}>{shift.label}</span>
-        <span style={{ fontSize: 11, fontWeight: 700, color: accent }}>
+        <span style={{ fontSize: 13, color: tokens.textSecondary, fontWeight: 600 }}>{shift.label}</span>
+        <span style={{ fontSize: 13, fontWeight: 700, color: accent }}>
           {moving ? "+" : ""}
           {delta}pt → {shift.poles[1]}
         </span>
       </div>
       {/* Track shows where the mix sits now; the marker shows where it started,
           so the size of the move is visible rather than asserted. */}
-      <div style={{ position: "relative", height: 7, background: tokens.cardBodyBg, borderRadius: 999, border: `1px solid ${tokens.borderDefault}` }}>
+      <div style={{ position: "relative", height: 14, background: tokens.cardBodyBg, borderRadius: 999, border: `1px solid ${tokens.borderDefault}` }}>
         <div style={{ position: "absolute", inset: 0, width: `${Math.min(100, toPct)}%`, background: accent, borderRadius: 999, opacity: 0.85 }} />
         <div
           title={`${shift.from.batch}: ${(shift.from.bShare * 100).toFixed(0)}%`}
@@ -45,13 +45,13 @@ function ShiftBar({ shift }: { shift: (typeof intelligence.dimensionShift)[numbe
             left: `${Math.min(100, shift.from.bShare * 100)}%`,
             top: -2,
             width: 2,
-            height: 11,
+            height: 18,
             background: tokens.textPrimary,
             opacity: 0.55,
           }}
         />
       </div>
-      <div style={{ fontSize: 9, color: tokens.textHint, marginTop: 2 }}>
+      <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 2 }}>
         {shift.poles[0]} ← → {shift.poles[1]} · {(shift.from.bShare * 100).toFixed(0)}% → {toPct.toFixed(0)}%
       </div>
     </div>
@@ -59,26 +59,30 @@ function ShiftBar({ shift }: { shift: (typeof intelligence.dimensionShift)[numbe
 }
 
 export function FrontierRadar({ onSelectTheme }: { onSelectTheme: (id: string) => void }) {
-  const themes = topThemes(8);
-  const gaps = intelligence.dependencyGaps.slice(0, 6);
+  const themes = topThemes(22);
+  const gaps = intelligence.dependencyGaps.slice(0, 16);
   const shifts = intelligence.dimensionShift;
   const firstBatch = shifts[0]?.from.batch;
   const lastBatch = shifts[0]?.to.batch;
 
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1.05fr 1.35fr 1fr", gap: 8, height: "100%", minHeight: 0 }}>
-      <Card title="Where the world is moving" subtitle={firstBatch ? `${firstBatch} → ${lastBatch}` : undefined} bodyStyle={{ overflowY: "auto" }}>
+      <Card
+        title="Where the world is moving"
+        subtitle={firstBatch ? `${firstBatch} → ${lastBatch}` : undefined}
+        bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column" }}
+      >
         {shifts.map((s) => (
           <ShiftBar key={s.id} shift={s} />
         ))}
-        <div style={{ fontSize: 9, color: tokens.textHint, marginTop: 4, lineHeight: 1.45 }}>
+        <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 8, lineHeight: 1.45, flexShrink: 0 }}>
           Share of companies classified on each axis. Companies the classifier could not place on an
           axis are excluded rather than assigned a side.
         </div>
       </Card>
 
       <Card title="Top emerging themes" subtitle="Discovered, not predefined · ranked by momentum" bodyStyle={{ overflowY: "auto", padding: 0 }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11 }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
           <thead style={{ position: "sticky", top: 0, background: tokens.cardHeader, zIndex: 1 }}>
             <tr style={{ borderBottom: `1px solid ${tokens.borderDefault}` }}>
               {["Theme", "Mom.", "Δ²S", "Cos", "Sectors"].map((h, i) => (
@@ -86,8 +90,8 @@ export function FrontierRadar({ onSelectTheme }: { onSelectTheme: (id: string) =
                   key={h}
                   style={{
                     textAlign: i === 0 ? "left" : "right",
-                    padding: "6px 8px",
-                    fontSize: 9,
+                    padding: "9px 10px",
+                    fontSize: 11,
                     fontWeight: 700,
                     color: tokens.textMuted,
                     textTransform: "uppercase",
@@ -108,25 +112,25 @@ export function FrontierRadar({ onSelectTheme }: { onSelectTheme: (id: string) =
                   onClick={() => onSelectTheme(t.id)}
                   style={{ borderBottom: `1px solid ${tokens.borderDefault}`, cursor: "pointer" }}
                 >
-                  <td style={{ padding: "6px 8px", color: tokens.textPrimary, fontWeight: 600 }}>
+                  <td style={{ padding: "9px 10px", color: tokens.textPrimary, fontWeight: 600 }}>
                     <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: 999, background: chartColorRotation[i % chartColorRotation.length], marginRight: 6 }} />
                     {t.label}
                   </td>
-                  <td style={{ padding: "6px 8px", textAlign: "right", fontWeight: 700, color: tokens.primaryText }}>
+                  <td style={{ padding: "9px 10px", textAlign: "right", fontWeight: 700, color: tokens.primaryText }}>
                     {t.momentum.score}
                   </td>
-                  <td style={{ padding: "6px 8px", textAlign: "right", color: accel >= 0 ? categoryColors.tools.text : categoryColors.heatmaps.text }}>
+                  <td style={{ padding: "9px 10px", textAlign: "right", color: accel >= 0 ? categoryColors.tools.text : categoryColors.heatmaps.text }}>
                     {accel >= 0 ? "+" : ""}
                     {accel.toFixed(1)}
                   </td>
-                  <td style={{ padding: "6px 8px", textAlign: "right", color: tokens.textSecondary }}>{t.size}</td>
-                  <td style={{ padding: "6px 8px", textAlign: "right", color: tokens.textSecondary }}>{t.sectors.length}</td>
+                  <td style={{ padding: "9px 10px", textAlign: "right", color: tokens.textSecondary }}>{t.size}</td>
+                  <td style={{ padding: "9px 10px", textAlign: "right", color: tokens.textSecondary }}>{t.sectors.length}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
-        <div style={{ fontSize: 9, color: tokens.textHint, padding: "6px 8px", lineHeight: 1.45 }}>
+        <div style={{ fontSize: 11, color: tokens.textHint, padding: "9px 10px", lineHeight: 1.45 }}>
           Δ²S = change in the rate of share growth (§19) — acceleration before scale. Click a theme
           for its component breakdown.
         </div>
@@ -136,17 +140,17 @@ export function FrontierRadar({ onSelectTheme }: { onSelectTheme: (id: string) =
         {gaps.map((g, i) => (
           <div key={g.id} style={{ marginBottom: 8 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <span style={{ fontSize: 11, fontWeight: 600, color: tokens.textPrimary }}>{g.label}</span>
-              <span style={{ fontSize: 11, fontWeight: 700, color: chartColorRotation[i % chartColorRotation.length] }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: tokens.textPrimary }}>{g.label}</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: chartColorRotation[i % chartColorRotation.length] }}>
                 {g.ratio}×
               </span>
             </div>
-            <div style={{ fontSize: 9, color: tokens.textHint }}>
+            <div style={{ fontSize: 11, color: tokens.textHint }}>
               {g.demand} companies depend on it · {g.supply} supply it
             </div>
           </div>
         ))}
-        <div style={{ fontSize: 9, color: tokens.textHint, marginTop: 4, lineHeight: 1.45 }}>
+        <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 4, lineHeight: 1.45 }}>
           Demand-to-supply ratio across all {intelligence.batchOrder.length} cohorts. A high ratio is
           a question worth asking, not a verified opportunity — both sides are inferred from company
           descriptions.
