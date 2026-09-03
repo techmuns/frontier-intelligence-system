@@ -34,7 +34,7 @@ export function SignalsView({ onSelectTheme }: { onSelectTheme: (id: string) => 
 
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1.25fr 1fr", gap: 8, height: "100%", minHeight: 0 }}>
-      <Card title="Signals" subtitle={`${signals.length} detected · §40`} bodyStyle={{ overflowY: "auto" }}>
+      <Card title="Signals" subtitle={`${signals.length} changes worth noticing`} bodyStyle={{ overflowY: "auto" }}>
         {signals.map((s, i) => (
           <div
             key={`${s.type}-${i}`}
@@ -58,7 +58,7 @@ export function SignalsView({ onSelectTheme }: { onSelectTheme: (id: string) => 
       </Card>
 
       <div style={{ display: "grid", gridTemplateRows: "minmax(0, auto) 1fr", gap: 8, minHeight: 0 }}>
-        <Card title="What most people will miss" subtitle="§41 · intersections, not commentary" bodyStyle={{ overflowY: "auto" }}>
+        <Card title="What most people will miss" subtitle="Only where two separate signals agree" bodyStyle={{ overflowY: "auto" }}>
           {insights.length > 0 ? (
             insights.map((n, i) => (
               <div key={i} style={{ marginBottom: 9 }}>
@@ -101,7 +101,7 @@ export function SignalsView({ onSelectTheme }: { onSelectTheme: (id: string) => 
 
         <Card
           title="Transitions"
-          subtitle="§26 · autonomy centre of gravity"
+          subtitle="Where software moved from helping to doing"
           bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}
         >
           {transitions.length === 0 && (

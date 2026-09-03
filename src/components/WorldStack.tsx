@@ -115,7 +115,7 @@ export function WorldStack({
 
       <Card
         title="Physical stack"
-        subtitle="Tracked separately, per §30"
+        subtitle="Counted separately from software"
         bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column" }}
       >
         {physical.map((row, i) => (

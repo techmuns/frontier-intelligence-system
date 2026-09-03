@@ -81,11 +81,11 @@ export function FrontierRadar({ onSelectTheme }: { onSelectTheme: (id: string) =
         </div>
       </Card>
 
-      <Card title="Top emerging themes" subtitle="Discovered, not predefined · ranked by momentum" bodyStyle={{ overflowY: "auto", padding: 0 }}>
+      <Card title="Top emerging themes" subtitle="Found by grouping similar companies — not a preset list" bodyStyle={{ overflowY: "auto", padding: 0 }}>
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
           <thead style={{ position: "sticky", top: 0, background: tokens.cardHeader, zIndex: 1 }}>
             <tr style={{ borderBottom: `1px solid ${tokens.borderDefault}` }}>
-              {["Theme", "Mom.", "Δ²S", "Cos", "Sectors"].map((h, i) => (
+              {["What they build", "Momentum", "Speeding up", "Companies", "Industries"].map((h, i) => (
                 <th
                   key={h}
                   style={{
@@ -131,12 +131,12 @@ export function FrontierRadar({ onSelectTheme }: { onSelectTheme: (id: string) =
           </tbody>
         </table>
         <div style={{ fontSize: 11, color: tokens.textHint, padding: "9px 10px", lineHeight: 1.45 }}>
-          Δ²S = change in the rate of share growth (§19) — acceleration before scale. Click a theme
+          "Speeding up" means the share is not just rising but rising faster than last time. Click a theme
           for its component breakdown.
         </div>
       </Card>
 
-      <Card title="What they'll all need next" subtitle="§25 second-order dependency gaps" bodyStyle={{ overflowY: "auto" }}>
+      <Card title="What they'll all need next" subtitle="What lots of companies need but few build" bodyStyle={{ overflowY: "auto" }}>
         {gaps.map((g, i) => (
           <div key={g.id} style={{ marginBottom: 8 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>

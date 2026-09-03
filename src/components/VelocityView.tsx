@@ -41,7 +41,7 @@ export function VelocityView() {
     <div style={{ display: "grid", gridTemplateColumns: "1.55fr 1fr", gap: 8, height: "100%", minHeight: 0 }}>
       <Card
         title={hasHistory ? "Company velocity" : "Company standing"}
-        subtitle={`§38 · ranked within archetype · ${withSignal} of ${velocity.length} companies have a signal`}
+        subtitle={`${withSignal} of ${velocity.length} companies have any public trace`}
         bodyStyle={{ display: "flex", flexDirection: "column", minHeight: 0, gap: 7 }}
       >
         <div style={{ display: "flex", gap: 4, flexWrap: "wrap", flexShrink: 0 }}>
@@ -123,7 +123,7 @@ export function VelocityView() {
         </div>
       </Card>
 
-      <Card title="How this is measured" subtitle="§20 · and what it is not yet" bodyStyle={{ overflowY: "auto" }}>
+      <Card title="How this is measured" subtitle="And what it cannot tell you yet" bodyStyle={{ overflowY: "auto" }}>
         {!hasHistory && (
           <div
             style={{

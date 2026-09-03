@@ -282,6 +282,31 @@ Summer 2026 is the newest batch worth quoting.
 
 ---
 
+## The front page
+
+The dashboard opens on **Overview**: six findings, each a plain sentence and
+two numbers you can compare without being taught anything first.
+
+> Startups moved from money to machines · Saying you are an AI company no
+> longer means anything · Robots stopped being rare · Software stopped helping
+> and started doing the work · Teams got much smaller · Everyone is building on
+> top of the same few things
+
+This exists because the rest of the dashboard was built in the spec's own
+vocabulary and was unreadable to anyone who had not written it. Columns were
+headed `Δ²S` and `Cos`; panels were subtitled `§25 second-order dependency
+gaps`; scores out of 100 appeared with no stated definition; tabs were called
+*World Stack*, *White Space* and *Velocity*. All of the analysis behind those
+is real, but none of it announces what it means.
+
+So: section numbers are gone from the interface (they were bookkeeping for the
+spec, not information for a reader), table headers say what the column holds
+(`Cos` was the company count, and now says so), and the tabs are named for what
+you will see — *What they build*, *Who builds what*, *Jobs & tools*, *Gaps*.
+
+Overview computes from the same datasets as every detailed tab. It is a plainer
+view of the same numbers, not a friendlier second set of them.
+
 ## Layout
 
 Sized for a full browser window, not a widget. The first version used 9-11px

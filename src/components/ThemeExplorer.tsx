@@ -158,7 +158,7 @@ export function ThemeExplorer({ selectedId, onSelect }: { selectedId: string | n
         </div>
       </Card>
 
-      <Card title="Momentum breakdown" subtitle="§18 · every component shown" bodyStyle={{ overflowY: "auto" }}>
+      <Card title="Momentum breakdown" subtitle="Every part of the score, shown" bodyStyle={{ overflowY: "auto" }}>
         <MomentumBreakdown theme={theme} />
 
         {capabilities.length > 0 && (

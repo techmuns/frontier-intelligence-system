@@ -23,7 +23,6 @@ import {
   aiSeries,
   aiMethodComparison,
   biggestIndustryShifts,
-  trends,
 } from "./data/trends";
 import { TrendChart } from "./components/TrendChart";
 import { StatTile } from "./components/StatTile";
@@ -41,6 +40,7 @@ import { SignalsView } from "./components/SignalsView";
 import { MapsView } from "./components/MapsView";
 import { VelocityView } from "./components/VelocityView";
 import { ResearchView } from "./components/ResearchView";
+import { OverviewView } from "./components/OverviewView";
 import { useResearch } from "./hooks/useResearch";
 
 const DEV_TOKEN_KEY = "frontier.devToken";
@@ -63,17 +63,21 @@ export function Dashboard() {
   // Showing a permanently-empty tab that explains how to provision one would
   // make a complete dashboard look unfinished to everyone who is not setting
   // it up; it appears by itself the moment one exists.
+  // Tab names say what you will see, in words a reader already knows.
+  // "World Stack", "White Space" and "Velocity" were the spec's vocabulary,
+  // not anything a person would guess the meaning of.
   const navPages: [Page, string][] = [
-    ["radar", "Radar"],
-    ["stack", "World Stack"],
-    ["themes", "Themes"],
-    ["maps", "Maps"],
-    ["signals", "Signals"],
-    ["whitespace", "White Space"],
-    ["velocity", "Velocity"],
+    ["overview", "Overview"],
     ["companies", "Companies"],
-    ["trends", "Trends"],
-    ["method", "Method"],
+    ["trends", "Over time"],
+    ["themes", "What they build"],
+    ["stack", "Who builds what"],
+    ["maps", "Jobs & tools"],
+    ["signals", "What's shifting"],
+    ["whitespace", "Gaps"],
+    ["velocity", "Who's noticed"],
+    ["radar", "All signals"],
+    ["method", "How it's counted"],
     ...(research.status.database ? ([["research", "Research"]] as [Page, string][]) : []),
   ];
 
@@ -124,6 +128,7 @@ export function Dashboard() {
   const useProxy = !effectiveToken && proxyAvailable;
 
   type Page =
+    | "overview"
     | "radar"
     | "stack"
     | "themes"
@@ -135,7 +140,7 @@ export function Dashboard() {
     | "trends"
     | "method"
     | "research";
-  const [page, setPage] = useState<Page>("radar");
+  const [page, setPage] = useState<Page>("overview");
   const [chartView, setChartView] = useState<"snapshot" | "trends" | "composition" | "method">("snapshot");
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
 
@@ -190,19 +195,6 @@ export function Dashboard() {
     [companies],
   );
   const shifts = useMemo(() => biggestIndustryShifts("winter-2022", "summer-2026", 6), []);
-
-  // Headline for the KPI row. Uses Summer 2026 — the most recent batch that is
-  // fully announced — rather than the newest, which is still filling and would
-  // read as a swing that hasn't actually happened.
-  const industrialsShift = useMemo(() => {
-    const from = trends.find((b) => b.slug === "winter-2022");
-    const to = trends.find((b) => b.slug === "summer-2026");
-    if (!from || !to || from.total === 0 || to.total === 0) return null;
-    return {
-      fromPct: Math.round(((from.industries["Industrials"] ?? 0) / from.total) * 100),
-      toPct: Math.round(((to.industries["Industrials"] ?? 0) / to.total) * 100),
-    };
-  }, []);
 
   // --- Composition view (current batches) ---
   const countryData: BarDatum[] = useMemo(
@@ -335,24 +327,18 @@ export function Dashboard() {
       <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", gap: 8, padding: 10 }}>
         {/* KPI row */}
         <div style={{ display: "flex", gap: 8, flexShrink: 0, flexWrap: "wrap" }}>
-          <StatTile label="Companies" value={companies.length.toLocaleString()} category="markets" hint="Winter '26 – Winter '27" />
+          <StatTile label="Companies" value={companies.length.toLocaleString()} category="markets" hint="5 recent batches" />
           <StatTile label="Batches" value={String(batchCounts.length)} category="sector" hint="2 still filling" />
-          <StatTile label="Industries" value={String(industryCount)} category="analytics" hint="top-level YC categories" />
+          <StatTile label="Industries" value={String(industryCount)} category="analytics" hint="broad categories" />
           <StatTile
             label="Hiring now"
             value={`${Math.round((hiringCount / companies.length) * 100)}%`}
             category="tools"
-            hint={`${hiringCount} of ${companies.length} companies`}
-          />
-          <StatTile
-            label="Physical shift"
-            value={industrialsShift ? `${industrialsShift.fromPct}% → ${industrialsShift.toPct}%` : "—"}
-            category="heatmaps"
-            hint="Industrials share, W22 → Su26"
+            hint={`${hiringCount} advertising jobs`}
           />
         </div>
 
-        {/* Page navigation (§51 — few, deep views rather than many shallow ones) */}
+        {/* Page navigation — few deep views rather than many shallow ones */}
         <div style={{ display: "flex", gap: 4, flexShrink: 0, flexWrap: "wrap" }}>
           {navPages.map(([key, label]) => (
             <button
@@ -407,6 +393,12 @@ export function Dashboard() {
         {page === "velocity" && (
           <div style={{ flex: 1, minHeight: 0 }}>
             <VelocityView />
+          </div>
+        )}
+
+        {page === "overview" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <OverviewView />
           </div>
         )}
 

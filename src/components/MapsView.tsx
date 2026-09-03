@@ -27,7 +27,7 @@ function LaborMap() {
   return (
     <Card
       title="Which jobs are becoming software"
-      subtitle="§32 · human role × industry"
+      subtitle="Which jobs software is starting to do"
       bodyStyle={{ overflow: "auto", display: "flex", flexDirection: "column", gap: 7 }}
     >
       <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
@@ -124,7 +124,7 @@ function InfrastructureMap() {
   const caps = intelligence.infrastructureMap.filter((c) => c.supplyCount > 0 || c.dependentThemes.length > 0);
 
   return (
-    <Card title="Infrastructure" subtitle="§34 · capabilities, not one AI-infra bucket" bodyStyle={{ overflowY: "auto" }}>
+    <Card title="Infrastructure" subtitle="What companies are built on top of" bodyStyle={{ overflowY: "auto" }}>
       {caps.slice(0, 24).map((c, i) => (
         <div key={c.id} style={{ marginBottom: 7, paddingBottom: 6, borderBottom: `1px solid ${tokens.borderDefault}` }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
@@ -151,7 +151,7 @@ function PhysicalMap() {
   const max = Math.max(...chain.map((s) => s.count), 1);
 
   return (
-    <Card title="Physical AI chain" subtitle="§35 · data → simulation → control → robot" bodyStyle={{ overflowY: "auto" }}>
+    <Card title="Physical AI chain" subtitle="From data, to simulation, to real robots" bodyStyle={{ overflowY: "auto" }}>
       {chain.map((stage, i) => (
         <div key={stage.id} style={{ marginBottom: 7 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>

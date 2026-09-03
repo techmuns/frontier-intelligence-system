@@ -105,7 +105,7 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
     <div style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 8, height: "100%", minHeight: 0 }}>
       <Card
         title="Themes by momentum and competition"
-        subtitle="§37 · quadrants are prompts to investigate, not verdicts"
+        subtitle="Prompts to look into, not verdicts"
         bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column" }}
       >
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridAutoRows: "1fr", gap: 6, flex: 1, minHeight: 0 }}>
@@ -141,7 +141,7 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
 
       <Card
         title="Unusually empty cells"
-        subtitle="§24 · matrix completion"
+        subtitle="Combinations almost nobody is trying"
         bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}
       >
         <div style={{ display: "flex", gap: 4 }}>
