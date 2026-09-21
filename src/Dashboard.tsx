@@ -59,46 +59,10 @@ export function Dashboard() {
   const research = useResearch();
   const companies = research.companies;
 
-  // Whether the deeper analysis tabs are on show. Off by default.
-  const [showDeeper, setShowDeeper] = useState(false);
-
   // The Research tab is only offered when a database is actually bound.
   // Showing a permanently-empty tab that explains how to provision one would
   // make a complete dashboard look unfinished to everyone who is not setting
   // it up; it appears by itself the moment one exists.
-  // Tab names say what you will see, in words a reader already knows.
-  // "World Stack", "White Space" and "Velocity" were the spec's vocabulary,
-  // not anything a person would guess the meaning of.
-  //
-  // Eleven tabs was too many to hand to someone who has to present this, so
-  // only four are offered by default: the finding, the companies behind it,
-  // the trend over time, and how it was counted. The deeper views are real
-  // analysis and are kept — they move behind "More views" rather than being
-  // deleted, so depth costs one click instead of being the first thing a
-  // reader trips over.
-  const CORE_PAGES: [Page, string][] = [
-    ["overview", "Overview"],
-    ["companies", "Companies"],
-    ["trends", "Over time"],
-    ["method", "How it's counted"],
-  ];
-
-  const DEEPER_PAGES: [Page, string][] = [
-    ["themes", "What they build"],
-    ["stack", "Who builds what"],
-    ["maps", "Jobs & tools"],
-    ["signals", "What's shifting"],
-    ["whitespace", "Gaps"],
-    ["velocity", "Who's noticed"],
-    ["radar", "All signals"],
-  ];
-
-  const navPages: [Page, string][] = [
-    ...CORE_PAGES,
-    ...(showDeeper ? DEEPER_PAGES : []),
-    ...(research.status.database ? ([["research", "Research"]] as [Page, string][]) : []),
-  ];
-
   // Standalone preview only (see TestModePanel) — lets this dashboard be
   // exercised with real data before it's embedded in the actual Munshot
   // host. A real host session always takes priority over these.
@@ -159,6 +123,52 @@ export function Dashboard() {
     | "method"
     | "research";
   const [page, setPage] = useState<Page>("overview");
+
+  // Navigation is grouped by the QUESTION each view answers, not by the order
+  // the analysis was built in.
+  //
+  // Eleven flat tabs was the problem, and hiding seven of them behind a "more"
+  // toggle only moved it — unfolding still gave you eleven flat tabs. So the
+  // seven deeper views are now filed under the three questions they actually
+  // answer, as sub-tabs. Nothing is dropped; a reader just meets three
+  // questions instead of seven unrelated nouns, and only opens the one they
+  // are asking.
+  const SECTIONS: { id: string; label: string; pages: [Page, string][] }[] = [
+    { id: "overview", label: "Overview", pages: [["overview", "Overview"]] },
+    { id: "companies", label: "Companies", pages: [["companies", "Companies"]] },
+    { id: "trends", label: "Over time", pages: [["trends", "Over time"]] },
+    {
+      id: "build",
+      label: "What they build",
+      pages: [
+        ["themes", "Groups of similar companies"],
+        ["stack", "Where they sit in the market"],
+      ],
+    },
+    {
+      id: "changing",
+      label: "What's changing",
+      pages: [
+        ["radar", "Directions"],
+        ["signals", "Shifts worth noticing"],
+        ["velocity", "Who has traction"],
+      ],
+    },
+    {
+      id: "needs",
+      label: "What they depend on",
+      pages: [
+        ["maps", "Jobs & tools"],
+        ["whitespace", "Gaps nobody fills"],
+      ],
+    },
+    { id: "method", label: "How it's counted", pages: [["method", "How it's counted"]] },
+    ...(research.status.database
+      ? [{ id: "research", label: "Research", pages: [["research", "Research"]] as [Page, string][] }]
+      : []),
+  ];
+
+  const activeSection = SECTIONS.find((sec) => sec.pages.some(([key]) => key === page)) ?? SECTIONS[0];
   const [chartView, setChartView] = useState<"snapshot" | "trends" | "composition" | "method">("snapshot");
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
 
@@ -356,48 +366,56 @@ export function Dashboard() {
           />
         </div>
 
-        {/* Page navigation — few deep views rather than many shallow ones */}
+        {/* Section navigation — one row of questions, one row of answers */}
         <div style={{ display: "flex", gap: 4, flexShrink: 0, flexWrap: "wrap" }}>
-          {navPages.map(([key, label]) => (
-            <button
-              key={key}
-              onClick={() => setPage(key)}
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                padding: "4px 11px",
-                borderRadius: 999,
-                cursor: "pointer",
-                border: `1px solid ${page === key ? tokens.primaryBorder : tokens.borderDefault}`,
-                background: page === key ? tokens.primaryLight : "#ffffff",
-                color: page === key ? tokens.primaryText : tokens.textMuted,
-              }}
-            >
-              {label}
-            </button>
-          ))}
-          <button
-            onClick={() => {
-              // Collapsing while parked on a deeper view would leave the page
-              // showing something no tab is highlighting, so step back to the
-              // summary as it closes.
-              if (showDeeper && DEEPER_PAGES.some(([key]) => key === page)) setPage("overview");
-              setShowDeeper((v) => !v);
-            }}
-            style={{
-              fontSize: 12,
-              fontWeight: 600,
-              padding: "4px 11px",
-              borderRadius: 999,
-              cursor: "pointer",
-              border: "1px solid transparent",
-              background: "transparent",
-              color: tokens.textHint,
-            }}
-          >
-            {showDeeper ? "Fewer views" : `More views (${DEEPER_PAGES.length})`}
-          </button>
+          {SECTIONS.map((sec) => {
+            const active = sec.id === activeSection.id;
+            return (
+              <button
+                key={sec.id}
+                // Entering a section lands on its first view rather than
+                // leaving the reader on a section header with nothing shown.
+                onClick={() => setPage(sec.pages[0][0])}
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  padding: "4px 11px",
+                  borderRadius: 999,
+                  cursor: "pointer",
+                  border: `1px solid ${active ? tokens.primaryBorder : tokens.borderDefault}`,
+                  background: active ? tokens.primaryLight : "#ffffff",
+                  color: active ? tokens.primaryText : tokens.textMuted,
+                }}
+              >
+                {sec.label}
+              </button>
+            );
+          })}
         </div>
+
+        {/* Sub-tabs, only for sections that hold more than one view. */}
+        {activeSection.pages.length > 1 && (
+          <div style={{ display: "flex", gap: 4, flexShrink: 0, flexWrap: "wrap" }}>
+            {activeSection.pages.map(([key, label]) => (
+              <button
+                key={key}
+                onClick={() => setPage(key)}
+                style={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  padding: "3px 10px",
+                  borderRadius: 999,
+                  cursor: "pointer",
+                  border: `1px solid ${page === key ? tokens.primaryBorder : tokens.borderDefault}`,
+                  background: page === key ? "#ffffff" : "transparent",
+                  color: page === key ? tokens.primaryText : tokens.textHint,
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
 
         {page === "radar" && (
           <div style={{ flex: 1, minHeight: 0 }}>
