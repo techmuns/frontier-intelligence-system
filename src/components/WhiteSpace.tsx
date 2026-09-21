@@ -88,7 +88,7 @@ function Heatmap({ matrix, title }: { matrix: typeof intelligence.matrices.secto
 }
 
 export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => void }) {
-  const [matrixKey, setMatrixKey] = useState<"sectorAutonomy" | "sectorStack">("sectorAutonomy");
+  const [matrixKey, setMatrixKey] = useState<"sectorAutonomy" | "sectorStack">("sectorStack");
   const matrix = intelligence.matrices[matrixKey];
   const median = useMemo(() => medianCompetition(), []);
 
@@ -133,15 +133,15 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
           ))}
         </div>
         <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 7, lineHeight: 1.5 }}>
-          Competition is the count of companies already in the theme; the split is the median across
-          all {intelligence.themes.length} themes ({median}). There is no funding or traction data
-          here, so "economic prize" from §37 is deliberately absent rather than estimated.
+          “Competition” is how many companies are already in a theme; the split is the median across
+          all {intelligence.themes.length} themes ({median}). Nothing here says how valuable a theme
+          is — there is no funding or revenue data to say it with.
         </div>
       </Card>
 
       <Card
         title="Unusually empty cells"
-        subtitle="Combinations almost nobody is trying"
+        subtitle="Combinations with far fewer companies than their size implies"
         bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}
       >
         <div style={{ display: "flex", gap: 4 }}>
@@ -174,17 +174,40 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
           <div style={{ fontSize: 12, fontWeight: 700, color: tokens.textPrimary, marginBottom: 3 }}>
             Emptier than expected
           </div>
-          {matrix.empty.slice(0, 16).map((e) => (
-            <div key={`${e.row}||${e.col}`} style={{ fontSize: 12, color: tokens.textSecondary, padding: "2px 0" }}>
-              <span style={{ color: categoryColors.heatmaps.text, fontWeight: 700 }}>{e.observed}</span>
-              <span style={{ color: tokens.textHint }}> vs {e.expected} expected · </span>
-              {e.row} × {e.col}
+          {matrix.empty.length === 0 ? (
+            // An honest empty state. Every cell this view used to list was
+            // ordinary sampling noise; saying nothing qualifies is the finding.
+            <div style={{ fontSize: 12.5, color: tokens.textMuted, lineHeight: 1.55, padding: "4px 0" }}>
+              Nothing here is emptier than chance would predict. Every combination has roughly the
+              number of companies its row and column sizes imply.
             </div>
-          ))}
+          ) : (
+            matrix.empty.slice(0, 12).map((e) => (
+              <div
+                key={`${e.row}||${e.col}`}
+                title={`${e.z} standard deviations below expectation`}
+                style={{
+                  display: "flex", alignItems: "baseline", gap: 8,
+                  fontSize: 12.5, color: tokens.textSecondary, padding: "6px 0",
+                  borderTop: `1px solid ${tokens.borderDefault}`,
+                }}
+              >
+                <span style={{ color: categoryColors.heatmaps.text, fontWeight: 700, minWidth: 38 }}>
+                  {e.observed}
+                </span>
+                <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {e.row} × {e.col}
+                </span>
+                <span style={{ color: tokens.textHint, whiteSpace: "nowrap" }}>
+                  {e.expected} expected
+                </span>
+              </div>
+            ))
+          )}
         </div>
 
         <div style={{ fontSize: 11, color: tokens.textHint, lineHeight: 1.5, borderTop: `1px solid ${tokens.borderDefault}`, paddingTop: 6, flexShrink: 0 }}>
-          An empty cell is a <strong>question, not an opportunity</strong> (§24). It may be overlooked —
+          An empty cell is a <strong>question, not an opportunity</strong>. It may be overlooked —
           or technically impossible, illegal, served by an incumbent, or simply have no buyer. This
           system has no evidence to tell those apart, so it does not try.
         </div>

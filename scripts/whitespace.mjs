@@ -50,7 +50,7 @@ export function buildMatrix(companies, rowOf, colOf) {
  * worth testing are considered, so a one-company row cannot generate spurious
  * "gaps" everywhere.
  */
-export function findEmptyCells(matrix, { minExpected = 1.5, limit = 24 } = {}) {
+export function findEmptyCells(matrix, { minExpected = 3, minZ = 2, limit = 24 } = {}) {
   const out = [];
   for (const row of matrix.rows) {
     for (const col of matrix.cols) {
@@ -58,6 +58,21 @@ export function findEmptyCells(matrix, { minExpected = 1.5, limit = 24 } = {}) {
       const expected = (matrix.rowTotals[row] * matrix.colTotals[col]) / matrix.total;
       if (expected < minExpected) continue;
       if (observed >= expected) continue;
+
+      // How many standard deviations below expectation, treating the cell
+      // count as Poisson (sd = sqrt(expected)).
+      //
+      // The previous rule was simply `observed < expected`, which made ANY
+      // shortfall a finding, and it ranked by emptiness x expected — so a big
+      // cell with a trivial gap outranked a genuinely empty small one. That
+      // reported "37 vs 39.7 expected" and "4 vs 4.9 expected" as unusually
+      // empty. Both are ordinary sampling noise: 0.43 and 0.41 sd. Measured
+      // this way, every cell the Sector x Autonomy matrix was reporting is
+      // noise, and the real findings in Sector x Stack (Industrials missing
+      // from vertical applications, 7.2 sd) were being listed beneath them.
+      const z = (expected - observed) / Math.sqrt(expected);
+      if (z < minZ) continue;
+
       out.push({
         row,
         col,
@@ -65,10 +80,13 @@ export function findEmptyCells(matrix, { minExpected = 1.5, limit = 24 } = {}) {
         expected: Math.round(expected * 10) / 10,
         // How far below expectation, normalised. 1 = completely empty.
         emptiness: Math.round((1 - observed / expected) * 100) / 100,
+        /** Standard deviations below expectation — how surprising, not how big. */
+        z: Math.round(z * 10) / 10,
       });
     }
   }
-  return out.sort((a, b) => b.emptiness * b.expected - a.emptiness * a.expected).slice(0, limit);
+  // Rank by how unusual the gap is, not by how many companies it involves.
+  return out.sort((a, b) => b.z - a.z).slice(0, limit);
 }
 
 /**

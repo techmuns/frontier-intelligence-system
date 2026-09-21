@@ -54,7 +54,16 @@ export interface Matrix {
   colTotals: Record<string, number>;
   cells: Record<string, number>;
   total: number;
-  empty: { row: string; col: string; observed: number; expected: number; emptiness: number }[];
+  /** Cells meaningfully below expectation — see findEmptyCells for the bar. */
+  empty: {
+    row: string;
+    col: string;
+    observed: number;
+    expected: number;
+    emptiness: number;
+    /** Standard deviations below expectation. Higher = more surprising. */
+    z: number;
+  }[];
 }
 
 export interface DependencyGap {
