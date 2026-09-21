@@ -287,6 +287,13 @@ Summer 2026 is the newest batch worth quoting.
 The dashboard opens on **Overview**: six findings, each a plain sentence and
 two numbers you can compare without being taught anything first.
 
+Four tabs are offered by default — *Overview*, *Companies*, *Over time*,
+*How it's counted*. Eleven was too many to hand to someone who has to present
+this. The seven deeper views are real analysis and are kept, behind
+**More views**: depth costs one click instead of being the first thing a reader
+trips over. Hiding a tab changes no data — every number still comes from the
+same two datasets.
+
 > Startups moved from money to machines · Saying you are an AI company no
 > longer means anything · Robots stopped being rare · Software stopped helping
 > and started doing the work · Teams got much smaller · Everyone is building on

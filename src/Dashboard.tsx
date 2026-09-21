@@ -59,6 +59,9 @@ export function Dashboard() {
   const research = useResearch();
   const companies = research.companies;
 
+  // Whether the deeper analysis tabs are on show. Off by default.
+  const [showDeeper, setShowDeeper] = useState(false);
+
   // The Research tab is only offered when a database is actually bound.
   // Showing a permanently-empty tab that explains how to provision one would
   // make a complete dashboard look unfinished to everyone who is not setting
@@ -66,10 +69,21 @@ export function Dashboard() {
   // Tab names say what you will see, in words a reader already knows.
   // "World Stack", "White Space" and "Velocity" were the spec's vocabulary,
   // not anything a person would guess the meaning of.
-  const navPages: [Page, string][] = [
+  //
+  // Eleven tabs was too many to hand to someone who has to present this, so
+  // only four are offered by default: the finding, the companies behind it,
+  // the trend over time, and how it was counted. The deeper views are real
+  // analysis and are kept — they move behind "More views" rather than being
+  // deleted, so depth costs one click instead of being the first thing a
+  // reader trips over.
+  const CORE_PAGES: [Page, string][] = [
     ["overview", "Overview"],
     ["companies", "Companies"],
     ["trends", "Over time"],
+    ["method", "How it's counted"],
+  ];
+
+  const DEEPER_PAGES: [Page, string][] = [
     ["themes", "What they build"],
     ["stack", "Who builds what"],
     ["maps", "Jobs & tools"],
@@ -77,7 +91,11 @@ export function Dashboard() {
     ["whitespace", "Gaps"],
     ["velocity", "Who's noticed"],
     ["radar", "All signals"],
-    ["method", "How it's counted"],
+  ];
+
+  const navPages: [Page, string][] = [
+    ...CORE_PAGES,
+    ...(showDeeper ? DEEPER_PAGES : []),
     ...(research.status.database ? ([["research", "Research"]] as [Page, string][]) : []),
   ];
 
@@ -358,6 +376,27 @@ export function Dashboard() {
               {label}
             </button>
           ))}
+          <button
+            onClick={() => {
+              // Collapsing while parked on a deeper view would leave the page
+              // showing something no tab is highlighting, so step back to the
+              // summary as it closes.
+              if (showDeeper && DEEPER_PAGES.some(([key]) => key === page)) setPage("overview");
+              setShowDeeper((v) => !v);
+            }}
+            style={{
+              fontSize: 12,
+              fontWeight: 600,
+              padding: "4px 11px",
+              borderRadius: 999,
+              cursor: "pointer",
+              border: "1px solid transparent",
+              background: "transparent",
+              color: tokens.textHint,
+            }}
+          >
+            {showDeeper ? "Fewer views" : `More views (${DEEPER_PAGES.length})`}
+          </button>
         </div>
 
         {page === "radar" && (

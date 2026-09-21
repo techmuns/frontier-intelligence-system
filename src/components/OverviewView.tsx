@@ -215,8 +215,10 @@ export function OverviewView() {
       </div>
 
       <div style={{ flexShrink: 0, fontSize: 12, color: tokens.textHint, lineHeight: 1.5 }}>
-        The tabs above break each of these down. Nothing here is a prediction — it is a count of what
-        was actually funded, and it says what is being <em>started</em>, never what is working.
+        <strong>Companies</strong> lists every company behind these numbers and <strong>Over time</strong>
+        charts them batch by batch; <strong>More views</strong> opens the deeper breakdowns. Nothing here is
+        a prediction — it is a count of what was actually funded, so it says what is being{" "}
+        <em>started</em>, never what is working.
       </div>
     </div>
   );
