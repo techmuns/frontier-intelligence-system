@@ -9,11 +9,20 @@ interface SignalsPanelProps {
   tickerCompany: string | null;
   topTheme: string;
   useProxy?: boolean;
+  /** True once the host handshake and the proxy probe have both had their turn. */
+  sessionSettled?: boolean;
 }
 
 type Status = "idle" | "loading" | "error" | "empty" | "ready";
 
-export function SignalsPanel({ token, ticker, tickerCompany, topTheme, useProxy = false }: SignalsPanelProps) {
+export function SignalsPanel({
+  token,
+  ticker,
+  tickerCompany,
+  topTheme,
+  useProxy = false,
+  sessionSettled = false,
+}: SignalsPanelProps) {
   const [status, setStatus] = useState<Status>("idle");
   const [results, setResults] = useState<NewsResult[]>([]);
   const [error, setError] = useState<string>("");
@@ -45,7 +54,7 @@ export function SignalsPanel({ token, ticker, tickerCompany, topTheme, useProxy 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, query, retryTick, useProxy]);
 
-  if (!token && !useProxy) return <WaitingForSession />;
+  if (!token && !useProxy) return <WaitingForSession settled={sessionSettled} />;
   if (status === "loading" || status === "idle") return <LoadingState label="Fetching live signals…" />;
   if (status === "error") return <ErrorState message={error || "Signal fetch failed"} onRetry={() => setRetryTick((t) => t + 1)} />;
   if (status === "empty") return <EmptyState message="No recent signals found" hint="Try again shortly — coverage is sparse for this query." />;

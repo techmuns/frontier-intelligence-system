@@ -102,14 +102,29 @@ export function Dashboard() {
   // Server-side proxy fallback (see worker/index.ts) — testing only, and only
   // when neither a real host session nor a manually-entered token exists.
   const [proxyAvailable, setProxyAvailable] = useState(false);
+  const [probeDone, setProbeDone] = useState(false);
   useEffect(() => {
     let cancelled = false;
     checkProxyAvailable().then((ok) => {
-      if (!cancelled) setProxyAvailable(ok);
+      if (cancelled) return;
+      setProxyAvailable(ok);
+      setProbeDone(true);
     });
     return () => {
       cancelled = true;
     };
+  }, []);
+
+  // The host handshake has no failure callback — when the dashboard is opened
+  // as a plain link rather than inside Munshot, `host:init` simply never
+  // arrives. So the panels that need a session were stuck on "Waiting for
+  // session…" indefinitely, which reads as a hung panel. After this grace
+  // period, with the proxy probe also answered, we can say plainly that live
+  // news is not connected instead of implying it is still coming.
+  const [handshakeGraceElapsed, setHandshakeGraceElapsed] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setHandshakeGraceElapsed(true), 4000);
+    return () => clearTimeout(t);
   }, []);
 
   const effectiveToken = session.token ?? devToken;
@@ -117,6 +132,7 @@ export function Dashboard() {
   const effectiveTickerCompany = tickerCompany ?? (devTicker ? devTicker : null);
   // Use the proxy only as a last resort — a real token always takes priority.
   const useProxy = !effectiveToken && proxyAvailable;
+  const sessionSettled = probeDone && handshakeGraceElapsed;
 
   type Page =
     | "overview"
@@ -571,6 +587,7 @@ export function Dashboard() {
                 company={selectedCompany}
                 token={effectiveToken}
                 useProxy={useProxy}
+                sessionSettled={sessionSettled}
                 onClose={() => setSelectedSlug(null)}
               />
             ) : (
@@ -580,6 +597,7 @@ export function Dashboard() {
                 tickerCompany={effectiveTickerCompany}
                 topTheme={topTheme}
                 useProxy={useProxy}
+                sessionSettled={sessionSettled}
               />
             )}
           </Card>

@@ -18,6 +18,26 @@ const inputStyle: React.CSSProperties = {
   width: 150,
 };
 
+/**
+ * Is this a context where the developer affordance should be offered at all?
+ *
+ * It used to show on every production page load, so anyone being shown the
+ * dashboard met a "⚙ Test mode" chip in the header and reasonably asked
+ * whether they were looking at test data. The panel is still needed — it is
+ * the only way to supply a token when running outside the Munshot iframe — so
+ * it is gated rather than deleted: the dev server, an explicit ?dev=1, or a
+ * token already entered in this session.
+ */
+function devAffordanceVisible(devToken: string | null): boolean {
+  if (devToken) return true; // already in use — never strand someone inside it
+  if (import.meta.env.DEV) return true;
+  try {
+    return new URLSearchParams(window.location.search).has("dev");
+  } catch {
+    return false;
+  }
+}
+
 // Standalone preview helper — NOT part of the Munshot auth model. Real host
 // context (session.token from the SDK) always wins; this only fills the gap
 // while testing outside the Munshot iframe, before this dashboard is embedded.
@@ -27,6 +47,7 @@ export function TestModePanel({ active, devToken, devTicker, onApply }: TestMode
   const [tickerInput, setTickerInput] = useState(devTicker ?? "");
 
   if (active) return null; // a real host session arrived — no need for this anymore
+  if (!devAffordanceVisible(devToken)) return null;
 
   return (
     <div style={{ position: "relative" }}>

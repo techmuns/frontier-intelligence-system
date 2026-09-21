@@ -9,6 +9,8 @@ interface CompanyDetailProps {
   token: string | null;
   onClose: () => void;
   useProxy?: boolean;
+  /** True once the host handshake and the proxy probe have both had their turn. */
+  sessionSettled?: boolean;
 }
 
 type Status = "idle" | "loading" | "error" | "empty" | "ready";
@@ -33,7 +35,7 @@ function Badge({ text, category }: { text: string; category: keyof typeof catego
   );
 }
 
-export function CompanyDetail({ company, token, onClose, useProxy = false }: CompanyDetailProps) {
+export function CompanyDetail({ company, token, onClose, useProxy = false, sessionSettled = false }: CompanyDetailProps) {
   const [status, setStatus] = useState<Status>("idle");
   const [results, setResults] = useState<NewsResult[]>([]);
   const [error, setError] = useState("");
@@ -150,7 +152,7 @@ export function CompanyDetail({ company, token, onClose, useProxy = false }: Com
 
       <div style={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
         {!token && !useProxy ? (
-          <WaitingForSession />
+          <WaitingForSession settled={sessionSettled} />
         ) : status === "loading" || status === "idle" ? (
           <LoadingState label="Fetching company signals…" />
         ) : status === "error" ? (

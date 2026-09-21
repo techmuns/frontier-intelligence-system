@@ -80,10 +80,29 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
   );
 }
 
-export function WaitingForSession() {
+/**
+ * Shown while the Munshot host handshake is still in flight.
+ *
+ * `settled` is the important half. Live news needs either a host session or a
+ * configured server-side proxy, and when the dashboard is opened as a plain
+ * link it will never get either. This used to sit on "Waiting for session…"
+ * for ever, which reads as a hung panel rather than a feature that is simply
+ * not connected. Once the caller knows nothing more is coming, it says so and
+ * says what still works.
+ */
+export function WaitingForSession({ settled = false }: { settled?: boolean }) {
+  if (!settled) {
+    return (
+      <div style={{ padding: 16, textAlign: "center", color: tokens.textHint, fontSize: 14 }}>
+        Waiting for session…
+      </div>
+    );
+  }
   return (
-    <div style={{ padding: 16, textAlign: "center", color: tokens.textHint, fontSize: 14 }}>
-      Waiting for session…
+    <div style={{ padding: "16px 14px", textAlign: "center", color: tokens.textHint, fontSize: 13, lineHeight: 1.55 }}>
+      <div style={{ fontWeight: 600, color: tokens.textSecondary, marginBottom: 4 }}>Live news not connected</div>
+      This panel fills in when the dashboard runs inside Munshot. Every other number on this page comes from
+      the bundled dataset and is unaffected.
     </div>
   );
 }
