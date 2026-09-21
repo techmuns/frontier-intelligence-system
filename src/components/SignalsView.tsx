@@ -3,89 +3,32 @@ import { tokens, categoryColors } from "../lib/theme";
 import { Card } from "./Card";
 
 /**
- * §40 Signals and §41 "what most people will miss".
+ * The two findings about change that live nowhere else: where two independent
+ * signals agree, and where software crossed from helping to doing.
  *
- * Every signal shows the numbers that triggered it. The non-obvious panel is
- * allowed to be empty — under §41 an empty result means nothing crossed the
- * bar, which is a real answer. The criteria and the closest near-misses are
- * shown so an empty panel reads as a finding rather than a fault.
+ * This used to also carry a list of thirty signals. Most were theme
+ * accelerations ("X is accelerating"), which the themes table under "What they
+ * build" already reports in its Speeding up column — and clicking one
+ * navigated out of this section into that very table, which is how the
+ * duplication surfaced. The list is gone; these two panels are not duplicated
+ * and stay.
+ *
+ * The non-obvious panel is allowed to be empty: an empty result means nothing
+ * crossed the bar, which is a real answer. The criteria and the closest
+ * near-misses are shown so it reads as a finding rather than a fault.
  */
 
-const SEVERITY_COLOR: Record<string, string> = {
-  high: categoryColors.heatmaps.text,
-  medium: categoryColors.india.text,
-  low: tokens.textHint,
-};
 
-const TYPE_LABEL: Record<string, string> = {
-  theme_acceleration: "Acceleration",
-  cross_sector_convergence: "Convergence",
-  autonomy_progression: "Autonomy",
-  dependency_bottleneck: "Bottleneck",
-  structural_shift: "Structural",
-  formation_slowdown: "Slowdown",
-};
 
-export function SignalsView({ onSelectTheme }: { onSelectTheme: (id: string) => void }) {
-  const { signals, nonObvious, transitions } = intelligence;
+export function ChangeInsights({ onSelectTheme }: { onSelectTheme: (id: string) => void }) {
+  const { nonObvious, transitions } = intelligence;
   const insights = nonObvious?.insights ?? [];
   const nearMisses = nonObvious?.nearMisses ?? [];
   const criteria = nonObvious?.criteria;
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1.25fr 1fr", gap: 8, height: "100%", minHeight: 0 }}>
-      <Card title="Signals" subtitle={`${signals.length} changes worth noticing`} bodyStyle={{ overflowY: "auto", padding: "4px 10px 10px" }}>
-        {signals.map((s, i) => (
-          // One line per signal. The explanation underneath used to carry the
-          // arithmetic that fired it ("Delta-squared-S of 2.32pp across 20
-          // companies"), which is the evidence, not the finding — thirty of
-          // those stacked is a wall nobody reads. It moves to the hover.
-          <div
-            key={`${s.type}-${i}`}
-            onClick={() => s.themes?.[0] && onSelectTheme(s.themes[0])}
-            title={s.explanation}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "9px 10px",
-              borderBottom: `1px solid ${tokens.borderDefault}`,
-              cursor: s.themes?.[0] ? "pointer" : "default",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = tokens.rowHover)}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-          >
-            <span
-              style={{
-                width: 7, height: 7, borderRadius: 999, flexShrink: 0,
-                background: SEVERITY_COLOR[s.severity] ?? tokens.textHint,
-              }}
-            />
-            <span
-              style={{
-                fontSize: 13.5, fontWeight: 600, color: tokens.textPrimary,
-                overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1,
-              }}
-            >
-              {s.title}
-            </span>
-            <span
-              style={{
-                fontSize: 11, fontWeight: 600, color: tokens.textMuted,
-                background: tokens.sunken, border: `1px solid ${tokens.borderDefault}`,
-                borderRadius: 999, padding: "2px 9px", whiteSpace: "nowrap", flexShrink: 0,
-              }}
-            >
-              {TYPE_LABEL[s.type] ?? s.type}
-            </span>
-          </div>
-        ))}
-        <div style={{ fontSize: 11.5, color: tokens.textHint, padding: "10px 10px 0", lineHeight: 1.5 }}>
-          Hover a row for the numbers behind it. Click one to open its theme.
-        </div>
-      </Card>
-
-      <div style={{ display: "grid", gridTemplateRows: "minmax(0, auto) 1fr", gap: 8, minHeight: 0 }}>
+    <div style={{ display: "flex", height: "100%", minHeight: 0 }}>
+      <div style={{ flex: 1, display: "grid", gridTemplateRows: "minmax(0, auto) 1fr", gap: 12, minHeight: 0 }}>
         <Card title="What most people will miss" subtitle="Only where two separate signals agree" bodyStyle={{ overflowY: "auto" }}>
           {insights.length > 0 ? (
             insights.map((n, i) => (

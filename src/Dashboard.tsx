@@ -19,9 +19,7 @@ import {
 import {
   industryShareSeries,
   subindustryShareSeries,
-  roboticsSeries,
   aiSeries,
-  aiMethodComparison,
   biggestIndustryShifts,
 } from "./data/trends";
 import { TrendChart } from "./components/TrendChart";
@@ -35,11 +33,12 @@ import { FrontierRadar } from "./components/FrontierRadar";
 import { WorldStack } from "./components/WorldStack";
 import { WhiteSpace } from "./components/WhiteSpace";
 import { ThemeExplorer } from "./components/ThemeExplorer";
-import { SignalsView } from "./components/SignalsView";
+import { ChangeInsights } from "./components/SignalsView";
 import { MapsView, DependencyMap } from "./components/MapsView";
 import { VelocityView } from "./components/VelocityView";
 import { ResearchView } from "./components/ResearchView";
 import { OverviewView } from "./components/OverviewView";
+import { MethodView } from "./components/MethodView";
 import { useResearch } from "./hooks/useResearch";
 import { useThemeMode } from "./hooks/useThemeMode";
 import { AppShell, Segmented } from "./components/shell/AppShell";
@@ -125,7 +124,6 @@ export function Dashboard() {
     | "themes"
     | "maps"
     | "depends"
-    | "signals"
     | "whitespace"
     | "velocity"
     | "companies"
@@ -158,9 +156,13 @@ export function Dashboard() {
     {
       id: "changing",
       label: "What's changing",
+      // "Shifts worth noticing" is gone. Most of its rows were theme
+      // accelerations ("X is accelerating"), which the themes table under
+      // "What they build" already carries in its Speeding up column — and
+      // clicking one navigated out of this section into that table, which is
+      // what made the duplication obvious.
       pages: [
         ["radar", "Directions"],
-        ["signals", "Shifts worth noticing"],
         ["velocity", "Who has traction"],
       ],
     },
@@ -235,10 +237,7 @@ export function Dashboard() {
       ]),
     [],
   );
-  // YC scatters robotics across verticals, so its own label undercounts it.
-  const robotics = useMemo(() => roboticsSeries(), []);
   const ai = useMemo(() => aiSeries(), []);
-  const aiMethod = useMemo(() => aiMethodComparison(), []);
   const subindustryChartData: BarDatum[] = useMemo(
     () =>
       topSubindustries(companies, 5).map((s) => ({
@@ -370,8 +369,9 @@ export function Dashboard() {
       )}
 
         {page === "radar" && (
-          <div style={{ flex: 1, minHeight: 0 }}>
+          <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 12 }}>
             <FrontierRadar onSelectTheme={openTheme} />
+            <ChangeInsights onSelectTheme={openTheme} />
           </div>
         )}
 
@@ -396,12 +396,6 @@ export function Dashboard() {
         {page === "depends" && (
           <div style={{ flex: 1, minHeight: 0 }}>
             <DependencyMap />
-          </div>
-        )}
-
-        {page === "signals" && (
-          <div style={{ flex: 1, minHeight: 0 }}>
-            <SignalsView onSelectTheme={openTheme} />
           </div>
         )}
 
@@ -464,15 +458,15 @@ export function Dashboard() {
           </div>
         )}
 
-        {/* Charts row — Trends and Method pages */}
-        {(page === "trends" || page === "method") && (
-        <div
-          style={
-            page === "method"
-              ? { display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr", gap: 8, flex: 1, minHeight: 0 }
-              : { display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr", gap: 8, flexShrink: 0, height: 210 }
-          }
-        >
+        {page === "method" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <MethodView />
+          </div>
+        )}
+
+        {/* Charts row — Trends page */}
+        {page === "trends" && (
+        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr", gap: 12, flexShrink: 0, height: 220 }}>
           {page === "trends" && chartView === "snapshot" && (
             <>
               <Card title="Companies by batch" subtitle="Current cohorts">
@@ -512,53 +506,6 @@ export function Dashboard() {
               </Card>
               <Card title="AI is now table stakes" subtitle="% of batch, from one-liners">
                 <TrendChart data={ai} series={[{ key: "AI share", label: "AI" }]} height={170} />
-              </Card>
-            </>
-          )}
-
-          {page === "method" && (
-            <>
-              <Card title="Why not tags" subtitle="AI share measured two ways">
-                <TrendChart
-                  data={aiMethod}
-                  series={[
-                    { key: "From one-liners", label: "One-liners" },
-                    { key: "From YC tags", label: "YC tags" },
-                    { key: "Tag coverage", label: "Tag coverage" },
-                  ]}
-                  height="100%"
-                />
-              </Card>
-              <Card title="Robotics, undercounted" subtitle="YC's label vs actual, % of batch">
-                <TrendChart
-                  data={robotics}
-                  series={[
-                    { key: "Corrected", label: "Actual" },
-                    { key: "YC label", label: "YC label" },
-                  ]}
-                  height="100%"
-                />
-              </Card>
-              <Card title="How things are counted" subtitle="Classification rules">
-                <div style={{ fontSize: 13, color: tokens.textSecondary, lineHeight: 1.6, height: "100%", overflowY: "auto" }}>
-                  <p style={{ margin: "0 0 7px" }}>
-                    <strong>AI / robotics</strong> counted from each company's own one-line pitch, not YC tags —
-                    tag coverage swings between 23% and 99% per batch, so a tag-based share tracks YC's
-                    bookkeeping more than the market.
-                  </p>
-                  <p style={{ margin: "0 0 7px" }}>
-                    <strong>Robotics</strong> also counts YC's "Manufacturing and Robotics" label, since YC files
-                    many robotics companies under the vertical they serve instead.
-                  </p>
-                  <p style={{ margin: "0 0 7px" }}>
-                    <strong>Ambiguous words excluded</strong> — "autonomous" describes software agents as often as
-                    machines, and including it halved precision.
-                  </p>
-                  <p style={{ margin: 0, color: tokens.textHint }}>
-                    Partial batches are flagged, never smoothed. Unknown values are omitted rather than counted
-                    as zero. Rules live in <code>scripts/build-data.mjs</code>.
-                  </p>
-                </div>
               </Card>
             </>
           )}
