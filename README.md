@@ -361,6 +361,18 @@ tint of the accent vanishes on navy, and reusing the light ramp inverts it —
 its palest step becomes the brightest cell, so the emptiest squares would
 shout. Each theme steps away from its own surface instead (`--heat-0…5`).
 
+### A tab shows its own subject, and only that
+
+*Directions* carried three columns: the directional shifts, a table of emerging
+themes, and a dependency-gap ranking. Two of those are other tabs' whole
+subject — themes are all of *What they build*, dependencies are all of *What
+they depend on* — so the page showed the same material twice and buried its own
+answer between the copies.
+
+It is now one full-width card of the five directional shifts, with a line
+saying where the other two live. That is the general rule: if a panel is the
+subject of another tab, it belongs there, not duplicated here.
+
 ### Pages lead with their conclusion
 
 *What they build* and *What's changing* were three equally-weighted columns of

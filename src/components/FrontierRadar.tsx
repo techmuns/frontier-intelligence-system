@@ -1,5 +1,5 @@
 import { intelligence, topThemes } from "../data/intelligence";
-import { chart, tokens, categoryColors, chartColorRotation } from "../lib/theme";
+import { chart, tokens, categoryColors } from "../lib/theme";
 import { Card } from "./Card";
 import { InsightStrip, type Insight } from "./shell/InsightStrip";
 
@@ -27,17 +27,17 @@ function ShiftBar({ shift }: { shift: (typeof intelligence.dimensionShift)[numbe
   const accent = moving ? categoryColors.heatmaps.text : categoryColors.markets.text;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minHeight: 54 }}>
+    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minHeight: 68 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 3 }}>
         <span style={{ fontSize: 13, color: tokens.textSecondary, fontWeight: 600 }}>{shift.label}</span>
-        <span style={{ fontSize: 13, fontWeight: 700, color: accent }}>
+        <span style={{ fontSize: 16, fontWeight: 750, color: accent }}>
           {moving ? "+" : ""}
           {delta}pt → {shift.poles[1]}
         </span>
       </div>
       {/* Track shows where the mix sits now; the marker shows where it started,
           so the size of the move is visible rather than asserted. */}
-      <div style={{ position: "relative", height: 14, background: tokens.cardBodyBg, borderRadius: 999, border: `1px solid ${tokens.borderDefault}` }}>
+      <div style={{ position: "relative", height: 18, background: tokens.cardBodyBg, borderRadius: 999, border: `1px solid ${tokens.borderDefault}` }}>
         <div style={{ position: "absolute", inset: 0, width: `${Math.min(100, toPct)}%`, background: accent, borderRadius: 999, opacity: 0.85 }} />
         <div
           title={`${shift.from.batch}: ${(shift.from.bShare * 100).toFixed(0)}%`}
@@ -52,7 +52,7 @@ function ShiftBar({ shift }: { shift: (typeof intelligence.dimensionShift)[numbe
           }}
         />
       </div>
-      <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 2 }}>
+      <div style={{ fontSize: 12, color: tokens.textMuted, marginTop: 4 }}>
         {shift.poles[0]} ← → {shift.poles[1]} · {(shift.from.bShare * 100).toFixed(0)}% → {toPct.toFixed(0)}%
       </div>
     </div>
@@ -61,7 +61,7 @@ function ShiftBar({ shift }: { shift: (typeof intelligence.dimensionShift)[numbe
 
 export function FrontierRadar({ onSelectTheme }: { onSelectTheme: (id: string) => void }) {
   const themes = topThemes(22);
-  const gaps = intelligence.dependencyGaps.slice(0, 16);
+  const gaps = intelligence.dependencyGaps;
   const shifts = intelligence.dimensionShift;
   const firstBatch = shifts[0]?.from.batch;
   const lastBatch = shifts[0]?.to.batch;
@@ -110,94 +110,26 @@ export function FrontierRadar({ onSelectTheme }: { onSelectTheme: (id: string) =
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12, height: "100%", minHeight: 0 }}>
       <InsightStrip insights={insights} />
-      <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "1fr 1.45fr 1fr", gap: 12 }}>
+      {/* One card, full width.
+          This page used to carry three columns: the directional shifts, a
+          table of emerging themes, and a dependency-gap ranking. The other two
+          were other tabs' subjects — themes are the whole of "What they build"
+          and dependencies are the whole of "What they depend on" — so this tab
+          was showing a reader the same material twice and burying its own
+          answer between them. It now shows directions and nothing else. */}
+      <div style={{ flex: 1, minHeight: 0, display: "flex" }}>
       <Card
         title="Where the world is moving"
-        subtitle={firstBatch ? `${firstBatch} → ${lastBatch}` : undefined}
-        bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column" }}
+        subtitle={firstBatch ? `Share of each batch, ${firstBatch} → ${lastBatch}` : undefined}
+        bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column", padding: "18px 26px", flex: 1 }}
       >
         {shifts.map((s) => (
           <ShiftBar key={s.id} shift={s} />
         ))}
-        <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 8, lineHeight: 1.45, flexShrink: 0 }}>
-          Share of companies classified on each axis. Companies the classifier could not place on an
-          axis are excluded rather than assigned a side.
-        </div>
-      </Card>
-
-      <Card title="Top emerging themes" subtitle="Found by grouping similar companies — not a preset list" bodyStyle={{ overflowY: "auto", padding: 0 }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
-          <thead style={{ position: "sticky", top: 0, background: tokens.cardHeader, zIndex: 1 }}>
-            <tr style={{ borderBottom: `1px solid ${tokens.borderDefault}` }}>
-              {["What they build", "Momentum", "Speeding up", "Companies", "Industries"].map((h, i) => (
-                <th
-                  key={h}
-                  style={{
-                    textAlign: i === 0 ? "left" : "right",
-                    padding: "9px 10px",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    color: tokens.textMuted,
-                    textTransform: "uppercase",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {themes.map((t, i) => {
-              const accel = t.momentum.derivatives.acceleration * 100;
-              return (
-                <tr
-                  key={t.id}
-                  onClick={() => onSelectTheme(t.id)}
-                  style={{ borderBottom: `1px solid ${tokens.borderDefault}`, cursor: "pointer" }}
-                >
-                  <td style={{ padding: "9px 10px", color: tokens.textPrimary, fontWeight: 600 }}>
-                    <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: 999, background: chartColorRotation[i % chartColorRotation.length], marginRight: 6 }} />
-                    {t.label}
-                  </td>
-                  <td style={{ padding: "9px 10px", textAlign: "right", fontWeight: 700, color: tokens.primaryText }}>
-                    {t.momentum.score}
-                  </td>
-                  <td style={{ padding: "9px 10px", textAlign: "right", color: accel >= 0 ? categoryColors.tools.text : categoryColors.heatmaps.text }}>
-                    {accel >= 0 ? "+" : ""}
-                    {accel.toFixed(1)}
-                  </td>
-                  <td style={{ padding: "9px 10px", textAlign: "right", color: tokens.textSecondary }}>{t.size}</td>
-                  <td style={{ padding: "9px 10px", textAlign: "right", color: tokens.textSecondary }}>{t.sectors.length}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <div style={{ fontSize: 11, color: tokens.textHint, padding: "9px 10px", lineHeight: 1.45 }}>
-          "Speeding up" means the share is not just rising but rising faster than last time. Click a theme
-          for its component breakdown.
-        </div>
-      </Card>
-
-      <Card title="What they'll all need next" subtitle="What lots of companies need but few build" bodyStyle={{ overflowY: "auto" }}>
-        {gaps.map((g, i) => (
-          <div key={g.id} style={{ marginBottom: 8 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <span style={{ fontSize: 13, fontWeight: 600, color: tokens.textPrimary }}>{g.label}</span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: chartColorRotation[i % chartColorRotation.length] }}>
-                {g.ratio}×
-              </span>
-            </div>
-            <div style={{ fontSize: 11, color: tokens.textHint }}>
-              {g.demand} companies depend on it · {g.supply} supply it
-            </div>
-          </div>
-        ))}
-        <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 4, lineHeight: 1.45 }}>
-          Demand-to-supply ratio across all {intelligence.batchOrder.length} cohorts. A high ratio is
-          a question worth asking, not a verified opportunity — both sides are inferred from company
-          descriptions.
+        <div style={{ fontSize: 11.5, color: tokens.textHint, marginTop: 10, lineHeight: 1.5, flexShrink: 0 }}>
+          Companies the classifier could not place on an axis are excluded rather than assigned a
+          side. Themes are on <strong>What they build</strong>; dependencies are on{" "}
+          <strong>What they depend on</strong>.
         </div>
       </Card>
       </div>

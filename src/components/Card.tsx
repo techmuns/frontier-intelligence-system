@@ -19,6 +19,8 @@ export function Card({ title, subtitle, children, bodyStyle }: CardProps) {
         flexDirection: "column",
         overflow: "hidden",
         minHeight: 0,
+        // Stretch when used as a flex item; harmless inside a grid cell.
+        flex: 1,
       }}
     >
       <div
