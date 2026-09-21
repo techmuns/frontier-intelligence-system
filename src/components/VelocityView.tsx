@@ -137,60 +137,46 @@ export function VelocityView() {
             <div style={{ fontSize: 13, fontWeight: 700, color: categoryColors.crypto.text, marginBottom: 3 }}>
               This is standing, not yet velocity
             </div>
-            <div style={{ fontSize: 12, color: tokens.textSecondary, lineHeight: 1.5 }}>
-              The observation store holds {observationMeta?.dates?.length ?? 0} date
-              {(observationMeta?.dates?.length ?? 0) === 1 ? "" : "s"}. Growth and acceleration (§21)
-              need at least two, so they are reported as unavailable rather than as zero — a company
-              with no history is not a company with flat history. The weekly refresh adds a dated
-              layer each run, and these become real velocity from the second run onward.
+            <div style={{ fontSize: 12.5, color: tokens.textSecondary, lineHeight: 1.55 }}>
+              These are today's positions. Growth needs two readings and there{" "}
+              {(observationMeta?.dates?.length ?? 0) === 1 ? "is 1" : `are ${observationMeta?.dates?.length ?? 0}`}
+              {" "}so far — the weekly refresh adds one each run.
             </div>
           </div>
         )}
 
-        <div style={{ fontSize: 12, color: tokens.textSecondary, lineHeight: 1.55 }}>
-          <p style={{ margin: "0 0 7px" }}>
-            <strong>Archetype first.</strong> §20 forbids comparing unlike businesses on the same
-            metrics, so each company is scored only against others of its kind — a developer-tools
-            company against developer-tools companies, robotics against robotics.
-          </p>
-          <p style={{ margin: "0 0 7px" }}>
-            <strong>Score is a percentile</strong> within that archetype across the metrics available
-            for it, not an absolute rating.
-          </p>
-          <p style={{ margin: "0 0 7px" }}>
-            <strong>Web rank is inverted</strong> — rank 1 is the largest site — so a lower number
-            scores higher.
-          </p>
-          <p style={{ margin: "0 0 7px" }}>
-            <strong>Most companies have no signal at all.</strong> {withSignal} of {velocity.length}
-            {" "}resolved anything from an external source; the remaining {velocity.length - withSignal} show
-            {" "}<strong>—</strong> rather than 0. A seed-stage company nobody has posted about is not a
-            company performing badly, and scoring it 0 would say the second thing.
-          </p>
-          <p style={{ margin: "0 0 7px", color: tokens.textHint }}>
-            {observationMeta?.resolved?.toLocaleString()} of{" "}
-            {observationMeta?.total?.toLocaleString()} observations resolved. Web rank resolves for
-            roughly a sixth of companies — most seed-stage domains sit outside the top-1M list, and
-            an unranked domain is recorded as unknown rather than as poor traffic.
-          </p>
-          <p style={{ margin: 0, color: tokens.textHint }}>
-            Sources: Tranco daily domain rank, Hacker News via Algolia. Both joined on the company's
-            exact domain rather than its name — name matching returns the wrong companies.
-          </p>
+        {/* Four short statements. This was six paragraphs that still carried
+            spec section numbers into the interface ("§20 forbids comparing
+            unlike businesses"), which is a note to the author, not to a
+            reader. */}
+        <div style={{ fontSize: 12.5, color: tokens.textSecondary, lineHeight: 1.6, display: "flex", flexDirection: "column", gap: 10 }}>
+          <div>
+            <strong style={{ color: tokens.textPrimary }}>Like is compared with like.</strong> A
+            developer-tools company is scored against other developer-tools companies, robotics
+            against robotics — never against each other.
+          </div>
+          <div>
+            <strong style={{ color: tokens.textPrimary }}>The score is a ranking, not a rating.</strong>{" "}
+            99 means near the top of its own kind, not that the company is excellent.
+          </div>
+          <div
+            title={`${withSignal} of ${velocity.length} companies resolved something from an external source.`}
+            style={{
+              padding: "10px 12px", borderRadius: 9,
+              background: tokens.sunken, border: `1px solid ${tokens.borderDefault}`,
+            }}
+          >
+            <strong style={{ color: tokens.textPrimary }}>Most companies show “—”, not a score.</strong>{" "}
+            {velocity.length - withSignal} of {velocity.length} have left no public trace yet. That is
+            unknown, not bad — scoring them 0 would say the second thing.
+          </div>
+          <div style={{ color: tokens.textHint }}>
+            From daily website rankings and Hacker News, matched on each company's own web address.
+            Funding, revenue and headcount have no free source, so they are absent rather than
+            guessed.
+          </div>
         </div>
 
-        <div style={{ marginTop: 9, paddingTop: 7, borderTop: `1px solid ${tokens.borderDefault}` }}>
-          <div style={{ fontSize: 11, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", marginBottom: 4 }}>
-            Still missing
-          </div>
-          <div style={{ fontSize: 12, color: tokens.textHint, lineHeight: 1.5 }}>
-            ARR, headcount, funding rounds and customer counts have no free public source. Those
-            parts of §20–§22 stay unavailable rather than being estimated.
-            {" "}GitHub stars are collected only when a working token is present: an invalid one
-            previously wrote 1,318 empty readings, which would have read as "no YC company has open
-            source" rather than as a broken credential.
-          </div>
-        </div>
       </Card>
     </div>
   );

@@ -188,54 +188,19 @@ function InfrastructureMap() {
   );
 }
 
-function PhysicalMap() {
-  const chain = intelligence.physicalMap;
-  const max = Math.max(...chain.map((s) => s.count), 1);
-
+export function MapsView() {
   return (
-    <Card title="Physical AI chain" subtitle="From data, to simulation, to real robots" bodyStyle={{ overflowY: "auto" }}>
-      {chain.map((stage, i) => (
-        <div key={stage.id} style={{ marginBottom: 7 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-            <span style={{ fontSize: 13, fontWeight: 600, color: tokens.textPrimary }}>{stage.label}</span>
-            <span style={{ fontSize: 12, color: tokens.textMuted }}>{stage.count}</span>
-          </div>
-          <div style={{ height: 12, background: tokens.cardBodyBg, borderRadius: 3, border: `1px solid ${tokens.borderDefault}`, overflow: "hidden" }}>
-            <div
-              style={{
-                width: `${(stage.count / max) * 100}%`,
-                height: "100%",
-                background: chartColorRotation[i % chartColorRotation.length],
-                opacity: 0.85,
-              }}
-            />
-          </div>
-          {Object.keys(stage.industries).length > 0 && (
-            <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 1 }}>
-              {Object.entries(stage.industries)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 4)
-                .map(([k, v]) => `${k} ${v}`)
-                .join(" · ")}
-            </div>
-          )}
-        </div>
-      ))}
-      <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 4, lineHeight: 1.45 }}>
-        A company appears at every stage it describes, not just one — a robotics company that also
-        builds its own simulation is counted in both, because that is what owning more of the chain
-        looks like.
-      </div>
-    </Card>
+    <div style={{ height: "100%", minHeight: 0, display: "flex" }}>
+      <LaborMap />
+    </div>
   );
 }
 
-export function MapsView() {
+/** "What they're built on" — the dependency list, given room to be read. */
+export function DependencyMap() {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 0.9fr", gap: 8, height: "100%", minHeight: 0 }}>
-      <LaborMap />
+    <div style={{ height: "100%", minHeight: 0, display: "flex" }}>
       <InfrastructureMap />
-      <PhysicalMap />
     </div>
   );
 }

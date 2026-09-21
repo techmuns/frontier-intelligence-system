@@ -36,7 +36,7 @@ import { WorldStack } from "./components/WorldStack";
 import { WhiteSpace } from "./components/WhiteSpace";
 import { ThemeExplorer } from "./components/ThemeExplorer";
 import { SignalsView } from "./components/SignalsView";
-import { MapsView } from "./components/MapsView";
+import { MapsView, DependencyMap } from "./components/MapsView";
 import { VelocityView } from "./components/VelocityView";
 import { ResearchView } from "./components/ResearchView";
 import { OverviewView } from "./components/OverviewView";
@@ -124,6 +124,7 @@ export function Dashboard() {
     | "stack"
     | "themes"
     | "maps"
+    | "depends"
     | "signals"
     | "whitespace"
     | "velocity"
@@ -167,7 +168,8 @@ export function Dashboard() {
       id: "needs",
       label: "What they depend on",
       pages: [
-        ["maps", "Jobs & tools"],
+        ["maps", "Jobs becoming software"],
+        ["depends", "What they're built on"],
         ["whitespace", "Gaps nobody fills"],
       ],
     },
@@ -388,6 +390,12 @@ export function Dashboard() {
         {page === "maps" && (
           <div style={{ flex: 1, minHeight: 0 }}>
             <MapsView />
+          </div>
+        )}
+
+        {page === "depends" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <DependencyMap />
           </div>
         )}
 
