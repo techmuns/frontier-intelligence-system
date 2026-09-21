@@ -10,6 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "data": "node scripts/build-data.mjs",
+    "data:india": "node scripts/build-india.mjs",
     "enrich": "node scripts/enrich.mjs"
   },
   "dependencies": {

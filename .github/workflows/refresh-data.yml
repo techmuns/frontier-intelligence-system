@@ -1,4 +1,4 @@
-name: Refresh YC data
+name: Refresh data
 
 # Keeps the bundled datasets current without anyone remembering to run
 # `npm run data`. Weekly rather than daily: YC's API refreshes daily, but
@@ -51,6 +51,16 @@ jobs:
       - name: Rebuild with the new observations
         run: npm run data
 
+      # Indian funding rounds, from Inc42's weekly roundups. A new roundup is
+      # published once a week, so this is on the same cadence as the rest.
+      # continue-on-error for the same reason as the enrich step: Inc42 is a
+      # publisher with rate limits, and a 429 there must not stop the YC data
+      # from updating. A failed run leaves the previous india-deals.json in
+      # place, which is stale but correct.
+      - name: Re-pull Indian funding rounds
+        run: npm run data:india
+        continue-on-error: true
+
       # The gate. If YC changes the API shape, or a batch arrives in a state
       # that breaks an invariant (counts exceeding batch totals, duplicate
       # slugs, the robotics correction dropping below YC's own label), this
@@ -65,16 +75,17 @@ jobs:
       - name: Commit if the data actually changed
         run: |
           if git diff --quiet -- src/data; then
-            echo "No change in YC data — nothing to commit."
+            echo "No change in the data — nothing to commit."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add src/data
-          git commit -m "Refresh YC data ($(date -u +%Y-%m-%d))
+          git commit -m "Refresh data ($(date -u +%Y-%m-%d))
 
-          Automated weekly pull via scripts/build-data.mjs. Verified by the
-          test suite and a successful build before committing."
+          Automated weekly pull via scripts/build-data.mjs and
+          scripts/build-india.mjs. Verified by the test suite and a
+          successful build before committing."
           git push
           echo "Pushed refreshed data — Workers Builds will redeploy."

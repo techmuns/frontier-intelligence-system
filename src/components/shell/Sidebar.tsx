@@ -52,6 +52,11 @@ export const icons = {
       <path d="M12 7.4v4.2M12 11.6L6.4 16.8M12 11.6l5.6 5.2" />
     </svg>
   ),
+  funding: (
+    <svg width="17" height="17" viewBox="0 0 24 24" {...stroke}>
+      <circle cx="12" cy="12" r="8.5" /><path d="M9 8.5h6M9 11.5h6M14 8.5c0 3-1 4.4-3.2 4.4h-1L14.5 17" />
+    </svg>
+  ),
   counted: (
     <svg width="17" height="17" viewBox="0 0 24 24" {...stroke}>
       <circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16.2v.2" />

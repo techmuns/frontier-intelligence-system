@@ -38,6 +38,8 @@ import { MapsView, DependencyMap } from "./components/MapsView";
 import { ResearchView } from "./components/ResearchView";
 import { OverviewView } from "./components/OverviewView";
 import { MethodView } from "./components/MethodView";
+import { IndiaView } from "./components/IndiaView";
+import { india, indiaSummary, usd } from "./data/india";
 import { useResearch } from "./hooks/useResearch";
 import { useThemeMode } from "./hooks/useThemeMode";
 import { AppShell, Segmented } from "./components/shell/AppShell";
@@ -126,6 +128,7 @@ export function Dashboard() {
     | "whitespace"
     | "companies"
     | "trends"
+    | "india"
     | "method"
     | "research";
   const [page, setPage] = useState<Page>("overview");
@@ -170,6 +173,11 @@ export function Dashboard() {
         ["whitespace", "Gaps nobody fills"],
       ],
     },
+    // An eighth section, added against the seven-item rule on purpose. This is
+    // a different question with a different dataset behind it — Indian funding
+    // rounds, not YC companies — so filing it under an existing section would
+    // have buried it inside a page whose numbers it shares nothing with.
+    { id: "india", label: "Who's funding it", pages: [["india", "Who's funding it"]] },
     { id: "method", label: "How it's counted", pages: [["method", "How it's counted"]] },
     ...(research.status.database
       ? [{ id: "research", label: "Research", pages: [["research", "Research"]] as [Page, string][] }]
@@ -190,6 +198,7 @@ export function Dashboard() {
     { id: "build", label: "What they build", icon: icons.build },
     { id: "changing", label: "What's changing", icon: icons.changing },
     { id: "needs", label: "What they depend on", icon: icons.depend },
+    { id: "india", label: "Who's funding it", icon: icons.funding },
     { id: "method", label: "How it's counted", icon: icons.counted },
   ];
   const [chartView, setChartView] = useState<"snapshot" | "trends" | "composition" | "method">("snapshot");
@@ -312,12 +321,24 @@ export function Dashboard() {
 
   const cohort = `${batchCounts[0]?.batch ?? ""} – ${batchCounts[batchCounts.length - 1]?.batch ?? ""}`.replace(/ 20/g, " '");
 
-  const metrics: Metric[] = [
-    { label: "Companies", value: companies.length.toLocaleString(), hint: "5 recent batches", category: "markets", icon: metricIcons.companies },
-    { label: "Batches", value: String(batchCounts.length), hint: "2 still filling", category: "sector", icon: metricIcons.batches },
-    { label: "Industries", value: String(industryCount), hint: "broad categories", category: "analytics", icon: metricIcons.industries },
-    { label: "Hiring now", value: `${Math.round((hiringCount / companies.length) * 100)}%`, hint: `${hiringCount} advertising jobs`, category: "tools", icon: metricIcons.hiring },
-  ];
+  // The metric row describes whatever the page is about. "Who's funding it"
+  // runs on a different dataset — Indian funding rounds, not YC companies — so
+  // leaving "704 companies across 5 batches" above it would caption the page
+  // with four numbers that have nothing to do with anything on screen.
+  const metrics: Metric[] =
+    page === "india"
+      ? [
+          { label: "Investors", value: String(indiaSummary.serviceInvestors), hint: `backing AI services · ${indiaSummary.windowMonths} months`, category: "markets", icon: metricIcons.companies },
+          { label: "Rounds", value: String(indiaSummary.serviceDeals), hint: `of ${indiaSummary.totalDeals} Indian rounds`, category: "sector", icon: metricIcons.batches },
+          { label: "Raised", value: usd(indiaSummary.serviceRoundValueUsdMn), hint: `${indiaSummary.serviceDisclosedDeals} rounds disclosed a size`, category: "analytics", icon: metricIcons.industries },
+          { label: "Median round", value: usd(indiaSummary.medianServiceRoundUsdMn), hint: `${indiaSummary.serviceCompanies} companies funded`, category: "tools", icon: metricIcons.hiring },
+        ]
+      : [
+          { label: "Companies", value: companies.length.toLocaleString(), hint: "5 recent batches", category: "markets", icon: metricIcons.companies },
+          { label: "Batches", value: String(batchCounts.length), hint: "2 still filling", category: "sector", icon: metricIcons.batches },
+          { label: "Industries", value: String(industryCount), hint: "broad categories", category: "analytics", icon: metricIcons.industries },
+          { label: "Hiring now", value: `${Math.round((hiringCount / companies.length) * 100)}%`, hint: `${hiringCount} advertising jobs`, category: "tools", icon: metricIcons.hiring },
+        ];
 
   return (
     <AppShell
@@ -329,7 +350,7 @@ export function Dashboard() {
       }}
       query={search}
       onQuery={setSearch}
-      cohort={cohort}
+      cohort={page === "india" ? `Last ${indiaSummary.windowMonths} months` : cohort}
       mode={mode}
       onToggleTheme={toggleTheme}
       headerRight={
@@ -447,6 +468,12 @@ export function Dashboard() {
           </div>
         )}
 
+        {page === "india" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <IndiaView query={search} />
+          </div>
+        )}
+
         {page === "method" && (
           <div style={{ flex: 1, minHeight: 0 }}>
             <MethodView />
@@ -559,14 +586,33 @@ export function Dashboard() {
         </div>
         )}
 
-      {/* Footer / provenance */}
+      {/* Footer / provenance. The India page is a different dataset with a
+          different caveat, so it cites its own source rather than YC's. */}
       <div style={{ flexShrink: 0, fontSize: 12, color: tokens.textHint, display: "flex", justifyContent: "space-between", gap: 16 }}>
-          <span>
-            Source: {DATASET_SOURCE.label} · captured {DATASET_SOURCE.capturedAt}
-          </span>
-        <span style={{ color: categoryColors.crypto.text }}>
-          Fall '26 and Winter '27 batches are still filling — treat their counts as partial, not decline.
-        </span>
+        {page === "india" ? (
+          <>
+            <span>
+              Source:{" "}
+              <a href={india.sourceUrl} target="_blank" rel="noreferrer" style={{ color: "inherit" }}>
+                {india.source}
+              </a>{" "}
+              · captured {india.generatedAt}
+            </span>
+            <span style={{ color: categoryColors.crypto.text }}>
+              {indiaSummary.serviceUndisclosedDeals} of {indiaSummary.serviceDeals} rounds published no size — counted
+              as bets, excluded from totals.
+            </span>
+          </>
+        ) : (
+          <>
+            <span>
+              Source: {DATASET_SOURCE.label} · captured {DATASET_SOURCE.capturedAt}
+            </span>
+            <span style={{ color: categoryColors.crypto.text }}>
+              Fall '26 and Winter '27 batches are still filling — treat their counts as partial, not decline.
+            </span>
+          </>
+        )}
       </div>
     </AppShell>
   );
