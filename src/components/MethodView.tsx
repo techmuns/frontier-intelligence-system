@@ -11,7 +11,7 @@
 
 import { useMemo } from "react";
 import { trends, aiMethodComparison, roboticsSeries } from "../data/trends";
-import { tokens, chart } from "../lib/theme";
+import { tokens } from "../lib/theme";
 import { Card } from "./Card";
 import { TrendChart } from "./TrendChart";
 
@@ -88,7 +88,7 @@ export function MethodView() {
   }, [complete]);
 
   return (
-    <div style={{ height: "100%", minHeight: 0, display: "grid", gridTemplateColumns: "1fr 1fr 0.8fr", gap: 12 }}>
+    <div style={{ height: "100%", minHeight: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
       <Claim
         headline="We don't use YC's own tags"
         detail="The same companies, counted two ways"
@@ -134,42 +134,6 @@ export function MethodView() {
         />
       </Claim>
 
-      <Card title="The rest of the rules" subtitle="Four that change the numbers" bodyStyle={{ overflowY: "auto" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 13, fontSize: 12.5, lineHeight: 1.55, color: tokens.textSecondary }}>
-          <Rule
-            color={chart.autonomy}
-            title="“Autonomous” doesn't count as robotics"
-            body="It describes software agents as often as machines. Including it halved precision, so it is excluded."
-          />
-          <Rule
-            color={chart.ai}
-            title="Only the one-line pitch is read"
-            body="Longer descriptions catch companies that merely mention robots as customers."
-          />
-          <Rule
-            color={chart.infrastructure}
-            title="Half-announced batches are flagged, never smoothed"
-            body={`Everything on this page stops at ${stats.lastBatch}. A batch still filling has a low count because of timing, not decline.`}
-          />
-          <Rule
-            color={chart.neutral}
-            title="Unknown is not zero"
-            body="A company that never reported its team size is left out of the median rather than counted as a team of none."
-          />
-          <div style={{ fontSize: 11.5, color: tokens.textHint, marginTop: 2 }}>
-            All of it runs at build time from one file, so every page counts the same way.
-          </div>
-        </div>
-      </Card>
-    </div>
-  );
-}
-
-function Rule({ color, title, body }: { color: string; title: string; body: string }) {
-  return (
-    <div style={{ borderLeft: `3px solid ${color}`, paddingLeft: 11 }}>
-      <div style={{ fontWeight: 650, color: tokens.textPrimary, marginBottom: 2 }}>{title}</div>
-      <div style={{ color: tokens.textMuted }}>{body}</div>
     </div>
   );
 }

@@ -114,7 +114,7 @@ export function Sidebar<T extends string>({ items, active, onSelect, collapsed }
               textAlign: "left",
               fontFamily: "inherit",
               fontSize: type.body,
-              fontWeight: on ? 650 : 500,
+              fontWeight: on ? 750 : 600,
               // The active row is marked three ways — tint, ink, and a left
               // indicator — so it survives both themes and colour-blindness.
               background: on ? tokens.primaryLight : "transparent",

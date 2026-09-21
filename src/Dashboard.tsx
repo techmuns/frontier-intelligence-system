@@ -455,17 +455,17 @@ export function Dashboard() {
 
         {/* Charts row — Trends page */}
         {page === "trends" && (
-        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr", gap: 12, flexShrink: 0, height: 220 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr", gap: 12, flex: 1, minHeight: 0 }}>
           {page === "trends" && chartView === "snapshot" && (
             <>
               <Card title="Companies by batch" subtitle="Current cohorts">
-                <BarChartCard data={batchChartData} layout="vertical" height={170} valueLabel="companies" />
+                <BarChartCard data={batchChartData} layout="vertical" height="100%" valueLabel="companies" />
               </Card>
               <Card title="Top industries" subtitle="By company count">
-                <BarChartCard data={industryChartData} layout="horizontal" height={170} valueLabel="companies" />
+                <BarChartCard data={industryChartData} layout="horizontal" height="100%" valueLabel="companies" />
               </Card>
               <Card title="Top subindustries" subtitle="By company count">
-                <BarChartCard data={subindustryChartData} layout="horizontal" height={170} valueLabel="companies" />
+                <BarChartCard data={subindustryChartData} layout="horizontal" height="100%" valueLabel="companies" />
               </Card>
             </>
           )}
@@ -479,7 +479,7 @@ export function Dashboard() {
                     { key: "Industrials", label: "Industrials" },
                     { key: "Fintech", label: "Fintech" },
                   ]}
-                  height={170}
+                  height="100%"
                 />
               </Card>
               <Card title="What's driving it" subtitle="Inside Industrials, % of batch">
@@ -490,11 +490,11 @@ export function Dashboard() {
                     { key: "Defense", label: "Defense" },
                     { key: "Climate", label: "Climate" },
                   ]}
-                  height={170}
+                  height="100%"
                 />
               </Card>
               <Card title="AI is now table stakes" subtitle="% of batch, from one-liners">
-                <TrendChart data={ai} series={[{ key: "AI share", label: "AI" }]} height={170} />
+                <TrendChart data={ai} series={[{ key: "AI share", label: "AI" }]} height="100%" />
               </Card>
             </>
           )}
@@ -525,7 +525,7 @@ export function Dashboard() {
         )}
 
         {/* Company explorer + signals — Companies and Trends pages */}
-        {(page === "companies" || page === "trends") && (
+        {page === "companies" && (
         <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "2.2fr 1fr", gap: 8 }}>
           <Card
             title="Company explorer"

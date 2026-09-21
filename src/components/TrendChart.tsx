@@ -76,13 +76,13 @@ export function TrendChart({ data, series, height = 170, unit = "%" }: TrendChar
         <CartesianGrid strokeDasharray="3 3" stroke={tokens.grid} vertical={false} />
         <XAxis
           dataKey="label"
-          tick={{ fontSize: 12, fill: tokens.textMuted }}
+          tick={{ fontSize: 12.5, fill: tokens.textMuted }}
           axisLine={false}
           tickLine={false}
           interval="preserveStartEnd"
           minTickGap={18}
         />
-        <YAxis tick={{ fontSize: 12, fill: tokens.textMuted }} axisLine={false} tickLine={false} />
+        <YAxis tick={{ fontSize: 12.5, fill: tokens.textMuted }} axisLine={false} tickLine={false} />
         <Tooltip content={<TrendTooltip unit={unit} />} />
         {showLegend && (
           <Legend
@@ -102,9 +102,9 @@ export function TrendChart({ data, series, height = 170, unit = "%" }: TrendChar
             dataKey={s.key}
             name={s.label}
             stroke={chartColorRotation[i % chartColorRotation.length]}
-            strokeWidth={2}
-            dot={{ r: 2.5 }}
-            activeDot={{ r: 4.5 }}
+            strokeWidth={2.5}
+            dot={{ r: 0 }}
+            activeDot={{ r: 5.5, strokeWidth: 2 }}
             connectNulls={false}
           />
         ))}
