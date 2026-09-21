@@ -6,86 +6,16 @@ import {
   QUADRANT_LABELS,
   type Quadrant,
 } from "../data/intelligence";
-import { heatFill, heatInk, tokens, categoryColors } from "../lib/theme";
+import { chart, tokens, categoryColors } from "../lib/theme";
 import { Card } from "./Card";
 
-/**
- * §24 matrix completion, §25 dependency gaps, §37 white-space quadrants.
- *
- * The spec is emphatic that an empty cell is not automatically an opportunity
- * (§24), so nothing here is labelled an opportunity. Cells are presented as
- * "emptier than expected" with the expectation shown, and the reasons a cell
- * might legitimately be empty are stated on screen so the reader supplies the
- * judgement the data cannot.
- */
-
+/** One hue per quadrant, so the four boxes are told apart without reading. */
 const QUADRANT_COLORS: Record<Quadrant, string> = {
-  attack: categoryColors.tools.text,
-  crowded: categoryColors.india.text,
-  early: categoryColors.markets.text,
+  attack: chart.growth,
+  crowded: chart.infrastructure,
+  early: chart.ai,
   low: tokens.textHint,
 };
-
-function Heatmap({ matrix, title }: { matrix: typeof intelligence.matrices.sectorAutonomy; title: string }) {
-  const rows = matrix.rows.slice(0, 14);
-  const cols = matrix.cols.slice(0, 10);
-  const max = Math.max(...Object.values(matrix.cells), 1);
-
-  return (
-    <div style={{ overflowX: "auto", flex: 1, minHeight: 0, display: "flex" }}>
-      <table style={{ borderCollapse: "collapse", fontSize: 13, width: "100%", height: "100%" }}>
-        <thead>
-          <tr>
-            <th style={{ textAlign: "left", padding: "3px 6px", color: tokens.textMuted, fontWeight: 700, fontSize: 11 }}>
-              {title}
-            </th>
-            {cols.map((c) => (
-              <th
-                key={c}
-                style={{ padding: "3px 4px", color: tokens.textMuted, fontWeight: 600, fontSize: 11, whiteSpace: "nowrap", maxWidth: 62, overflow: "hidden", textOverflow: "ellipsis" }}
-                title={c}
-              >
-                {c.length > 12 ? `${c.slice(0, 11)}…` : c}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r) => (
-            <tr key={r}>
-              <td style={{ padding: "3px 6px", color: tokens.textSecondary, whiteSpace: "nowrap", fontWeight: 600 }} title={r}>
-                {r.length > 20 ? `${r.slice(0, 19)}…` : r}
-              </td>
-              {cols.map((c) => {
-                const n = matrix.cells[`${r}||${c}`] ?? 0;
-                const expected = (matrix.rowTotals[r] * matrix.colTotals[c]) / matrix.total;
-                // Emptiness is only meaningful where enough mass exists to
-                // expect something in the first place.
-                const notable = expected >= 1.5 && n < expected * 0.35;
-                return (
-                  <td
-                    key={c}
-                    title={`${r} × ${c}\nobserved ${n}, expected ${expected.toFixed(1)}`}
-                    style={{
-                      padding: "3px 4px",
-                      textAlign: "center",
-                      background: n === 0 ? "var(--heat-0)" : heatFill(n / max),
-                      color: heatInk(n / max),
-                      border: notable ? `1px dashed ${categoryColors.heatmaps.text}` : `1px solid ${tokens.borderDefault}`,
-                      minWidth: 30,
-                    }}
-                  >
-                    {n || ""}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
 
 export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => void }) {
   const [matrixKey, setMatrixKey] = useState<"sectorAutonomy" | "sectorStack">("sectorStack");
@@ -133,21 +63,20 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
           ))}
         </div>
         <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 7, lineHeight: 1.5 }}>
-          “Competition” is how many companies are already in a theme; the split is the median across
-          all {intelligence.themes.length} themes ({median}). Nothing here says how valuable a theme
-          is — there is no funding or revenue data to say it with.
+          Split at the median of {intelligence.themes.length} themes ({median} companies). Nothing
+          here says how valuable a theme is.
         </div>
       </Card>
 
       <Card
         title="Unusually empty cells"
-        subtitle="Combinations with far fewer companies than their size implies"
-        bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}
+        subtitle="Far fewer companies than their row and column sizes imply"
+        bodyStyle={{ overflowY: "auto", display: "flex", flexDirection: "column", gap: 10 }}
       >
-        <div style={{ display: "flex", gap: 4 }}>
+        <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
           {([
-            ["sectorAutonomy", "Sector × Autonomy"],
             ["sectorStack", "Sector × Stack"],
+            ["sectorAutonomy", "Sector × Autonomy"],
           ] as const).map(([key, label]) => (
             <button
               key={key}
@@ -155,7 +84,7 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
               style={{
                 fontSize: 12,
                 fontWeight: 600,
-                padding: "3px 9px",
+                padding: "4px 11px",
                 borderRadius: 999,
                 cursor: "pointer",
                 border: `1px solid ${matrixKey === key ? tokens.primaryBorder : tokens.borderDefault}`,
@@ -168,48 +97,45 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
           ))}
         </div>
 
-        <Heatmap matrix={matrix} title={matrixKey === "sectorAutonomy" ? "Sector \\ Autonomy" : "Sector \\ Stack"} />
-
-        <div style={{ flexShrink: 0 }}>
-          <div style={{ fontSize: 12, fontWeight: 700, color: tokens.textPrimary, marginBottom: 3 }}>
-            Emptier than expected
+        {matrix.empty.length === 0 ? (
+          <div style={{ fontSize: 13, color: tokens.textMuted, lineHeight: 1.6 }}>
+            Nothing here is emptier than chance would predict.
           </div>
-          {matrix.empty.length === 0 ? (
-            // An honest empty state. Every cell this view used to list was
-            // ordinary sampling noise; saying nothing qualifies is the finding.
-            <div style={{ fontSize: 12.5, color: tokens.textMuted, lineHeight: 1.55, padding: "4px 0" }}>
-              Nothing here is emptier than chance would predict. Every combination has roughly the
-              number of companies its row and column sizes imply.
-            </div>
-          ) : (
-            matrix.empty.slice(0, 12).map((e) => (
-              <div
-                key={`${e.row}||${e.col}`}
-                title={`${e.z} standard deviations below expectation`}
-                style={{
-                  display: "flex", alignItems: "baseline", gap: 8,
-                  fontSize: 12.5, color: tokens.textSecondary, padding: "6px 0",
-                  borderTop: `1px solid ${tokens.borderDefault}`,
-                }}
-              >
-                <span style={{ color: categoryColors.heatmaps.text, fontWeight: 700, minWidth: 38 }}>
-                  {e.observed}
-                </span>
-                <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                  {e.row} × {e.col}
-                </span>
-                <span style={{ color: tokens.textHint, whiteSpace: "nowrap" }}>
-                  {e.expected} expected
-                </span>
-              </div>
-            ))
-          )}
-        </div>
+        ) : (
+          <div style={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
+            {matrix.empty.slice(0, 14).map((e) => {
+              // Bar length is the shortfall, so the biggest hole reads longest.
+              const shortfall = Math.max(0, e.expected - e.observed);
+              const width = (shortfall / (matrix.empty[0].expected - matrix.empty[0].observed)) * 100;
+              return (
+                <div
+                  key={`${e.row}||${e.col}`}
+                  title={`${e.z} standard deviations below expectation`}
+                  style={{ padding: "8px 2px", borderBottom: `1px solid ${tokens.borderDefault}` }}
+                >
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 5 }}>
+                    <span style={{ fontSize: 13.5, fontWeight: 600, color: tokens.textPrimary, flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      {e.row} × {e.col}
+                    </span>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: categoryColors.heatmaps.text, whiteSpace: "nowrap" }}>
+                      {e.observed}
+                    </span>
+                    <span style={{ fontSize: 12, color: tokens.textHint, whiteSpace: "nowrap" }}>
+                      of {Math.round(e.expected)} expected
+                    </span>
+                  </div>
+                  <div style={{ height: 6, borderRadius: 999, background: tokens.sunken, overflow: "hidden" }}>
+                    <div style={{ width: `${Math.max(3, width)}%`, height: "100%", background: categoryColors.heatmaps.text, opacity: 0.85 }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
-        <div style={{ fontSize: 11, color: tokens.textHint, lineHeight: 1.5, borderTop: `1px solid ${tokens.borderDefault}`, paddingTop: 6, flexShrink: 0 }}>
-          An empty cell is a <strong>question, not an opportunity</strong>. It may be overlooked —
-          or technically impossible, illegal, served by an incumbent, or simply have no buyer. This
-          system has no evidence to tell those apart, so it does not try.
+        <div style={{ fontSize: 11.5, color: tokens.textHint, lineHeight: 1.5, flexShrink: 0 }}>
+          A gap is a <strong>question, not an opportunity</strong> — it may be impossible, illegal,
+          or already served by someone bigger.
         </div>
       </Card>
     </div>

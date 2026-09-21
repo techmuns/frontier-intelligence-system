@@ -35,7 +35,6 @@ import { WhiteSpace } from "./components/WhiteSpace";
 import { ThemeExplorer } from "./components/ThemeExplorer";
 import { ChangeInsights } from "./components/SignalsView";
 import { MapsView, DependencyMap } from "./components/MapsView";
-import { VelocityView } from "./components/VelocityView";
 import { ResearchView } from "./components/ResearchView";
 import { OverviewView } from "./components/OverviewView";
 import { MethodView } from "./components/MethodView";
@@ -125,7 +124,6 @@ export function Dashboard() {
     | "maps"
     | "depends"
     | "whitespace"
-    | "velocity"
     | "companies"
     | "trends"
     | "method"
@@ -156,15 +154,12 @@ export function Dashboard() {
     {
       id: "changing",
       label: "What's changing",
-      // "Shifts worth noticing" is gone. Most of its rows were theme
-      // accelerations ("X is accelerating"), which the themes table under
-      // "What they build" already carries in its Speeding up column — and
-      // clicking one navigated out of this section into that table, which is
-      // what made the duplication obvious.
-      pages: [
-        ["radar", "Directions"],
-        ["velocity", "Who has traction"],
-      ],
+      // One page. "Shifts worth noticing" was mostly theme accelerations,
+      // which the themes table under "What they build" already carries in its
+      // Speeding up column. "Who has traction" ranked companies on external
+      // attention that 75% of them do not have, so most rows read "—"; it was
+      // a leaderboard of the few companies someone had posted about.
+      pages: [["radar", "Directions"]],
     },
     {
       id: "needs",
@@ -368,6 +363,26 @@ export function Dashboard() {
         </div>
       )}
 
+        {page === "overview" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <OverviewView />
+          </div>
+        )}
+
+        {page === "research" && (
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <ResearchView
+              status={research.status}
+              companies={companies}
+              overrides={research.overrides}
+              applied={research.applied}
+              ignored={research.ignored}
+              loading={research.loading}
+              onReload={research.reload}
+            />
+          </div>
+        )}
+
         {page === "radar" && (
           <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 12 }}>
             <FrontierRadar onSelectTheme={openTheme} />
@@ -396,32 +411,6 @@ export function Dashboard() {
         {page === "depends" && (
           <div style={{ flex: 1, minHeight: 0 }}>
             <DependencyMap />
-          </div>
-        )}
-
-        {page === "velocity" && (
-          <div style={{ flex: 1, minHeight: 0 }}>
-            <VelocityView />
-          </div>
-        )}
-
-        {page === "overview" && (
-          <div style={{ flex: 1, minHeight: 0 }}>
-            <OverviewView />
-          </div>
-        )}
-
-        {page === "research" && (
-          <div style={{ flex: 1, minHeight: 0 }}>
-            <ResearchView
-              status={research.status}
-              companies={companies}
-              overrides={research.overrides}
-              applied={research.applied}
-              ignored={research.ignored}
-              loading={research.loading}
-              onReload={research.reload}
-            />
           </div>
         )}
 
