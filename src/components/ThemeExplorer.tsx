@@ -3,12 +3,16 @@ import { intelligence, type Theme } from "../data/intelligence";
 import { chart, tokens, categoryColors, chartColorRotation } from "../lib/theme";
 import { Card } from "./Card";
 import { InsightStrip, type Insight } from "./shell/InsightStrip";
-import { TrendChart } from "./TrendChart";
-import { shortBatchLabel } from "../data/trends";
 
 /**
- * §36 Theme Explorer — a theme's definition, evidence, history, momentum
- * breakdown, dependencies and example companies in one view.
+ * What they build — the groups, and who is in the one you pick.
+ *
+ * This used to show four things at once: a list of themes, a share-of-cohort
+ * line chart, the companies in the theme, and a full momentum breakdown. The
+ * chart was the weakest of them — a twenty-company theme's share moves on one
+ * or two companies joining, so its shape is mostly noise, and the list already
+ * reports that movement as a number. It is gone; the page is now the groups
+ * and their members.
  *
  * The momentum breakdown is the important part: §18 forbids unexplained
  * scores, so every component is shown with its contribution, and the three
@@ -80,25 +84,23 @@ export function ThemeExplorer({ selectedId, onSelect }: { selectedId: string | n
     return themes.filter((t) => t.label.toLowerCase().includes(q) || t.terms.some((term) => term.includes(q)));
   }, [themes, query]);
 
-  const history = useMemo(() => {
-    if (!theme) return [];
-    return intelligence.batchOrder.map((batch, i) => ({
-      batch,
-      label: shortBatchLabel(batch),
-      "Share of cohort": Math.round((theme.shares[i] ?? 0) * 1000) / 10,
-      count: theme.counts[i] ?? 0,
-    }));
-  }, [theme]);
 
   if (!theme) return null;
 
   // The three tiles answer the questions a reader was previously expected to
   // work out by comparing three dense columns themselves.
-  const biggest = [...themes].sort((a, b) => b.size - a.size)[0];
-  const fastest = [...themes].sort(
-    (a, b) => b.momentum.derivatives.acceleration - a.momentum.derivatives.acceleration,
-  )[0];
-  const widest = [...themes].sort((a, b) => b.sectors.length - a.sectors.length)[0];
+  // Three tiles, three different themes. One group can top all three measures
+  // at once — it currently does — and printing its name three times says less
+  // than naming the runner-up on the measures it does not lead.
+  const taken = new Set<string>();
+  const pick = (rank: (a: Theme, b: Theme) => number) => {
+    const found = [...themes].sort(rank).find((t) => !taken.has(t.id)) ?? themes[0];
+    taken.add(found.id);
+    return found;
+  };
+  const biggest = pick((a, b) => b.size - a.size);
+  const fastest = pick((a, b) => b.momentum.derivatives.acceleration - a.momentum.derivatives.acceleration);
+  const widest = pick((a, b) => b.sectors.length - a.sectors.length);
 
   const insights: Insight[] = [
     {
@@ -172,28 +174,28 @@ export function ThemeExplorer({ selectedId, onSelect }: { selectedId: string | n
         </div>
       </Card>
 
-      <Card title={theme.label} subtitle={`${theme.size} companies · ${theme.sectors.length} sectors`} bodyStyle={{ overflowY: "auto" }}>
-        <div style={{ fontSize: 12, color: tokens.textHint, marginBottom: 6 }}>
-          Defined by the terms that distinguish it: {theme.terms.join(", ")}
+      <Card title={theme.label} subtitle={`All ${theme.size} companies in this group`} bodyStyle={{ overflowY: "auto" }}>
+        <div style={{ fontSize: 12, color: tokens.textHint, marginBottom: 10 }}>
+          Grouped by these words: {theme.terms.join(", ")}
         </div>
 
-        <div style={{ marginBottom: 8 }}>
-          <TrendChart data={history} series={[{ key: "Share of cohort", label: "Share of cohort" }]} height={200} />
-        </div>
-
-        <div style={{ fontSize: 12, fontWeight: 700, color: tokens.textPrimary, marginBottom: 3 }}>
-          Companies in this theme
-        </div>
         {theme.examples.map((e) => (
-          <div key={e.name} style={{ fontSize: 12, color: tokens.textSecondary, padding: "3px 0", borderBottom: `1px solid ${tokens.borderDefault}` }}>
-            <strong style={{ color: tokens.textPrimary }}>{e.name}</strong> — {e.one_liner ?? "—"}
+          <div
+            key={e.name}
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: 12,
+              fontSize: 13,
+              color: tokens.textSecondary,
+              padding: "8px 0",
+              borderBottom: `1px solid ${tokens.borderDefault}`,
+            }}
+          >
+            <strong style={{ color: tokens.textPrimary, minWidth: 150, flexShrink: 0 }}>{e.name}</strong>
+            <span style={{ minWidth: 0 }}>{e.one_liner ?? "—"}</span>
           </div>
         ))}
-
-        <div style={{ fontSize: 11, color: tokens.textHint, marginTop: 6, lineHeight: 1.45, flexShrink: 0 }}>
-          Themes are discovered by clustering company descriptions, not defined in advance — a
-          category nobody has named yet appears here on its own once enough companies describe it.
-        </div>
 
         <details style={{ marginTop: 12, borderTop: `1px solid ${tokens.borderDefault}`, paddingTop: 10 }}>
           <summary
