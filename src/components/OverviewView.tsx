@@ -54,7 +54,7 @@ function useFindings(): Finding[] {
       {
         headline: "Startups moved from money to machines",
         detail:
-          "Fintech was the biggest category in 2022. Today it is one of the smallest, and industrial companies have taken its place — a four-fold swing in four years.",
+          "Fintech was the biggest category in 2022. Industrials have taken its place.",
         fromLabel: "Fintech, 2022",
         toLabel: "Industrials, today",
         from: industry(from, "Fintech"),
@@ -66,7 +66,7 @@ function useFindings(): Finding[] {
       {
         headline: "Saying you are an AI company no longer means anything",
         detail:
-          "Four in five new startups now describe themselves as AI. When almost everyone claims it, the claim stops telling you who is different.",
+          "When almost everyone claims it, the claim stops telling you who is different.",
         fromLabel: "2022",
         toLabel: "Today",
         from: share(FROM_SLUG, (b) => b.aiTotal),
@@ -78,7 +78,7 @@ function useFindings(): Finding[] {
       {
         headline: "Robots stopped being rare",
         detail:
-          "One company in fifty built something physical in 2022. Now it is one in eight. Defense went from nothing to a real category; climate quietly faded the other way.",
+          "One in fifty built something physical in 2022. Now it is one in eight.",
         fromLabel: "2022",
         toLabel: "Today",
         from: share(FROM_SLUG, (b) => b.roboticsTotal),
@@ -90,7 +90,7 @@ function useFindings(): Finding[] {
       {
         headline: "Software stopped helping and started doing the work",
         detail:
-          "Most products used to assist a person who stayed in charge. Now most of them do the task themselves and report back. That is the single biggest change in what is being built.",
+          "Products used to assist a person. Now most do the task and report back.",
         fromLabel: "2022",
         toLabel: "Today",
         from: autonomy?.from.bShare ? Math.round(autonomy.from.bShare * 100) : 0,
@@ -102,7 +102,7 @@ function useFindings(): Finding[] {
       {
         headline: "Teams got much smaller",
         detail:
-          "A typical new company was ten people in 2022. Today it is two. Small teams are attempting what used to need a department.",
+          "Two people now attempt what used to need a department.",
         fromLabel: "2022",
         toLabel: "Today",
         from: from?.medianTeamSize ?? 0,
@@ -113,7 +113,7 @@ function useFindings(): Finding[] {
       },
       {
         headline: "Everyone is building on top of the same few things",
-        detail: `${biggestGap?.demand ?? 0} companies need ${(biggestGap?.label ?? "").toLowerCase()} to work. ${biggestGap?.supply ?? 0} are building it. That is worth a look — though it may also mean the big providers already have it covered.`,
+        detail: `${biggestGap?.demand ?? 0} companies need ${(biggestGap?.label ?? "").toLowerCase()}. ${biggestGap?.supply ?? 0} build it.`,
         fromLabel: "Need it",
         toLabel: "Build it",
         from: biggestGap?.demand ?? 0,
@@ -131,7 +131,7 @@ function Bar({ value, scale, color, muted }: { value: number; scale: number; col
   return (
     <div
       style={{
-        height: 26,
+        height: 30,
         background: tokens.cardBodyBg,
         borderRadius: 6,
         border: `1px solid ${tokens.borderDefault}`,
@@ -147,10 +147,10 @@ function FindingCard({ f }: { f: Finding }) {
   return (
     <div
       style={{
-        background: "#ffffff",
+        background: tokens.cardBackground,
         border: `1px solid ${tokens.borderDefault}`,
         borderRadius: 12,
-        padding: 16,
+        padding: 18,
         display: "flex",
         flexDirection: "column",
         gap: 10,
@@ -158,7 +158,7 @@ function FindingCard({ f }: { f: Finding }) {
       }}
     >
       <div>
-        <div style={{ fontSize: 17, fontWeight: 700, color: tokens.textPrimary, lineHeight: 1.3 }}>{f.headline}</div>
+        <div style={{ fontSize: 16, fontWeight: 700, color: tokens.textPrimary, lineHeight: 1.3 }}>{f.headline}</div>
         <div style={{ fontSize: 13, color: tokens.textMuted, lineHeight: 1.55, marginTop: 5 }}>{f.detail}</div>
       </div>
 
@@ -173,7 +173,7 @@ function FindingCard({ f }: { f: Finding }) {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 3 }}>
             <span style={{ fontSize: 12, color: tokens.textSecondary, fontWeight: 600 }}>{f.toLabel}</span>
-            <span style={{ fontSize: 20, fontWeight: 800, color: f.color.text }}>{f.to}</span>
+            <span style={{ fontSize: 24, fontWeight: 800, color: f.color.text, letterSpacing: -0.5 }}>{f.to}</span>
           </div>
           <Bar value={f.to} scale={f.scale} color={f.color.text} />
         </div>
@@ -215,12 +215,7 @@ export function OverviewView() {
       </div>
 
       <div style={{ flexShrink: 0, fontSize: 12, color: tokens.textHint, lineHeight: 1.5 }}>
-        <strong>Companies</strong> lists every company behind these numbers,{" "}
-        <strong>Over time</strong> charts them batch by batch, and the three question tabs —{" "}
-        <strong>What they build</strong>, <strong>What&rsquo;s changing</strong>,{" "}
-        <strong>What they depend on</strong> — hold the detail behind each finding. Nothing here is a
-        prediction: it is a count of what was actually funded, so it says what is being{" "}
-        <em>started</em>, never what is working.
+        A count of what was actually funded — what is being <em>started</em>, never what is working.
       </div>
     </div>
   );

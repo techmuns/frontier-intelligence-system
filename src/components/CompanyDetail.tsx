@@ -89,7 +89,7 @@ export function CompanyDetail({ company, token, onClose, useProxy = false }: Com
             fontSize: 13,
             fontWeight: 600,
             color: tokens.textMuted,
-            background: "#ffffff",
+            background: tokens.cardBackground,
             border: `1px solid ${tokens.borderDefault}`,
             borderRadius: 6,
             padding: "3px 8px",
@@ -171,7 +171,7 @@ export function CompanyDetail({ company, token, onClose, useProxy = false }: Com
                   border: `1px solid ${tokens.borderDefault}`,
                   borderRadius: 8,
                   padding: "7px 9px",
-                  background: "#ffffff",
+                  background: tokens.cardBackground,
                 }}
               >
                 <div style={{ fontSize: 13, fontWeight: 600, color: tokens.textPrimary, lineHeight: 1.3 }}>

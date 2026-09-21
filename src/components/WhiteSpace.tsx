@@ -6,7 +6,7 @@ import {
   QUADRANT_LABELS,
   type Quadrant,
 } from "../data/intelligence";
-import { tokens, categoryColors } from "../lib/theme";
+import { heatFill, heatInk, tokens, categoryColors } from "../lib/theme";
 import { Card } from "./Card";
 
 /**
@@ -69,8 +69,8 @@ function Heatmap({ matrix, title }: { matrix: typeof intelligence.matrices.secto
                     style={{
                       padding: "3px 4px",
                       textAlign: "center",
-                      background: n === 0 ? "transparent" : `rgba(79,70,229,${0.08 + (n / max) * 0.62})`,
-                      color: n / max > 0.5 ? "#ffffff" : tokens.textSecondary,
+                      background: n === 0 ? "var(--heat-0)" : heatFill(n / max),
+                      color: heatInk(n / max),
                       border: notable ? `1px dashed ${categoryColors.heatmaps.text}` : `1px solid ${tokens.borderDefault}`,
                       minWidth: 30,
                     }}
@@ -110,7 +110,7 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
       >
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridAutoRows: "1fr", gap: 6, flex: 1, minHeight: 0 }}>
           {(["attack", "crowded", "early", "low"] as Quadrant[]).map((q) => (
-            <div key={q} style={{ border: `1px solid ${tokens.borderDefault}`, borderRadius: 8, padding: 9, background: "#ffffff", overflowY: "auto", minHeight: 0 }}>
+            <div key={q} style={{ border: `1px solid ${tokens.borderDefault}`, borderRadius: 8, padding: 9, background: tokens.cardBackground, overflowY: "auto", minHeight: 0 }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: QUADRANT_COLORS[q], marginBottom: 1 }}>
                 {QUADRANT_LABELS[q].label}
                 <span style={{ color: tokens.textHint, fontWeight: 600 }}> · {grouped[q].length}</span>
@@ -159,7 +159,7 @@ export function WhiteSpace({ onSelectTheme }: { onSelectTheme: (id: string) => v
                 borderRadius: 999,
                 cursor: "pointer",
                 border: `1px solid ${matrixKey === key ? tokens.primaryBorder : tokens.borderDefault}`,
-                background: matrixKey === key ? tokens.primaryLight : "#ffffff",
+                background: matrixKey === key ? tokens.primaryLight : tokens.cardBackground,
                 color: matrixKey === key ? tokens.primaryText : tokens.textMuted,
               }}
             >

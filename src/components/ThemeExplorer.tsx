@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { intelligence, type Theme } from "../data/intelligence";
-import { tokens, categoryColors, chartColorRotation } from "../lib/theme";
+import { chart, tokens, categoryColors, chartColorRotation } from "../lib/theme";
 import { Card } from "./Card";
+import { InsightStrip, type Insight } from "./shell/InsightStrip";
 import { TrendChart } from "./TrendChart";
 import { shortBatchLabel } from "../data/trends";
 
@@ -91,10 +92,47 @@ export function ThemeExplorer({ selectedId, onSelect }: { selectedId: string | n
 
   if (!theme) return null;
 
+  // The three tiles answer the questions a reader was previously expected to
+  // work out by comparing three dense columns themselves.
+  const biggest = [...themes].sort((a, b) => b.size - a.size)[0];
+  const fastest = [...themes].sort(
+    (a, b) => b.momentum.derivatives.acceleration - a.momentum.derivatives.acceleration,
+  )[0];
+  const widest = [...themes].sort((a, b) => b.sectors.length - a.sectors.length)[0];
+
+  const insights: Insight[] = [
+    {
+      label: "Biggest group",
+      headline: biggest.label,
+      value: String(biggest.size),
+      detail: `companies · across ${biggest.sectors.length} industries`,
+      color: chart.ai,
+      onClick: () => onSelect(biggest.id),
+    },
+    {
+      label: "Speeding up fastest",
+      headline: fastest.label,
+      value: `+${(fastest.momentum.derivatives.acceleration * 100).toFixed(1)}`,
+      detail: "share is rising faster each batch",
+      color: chart.growth,
+      onClick: () => onSelect(fastest.id),
+    },
+    {
+      label: "Most widely spread",
+      headline: widest.label,
+      value: String(widest.sectors.length),
+      detail: `industries · ${widest.size} companies`,
+      color: chart.autonomy,
+      onClick: () => onSelect(widest.id),
+    },
+  ];
+
   const capabilities = Object.entries(theme.capabilityDemand).sort((a, b) => b[1] - a[1]).slice(0, 16);
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "0.85fr 1.3fr 1fr", gap: 8, height: "100%", minHeight: 0 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 12, height: "100%", minHeight: 0 }}>
+      <InsightStrip insights={insights} />
+      <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "0.78fr 1.55fr", gap: 12 }}>
       <Card title="Themes" subtitle={`${themes.length} discovered`} bodyStyle={{ display: "flex", flexDirection: "column", minHeight: 0, gap: 6 }}>
         <input
           value={query}
@@ -105,7 +143,7 @@ export function ThemeExplorer({ selectedId, onSelect }: { selectedId: string | n
             padding: "5px 8px",
             borderRadius: 6,
             border: `1px solid ${tokens.borderDefault}`,
-            background: "#ffffff",
+            background: tokens.cardBackground,
             color: tokens.textSecondary,
           }}
         />
@@ -156,25 +194,38 @@ export function ThemeExplorer({ selectedId, onSelect }: { selectedId: string | n
           Themes are discovered by clustering company descriptions, not defined in advance — a
           category nobody has named yet appears here on its own once enough companies describe it.
         </div>
-      </Card>
 
-      <Card title="Momentum breakdown" subtitle="Every part of the score, shown" bodyStyle={{ overflowY: "auto" }}>
-        <MomentumBreakdown theme={theme} />
-
-        {capabilities.length > 0 && (
-          <div style={{ marginTop: 10, paddingTop: 7, borderTop: `1px solid ${tokens.borderDefault}` }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", marginBottom: 4 }}>
-              What this theme depends on
-            </div>
-            {capabilities.map(([label, count]) => (
-              <div key={label} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: tokens.textSecondary, padding: "1px 0" }}>
-                <span>{label}</span>
-                <span style={{ color: tokens.textHint }}>{count}</span>
+        <details style={{ marginTop: 12, borderTop: `1px solid ${tokens.borderDefault}`, paddingTop: 10 }}>
+          <summary
+            style={{
+              cursor: "pointer", fontSize: 12, fontWeight: 700,
+              color: tokens.textMuted, listStyle: "revert", userSelect: "none",
+            }}
+          >
+            How this score is worked out, and what it depends on
+          </summary>
+          <div style={{ marginTop: 10 }}>
+            <MomentumBreakdown theme={theme} />
+            {capabilities.length > 0 && (
+              <div style={{ marginTop: 12, paddingTop: 9, borderTop: `1px solid ${tokens.borderDefault}` }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", letterSpacing: 0.4, marginBottom: 6 }}>
+                  What this theme depends on
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "2px 20px" }}>
+                  {capabilities.map(([label, count]) => (
+                    <div key={label} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: tokens.textSecondary, padding: "2px 0" }}>
+                      <span>{label}</span>
+                      <span style={{ color: tokens.textHint }}>{count}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
+            )}
           </div>
-        )}
+        </details>
       </Card>
+
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { intelligence, topThemes } from "../data/intelligence";
-import { tokens, categoryColors, chartColorRotation } from "../lib/theme";
+import { chart, tokens, categoryColors, chartColorRotation } from "../lib/theme";
 import { Card } from "./Card";
+import { InsightStrip, type Insight } from "./shell/InsightStrip";
 
 /**
  * §29 Frontier Radar — answer the market in ~30 seconds.
@@ -65,8 +66,51 @@ export function FrontierRadar({ onSelectTheme }: { onSelectTheme: (id: string) =
   const firstBatch = shifts[0]?.from.batch;
   const lastBatch = shifts[0]?.to.batch;
 
+  // Lead with the three answers. The panels below are the evidence for them,
+  // not three separate things to read and reconcile.
+  const biggestShift = [...shifts]
+    .filter((sh) => sh.deltaPct !== null)
+    .sort((a, b) => Math.abs(b.deltaPct!) - Math.abs(a.deltaPct!))[0];
+  const fastest = [...themes].sort(
+    (a, b) => b.momentum.derivatives.acceleration - a.momentum.derivatives.acceleration,
+  )[0];
+  const tightest = gaps[0];
+
+  const insights: Insight[] = [
+    ...(biggestShift
+      ? [{
+          label: "Biggest direction change",
+          headline: `Toward ${biggestShift.poles[1].toLowerCase()}`,
+          value: `${biggestShift.deltaPct! >= 0 ? "+" : ""}${biggestShift.deltaPct}pt`,
+          detail: `${biggestShift.label} · ${(biggestShift.from.bShare! * 100).toFixed(0)}% → ${(biggestShift.to.bShare! * 100).toFixed(0)}%`,
+          color: chart.shift,
+        }]
+      : []),
+    ...(fastest
+      ? [{
+          label: "Speeding up fastest",
+          headline: fastest.label,
+          value: `+${(fastest.momentum.derivatives.acceleration * 100).toFixed(1)}`,
+          detail: `${fastest.size} companies · share rising faster each batch`,
+          color: chart.growth,
+          onClick: () => onSelectTheme(fastest.id),
+        }]
+      : []),
+    ...(tightest
+      ? [{
+          label: "Tightest supply gap",
+          headline: tightest.label,
+          value: `${tightest.ratio}×`,
+          detail: `${tightest.demand} need it · ${tightest.supply} build it`,
+          color: chart.infrastructure,
+        }]
+      : []),
+  ];
+
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1.05fr 1.35fr 1fr", gap: 8, height: "100%", minHeight: 0 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 12, height: "100%", minHeight: 0 }}>
+      <InsightStrip insights={insights} />
+      <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "1fr 1.45fr 1fr", gap: 12 }}>
       <Card
         title="Where the world is moving"
         subtitle={firstBatch ? `${firstBatch} → ${lastBatch}` : undefined}
@@ -156,6 +200,7 @@ export function FrontierRadar({ onSelectTheme }: { onSelectTheme: (id: string) =
           descriptions.
         </div>
       </Card>
+      </div>
     </div>
   );
 }

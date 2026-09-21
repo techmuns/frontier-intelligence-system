@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { intelligence } from "../data/intelligence";
-import { tokens, chartColorRotation } from "../lib/theme";
+import { heatFill, heatInk, tokens, chartColorRotation } from "../lib/theme";
 import { Card } from "./Card";
 
 /**
@@ -45,7 +45,7 @@ function LaborMap() {
               borderRadius: 999,
               cursor: "pointer",
               border: `1px solid ${measure === key ? tokens.primaryBorder : tokens.borderDefault}`,
-              background: measure === key ? tokens.primaryLight : "#ffffff",
+              background: measure === key ? tokens.primaryLight : tokens.cardBackground,
               color: measure === key ? tokens.primaryText : tokens.textMuted,
             }}
           >
@@ -54,62 +54,104 @@ function LaborMap() {
         ))}
       </div>
 
-      <table style={{ borderCollapse: "collapse", fontSize: 13, width: "100%" }}>
-        <thead>
-          <tr>
-            <th style={{ textAlign: "left", padding: "3px 6px", fontSize: 11, color: tokens.textMuted }}>Role \ Industry</th>
-            {industries.map((ind) => (
+      {/* Sticky header row and first column: the matrix is wider than the
+          card, and a number is meaningless once its role or industry has
+          scrolled out of sight. */}
+      <div style={{ flex: 1, minHeight: 0, overflow: "auto", border: `1px solid ${tokens.borderDefault}`, borderRadius: 9 }}>
+        <table style={{ borderCollapse: "separate", borderSpacing: 0, fontSize: 13, width: "100%" }}>
+          <thead>
+            <tr>
               <th
-                key={ind}
-                title={ind}
-                style={{ padding: "3px 3px", fontSize: 11, color: tokens.textMuted, fontWeight: 600, maxWidth: 58, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                style={{
+                  position: "sticky", top: 0, left: 0, zIndex: 3,
+                  textAlign: "left", padding: "9px 11px", fontSize: 11, fontWeight: 700,
+                  letterSpacing: 0.3, textTransform: "uppercase",
+                  color: tokens.textMuted, background: tokens.cardBackground,
+                  borderBottom: `1px solid ${tokens.borderDefault}`,
+                  borderRight: `1px solid ${tokens.borderDefault}`,
+                }}
               >
-                {ind.length > 10 ? `${ind.slice(0, 9)}…` : ind}
+                Role
               </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {roles.map((role) => (
-            <tr key={role}>
-              <td style={{ padding: "3px 6px", color: tokens.textSecondary, fontWeight: 600, whiteSpace: "nowrap" }} title={role}>
-                {role.length > 22 ? `${role.slice(0, 21)}…` : role}
-              </td>
-              {industries.map((ind) => {
-                const cell = map.cells[`${role}||${ind}`];
-                if (!cell) {
-                  return <td key={ind} style={{ border: `1px solid ${tokens.borderDefault}`, minWidth: 30 }} />;
-                }
-                // Autonomy view uses a fixed 0-6 scale so colour means the same
-                // thing in every cell; count view scales to the busiest cell.
-                const intensity =
-                  measure === "count"
-                    ? cell.count / maxCount
-                    : cell.autonomy === null
-                      ? 0
-                      : cell.autonomy / 6;
-                const display = measure === "count" ? cell.count : (cell.autonomy ?? "—");
-                return (
-                  <td
-                    key={ind}
-                    title={`${role} × ${ind}\n${cell.count} companies\nmean autonomy ${cell.autonomy ?? "unknown"}\n${cell.examples.join(", ")}`}
-                    style={{
-                      padding: "3px 4px",
-                      textAlign: "center",
-                      border: `1px solid ${tokens.borderDefault}`,
-                      background: `rgba(79,70,229,${0.06 + intensity * 0.66})`,
-                      color: intensity > 0.5 ? "#ffffff" : tokens.textSecondary,
-                      minWidth: 30,
-                    }}
-                  >
-                    {display}
-                  </td>
-                );
-              })}
+              {industries.map((ind) => (
+                <th
+                  key={ind}
+                  title={ind}
+                  style={{
+                    position: "sticky", top: 0, zIndex: 2,
+                    padding: "9px 6px", fontSize: 11, fontWeight: 700, letterSpacing: 0.3,
+                    color: tokens.textMuted, background: tokens.cardBackground,
+                    borderBottom: `1px solid ${tokens.borderDefault}`,
+                    maxWidth: 74, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                  }}
+                >
+                  {ind.length > 11 ? `${ind.slice(0, 10)}…` : ind}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {roles.map((role) => (
+              <tr key={role}>
+                <td
+                  title={role}
+                  style={{
+                    position: "sticky", left: 0, zIndex: 1,
+                    padding: "8px 11px", color: tokens.textSecondary, fontWeight: 600,
+                    whiteSpace: "nowrap", background: tokens.cardBackground,
+                    borderRight: `1px solid ${tokens.borderDefault}`,
+                    borderBottom: `1px solid ${tokens.borderDefault}`,
+                  }}
+                >
+                  {role.length > 24 ? `${role.slice(0, 23)}…` : role}
+                </td>
+                {industries.map((ind) => {
+                  const cell = map.cells[`${role}||${ind}`];
+                  if (!cell) {
+                    return (
+                      <td
+                        key={ind}
+                        title={`${role} × ${ind}\nNo company stated enough to place here`}
+                        style={{ borderBottom: `1px solid ${tokens.borderDefault}`, minWidth: 44, background: tokens.sunken }}
+                      />
+                    );
+                  }
+                  // Autonomy view uses a fixed 0-6 scale so colour means the same
+                  // thing in every cell; count view scales to the busiest cell.
+                  const intensity =
+                    measure === "count"
+                      ? cell.count / maxCount
+                      : cell.autonomy === null
+                        ? 0
+                        : cell.autonomy / 6;
+                  const display = measure === "count" ? cell.count : (cell.autonomy ?? "—");
+                  return (
+                    <td
+                      key={ind}
+                      title={`${role} × ${ind}\n${cell.count} companies\nmean autonomy ${cell.autonomy ?? "unknown"}\n${cell.examples.join(", ")}`}
+                      style={{
+                        padding: "8px 6px",
+                        textAlign: "center",
+                        fontWeight: intensity > 0.45 ? 700 : 500,
+                        borderBottom: `1px solid ${tokens.borderDefault}`,
+                        minWidth: 44,
+                        // One hue, light to dark. The previous fill started at
+                        // 6% opacity, which on a dark surface was invisible —
+                        // the scale now runs over an opaque ramp instead.
+                        background: heatFill(intensity),
+                        color: heatInk(intensity),
+                        cursor: "default",
+                      }}
+                    >
+                      {display}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <div style={{ fontSize: 11, color: tokens.textHint, lineHeight: 1.45 }}>
         Roles are inferred from what each company says it does, so a company automating no

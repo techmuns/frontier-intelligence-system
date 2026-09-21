@@ -25,7 +25,6 @@ import {
   biggestIndustryShifts,
 } from "./data/trends";
 import { TrendChart } from "./components/TrendChart";
-import { StatTile } from "./components/StatTile";
 import { Card } from "./components/Card";
 import { BarChartCard, type BarDatum } from "./components/BarChartCard";
 import { CompanyTable } from "./components/CompanyTable";
@@ -42,6 +41,10 @@ import { VelocityView } from "./components/VelocityView";
 import { ResearchView } from "./components/ResearchView";
 import { OverviewView } from "./components/OverviewView";
 import { useResearch } from "./hooks/useResearch";
+import { useThemeMode } from "./hooks/useThemeMode";
+import { AppShell, Segmented } from "./components/shell/AppShell";
+import { icons, type NavItem } from "./components/shell/Sidebar";
+import { MetricRow, metricIcons, type Metric } from "./components/shell/MetricCard";
 
 const DEV_TOKEN_KEY = "frontier.devToken";
 const DEV_TICKER_KEY = "frontier.devTicker";
@@ -58,6 +61,12 @@ export function Dashboard() {
   // aggregate below reads the same list whether or not D1 exists.
   const research = useResearch();
   const companies = research.companies;
+
+  const { mode, toggle: toggleTheme } = useThemeMode();
+  // One global search box in the header. It drives the company explorer and
+  // sends the reader there, because "find a company" is the only thing anyone
+  // wants to search for in this dataset.
+  const [search, setSearch] = useState("");
 
   // The Research tab is only offered when a database is actually bound.
   // Showing a permanently-empty tab that explains how to provision one would
@@ -169,6 +178,21 @@ export function Dashboard() {
   ];
 
   const activeSection = SECTIONS.find((sec) => sec.pages.some(([key]) => key === page)) ?? SECTIONS[0];
+
+  type SectionId = (typeof SECTIONS)[number]["id"];
+
+  // The sidebar carries these seven and nothing else — no search, settings,
+  // exports or account rows. They are the same seven sections as before, in
+  // the same order; only their presentation moved.
+  const NAV: NavItem<SectionId>[] = [
+    { id: "overview", label: "Overview", icon: icons.overview },
+    { id: "companies", label: "Companies", icon: icons.companies },
+    { id: "trends", label: "Over time", icon: icons.overTime },
+    { id: "build", label: "What they build", icon: icons.build },
+    { id: "changing", label: "What's changing", icon: icons.changing },
+    { id: "needs", label: "What they depend on", icon: icons.depend },
+    { id: "method", label: "How it's counted", icon: icons.counted },
+  ];
   const [chartView, setChartView] = useState<"snapshot" | "trends" | "composition" | "method">("snapshot");
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
 
@@ -290,132 +314,58 @@ export function Dashboard() {
     };
   }, []);
 
+  const cohort = `${batchCounts[0]?.batch ?? ""} – ${batchCounts[batchCounts.length - 1]?.batch ?? ""}`.replace(/ 20/g, " '");
+
+  const metrics: Metric[] = [
+    { label: "Companies", value: companies.length.toLocaleString(), hint: "5 recent batches", category: "markets", icon: metricIcons.companies },
+    { label: "Batches", value: String(batchCounts.length), hint: "2 still filling", category: "sector", icon: metricIcons.batches },
+    { label: "Industries", value: String(industryCount), hint: "broad categories", category: "analytics", icon: metricIcons.industries },
+    { label: "Hiring now", value: `${Math.round((hiringCount / companies.length) * 100)}%`, hint: `${hiringCount} advertising jobs`, category: "tools", icon: metricIcons.hiring },
+  ];
+
   return (
-    <main
-      id="dashboard-main"
-      data-dashboard-capture-root="true"
-      style={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        background: tokens.pageBackground,
-        color: tokens.textPrimary,
-        fontFamily: "inherit",
+    <AppShell
+      items={NAV}
+      active={activeSection.id as SectionId}
+      onSelect={(id) => {
+        const sec = SECTIONS.find((x) => x.id === id);
+        if (sec) setPage(sec.pages[0][0]);
       }}
-    >
-      {/* Header */}
-      <header
-        style={{
-          flexShrink: 0,
-          background: tokens.headerBar,
-          borderBottom: `1px solid ${tokens.borderDefault}`,
-          padding: "6px 14px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 10,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-          <div style={{ fontSize: 17, fontWeight: 800, letterSpacing: 0.3, color: tokens.textPrimary }}>
-            FRONTIER
-          </div>
-          <div style={{ fontSize: 11, color: tokens.textHint, fontWeight: 600, letterSpacing: 0.3 }}>
-            TECHNOLOGY MARKET INTELLIGENCE — YC WINTER '26 – WINTER '27
-          </div>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          {effectiveTicker ? (
+      query={search}
+      onQuery={setSearch}
+      cohort={cohort}
+      mode={mode}
+      onToggleTheme={toggleTheme}
+      headerRight={
+        <>
+          {effectiveTicker && (
             <span
               style={{
-                fontSize: 13,
-                fontWeight: 700,
-                color: tokens.primaryText,
-                background: tokens.primaryLight,
-                border: `1px solid ${tokens.primaryBorder}`,
-                borderRadius: 999,
-                padding: "3px 10px",
+                fontSize: 12, fontWeight: 700, color: tokens.primaryText,
+                background: tokens.primaryLight, border: `1px solid ${tokens.primaryBorder}`,
+                borderRadius: 8, padding: "6px 11px", whiteSpace: "nowrap",
               }}
             >
               {effectiveTickerCompany ?? effectiveTicker}
             </span>
-          ) : (
-            <span style={{ fontSize: 13, color: tokens.textHint }}>No ticker selected</span>
           )}
-          <TestModePanel
-            active={!!session.token}
-            devToken={devToken}
-            devTicker={devTicker}
-            onApply={applyDevOverride}
+          <TestModePanel active={!!session.token} devToken={devToken} devTicker={devTicker} onApply={applyDevOverride} />
+        </>
+      }
+    >
+      <MetricRow metrics={metrics} />
+
+      {/* Sub-views inside a section. The sidebar is the only place the seven
+          sections appear; these are the views within the current one. */}
+      {activeSection.pages.length > 1 && (
+        <div style={{ flexShrink: 0 }}>
+          <Segmented
+            options={activeSection.pages}
+            value={page}
+            onChange={setPage}
           />
         </div>
-      </header>
-
-      {/* Body */}
-      <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", gap: 8, padding: 10 }}>
-        {/* KPI row */}
-        <div style={{ display: "flex", gap: 8, flexShrink: 0, flexWrap: "wrap" }}>
-          <StatTile label="Companies" value={companies.length.toLocaleString()} category="markets" hint="5 recent batches" />
-          <StatTile label="Batches" value={String(batchCounts.length)} category="sector" hint="2 still filling" />
-          <StatTile label="Industries" value={String(industryCount)} category="analytics" hint="broad categories" />
-          <StatTile
-            label="Hiring now"
-            value={`${Math.round((hiringCount / companies.length) * 100)}%`}
-            category="tools"
-            hint={`${hiringCount} advertising jobs`}
-          />
-        </div>
-
-        {/* Section navigation — one row of questions, one row of answers */}
-        <div style={{ display: "flex", gap: 4, flexShrink: 0, flexWrap: "wrap" }}>
-          {SECTIONS.map((sec) => {
-            const active = sec.id === activeSection.id;
-            return (
-              <button
-                key={sec.id}
-                // Entering a section lands on its first view rather than
-                // leaving the reader on a section header with nothing shown.
-                onClick={() => setPage(sec.pages[0][0])}
-                style={{
-                  fontSize: 13,
-                  fontWeight: 600,
-                  padding: "4px 11px",
-                  borderRadius: 999,
-                  cursor: "pointer",
-                  border: `1px solid ${active ? tokens.primaryBorder : tokens.borderDefault}`,
-                  background: active ? tokens.primaryLight : "#ffffff",
-                  color: active ? tokens.primaryText : tokens.textMuted,
-                }}
-              >
-                {sec.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Sub-tabs, only for sections that hold more than one view. */}
-        {activeSection.pages.length > 1 && (
-          <div style={{ display: "flex", gap: 4, flexShrink: 0, flexWrap: "wrap" }}>
-            {activeSection.pages.map(([key, label]) => (
-              <button
-                key={key}
-                onClick={() => setPage(key)}
-                style={{
-                  fontSize: 12,
-                  fontWeight: 600,
-                  padding: "3px 10px",
-                  borderRadius: 999,
-                  cursor: "pointer",
-                  border: `1px solid ${page === key ? tokens.primaryBorder : tokens.borderDefault}`,
-                  background: page === key ? "#ffffff" : "transparent",
-                  color: page === key ? tokens.primaryText : tokens.textHint,
-                }}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        )}
+      )}
 
         {page === "radar" && (
           <div style={{ flex: 1, minHeight: 0 }}>
@@ -496,7 +446,7 @@ export function Dashboard() {
                   borderRadius: 999,
                   cursor: "pointer",
                   border: `1px solid ${chartView === key ? tokens.primaryBorder : tokens.borderDefault}`,
-                  background: chartView === key ? "#ffffff" : "transparent",
+                  background: chartView === key ? tokens.cardBackground : "transparent",
                   color: chartView === key ? tokens.primaryText : tokens.textHint,
                 }}
               >
@@ -638,7 +588,7 @@ export function Dashboard() {
             subtitle={`${companies.length} companies · click a row for detail`}
             bodyStyle={{ display: "flex", flexDirection: "column", minHeight: 0 }}
           >
-            <CompanyTable companies={companies} selectedSlug={selectedSlug} onSelect={setSelectedSlug} />
+            <CompanyTable companies={companies} selectedSlug={selectedSlug} onSelect={setSelectedSlug} initialSearch={search} />
           </Card>
           <Card
             title={selectedCompany ? selectedCompany.name : "Live signals"}
@@ -665,16 +615,15 @@ export function Dashboard() {
         </div>
         )}
 
-        {/* Footer / provenance */}
-        <div style={{ flexShrink: 0, fontSize: 12, color: tokens.textHint, display: "flex", justifyContent: "space-between" }}>
+      {/* Footer / provenance */}
+      <div style={{ flexShrink: 0, fontSize: 12, color: tokens.textHint, display: "flex", justifyContent: "space-between", gap: 16 }}>
           <span>
             Source: {DATASET_SOURCE.label} · captured {DATASET_SOURCE.capturedAt}
           </span>
-          <span style={{ color: categoryColors.crypto.text }}>
-            Fall '26 and Winter '27 batches are still filling — treat their counts as partial, not decline.
-          </span>
-        </div>
+        <span style={{ color: categoryColors.crypto.text }}>
+          Fall '26 and Winter '27 batches are still filling — treat their counts as partial, not decline.
+        </span>
       </div>
-    </main>
+    </AppShell>
   );
 }

@@ -327,6 +327,50 @@ you will see — *What they build*, *Who builds what*, *Jobs & tools*, *Gaps*.
 Overview computes from the same datasets as every detailed tab. It is a plainer
 view of the same numbers, not a friendlier second set of them.
 
+## Shell and theming
+
+A **left sidebar** carries the seven sections and nothing else — no search,
+settings, exports or account rows. The header holds one global search, the
+cohort the numbers cover, and a light/dark toggle. The sections are never
+duplicated as horizontal tabs; the only second row is the sub-views *inside* a
+section.
+
+**Dark mode works without any component knowing about it.** Every component
+styles itself from `tokens` in `src/lib/theme.ts`, whose values are `var(--…)`
+references into `src/styles/theme.css`. Setting one attribute on `<html>`
+repaints the whole dashboard, so twenty components gained a second theme
+without being rewritten. The choice is remembered in `localStorage` and
+defaults to the operating system; `index.html` paints the right surface before
+React mounts so a dark-mode reader never sees a white flash.
+
+### Chart colour is validated, not chosen by eye
+
+The categorical order is **blue, pink, teal, orange, violet, green, amber**,
+and it is deliberate. The obvious order put green next to pink, which
+deuteranopes cannot separate — the dataviz skill's validator scored that pair
+ΔE 2.7 against a floor of 8. This order passes on both the white and the dark
+navy surface. Re-run `validate_palette.js` before changing it.
+
+**The hues are identical in both themes**, so "violet means autonomy" stays
+true when the lights go out. Dark mode flags blue and violet slightly under
+3:1 against the navy surface; the relief the validator asks for is visible
+labels, which every chart here already carries.
+
+Heatmap ramps are the one thing that *must* differ per theme. A translucent
+tint of the accent vanishes on navy, and reusing the light ramp inverts it —
+its palest step becomes the brightest cell, so the emptiest squares would
+shout. Each theme steps away from its own surface instead (`--heat-0…5`).
+
+### Pages lead with their conclusion
+
+*What they build* and *What's changing* were three equally-weighted columns of
+dense panels: everything on screen, nothing foremost, and the reader left to
+synthesise the answer. Both now open with three insight tiles computed from
+the page's own data — biggest group, fastest accelerating, tightest supply gap
+— and the panels below became the evidence for a claim already made. The
+momentum arithmetic (`100/100 × 0.43 = 43`) moved behind an expander rather
+than occupying a third of the page.
+
 ## Layout
 
 Sized for a full browser window, not a widget. The first version used 9-11px

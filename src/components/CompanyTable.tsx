@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Company } from "../data/companies";
 import { allBatches, allIndustries } from "../data/companies";
 import { tokens, categoryColors } from "../lib/theme";
@@ -14,7 +14,7 @@ const selectStyle: React.CSSProperties = {
   padding: "9px 10px",
   borderRadius: 6,
   border: `1px solid ${tokens.borderDefault}`,
-  background: "#ffffff",
+  background: tokens.cardBackground,
   color: tokens.textSecondary,
 };
 
@@ -22,15 +22,25 @@ interface CompanyTableProps {
   companies: Company[];
   selectedSlug?: string | null;
   onSelect?: (slug: string) => void;
+  /** Seeded from the global header search. */
+  initialSearch?: string;
 }
 
-export function CompanyTable({ companies, selectedSlug, onSelect }: CompanyTableProps) {
-  const [search, setSearch] = useState("");
+export function CompanyTable({ companies, selectedSlug, onSelect, initialSearch = "" }: CompanyTableProps) {
+  const [search, setSearch] = useState(initialSearch);
   const [batch, setBatch] = useState("all");
   const [industry, setIndustry] = useState("all");
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
   const [page, setPage] = useState(0);
+
+  // Follow the header field while the reader is typing in it. Kept in local
+  // state rather than driven straight from the prop so the table's own box
+  // still works on its own once they start editing it here.
+  useEffect(() => {
+    setSearch(initialSearch);
+    setPage(0);
+  }, [initialSearch]);
 
   const batches = useMemo(() => allBatches(companies), [companies]);
   const industries = useMemo(() => allIndustries(companies), [companies]);
@@ -261,7 +271,7 @@ function pagerButtonStyle(disabled: boolean): React.CSSProperties {
     padding: "4px 10px",
     borderRadius: 6,
     border: `1px solid ${tokens.borderDefault}`,
-    background: disabled ? "#f9fafb" : "#ffffff",
+    background: disabled ? tokens.sunken : tokens.cardBackground,
     color: disabled ? tokens.textHint : tokens.textSecondary,
     cursor: disabled ? "default" : "pointer",
   };

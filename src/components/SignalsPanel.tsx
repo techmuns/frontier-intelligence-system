@@ -69,7 +69,7 @@ export function SignalsPanel({ token, ticker, tickerCompany, topTheme, useProxy 
             border: `1px solid ${tokens.borderDefault}`,
             borderRadius: 8,
             padding: "8px 10px",
-            background: "#ffffff",
+            background: tokens.cardBackground,
           }}
         >
           <div style={{ fontSize: 14, fontWeight: 600, color: tokens.textPrimary, lineHeight: 1.3 }}>

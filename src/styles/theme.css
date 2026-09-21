@@ -1,0 +1,135 @@
+/* Light and dark surfaces as CSS custom properties.
+ *
+ * Every component styles itself from `tokens` in src/lib/theme.ts, whose values
+ * are `var(--…)` references into this file. That is what makes one attribute on
+ * <html> repaint the whole dashboard: no component knows which mode it is in,
+ * and none had to be rewritten to gain dark mode.
+ *
+ * CHART HUES ARE DELIBERATELY NOT REDEFINED for dark mode. A reader learns
+ * "violet means autonomy" once and it must not change when the lights go out.
+ * They are declared once, below, and inherited by both themes.
+ */
+
+:root {
+  /* Surfaces — light */
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --surface-sunken: #f1f5f9;
+  --sidebar-bg: #ffffff;
+  --header-bg: #ffffff;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  /* Ink — light */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-hint: #94a3b8;
+
+  /* Accent — light */
+  --accent: #4f46e5;
+  --accent-text: #4338ca;
+  --accent-soft: #eef2ff;
+  --accent-border: #e0e7ff;
+
+  /* Category surfaces — light. The `text` hues live below and never change. */
+  --cat-markets-bg: #eff6ff;   --cat-markets-border: #dbeafe;
+  --cat-heatmaps-bg: #fff1f2;  --cat-heatmaps-border: #fecdd3;
+  --cat-sector-bg: #f0fdfa;    --cat-sector-border: #99f6e4;
+  --cat-crypto-bg: #fff7ed;    --cat-crypto-border: #fed7aa;
+  --cat-analytics-bg: #f5f3ff; --cat-analytics-border: #ede9fe;
+  --cat-tools-bg: #f0fdf4;     --cat-tools-border: #bbf7d0;
+  --cat-india-bg: #fffbeb;     --cat-india-border: #fde68a;
+
+  --error: #ef4444;
+  --error-bg: #fef2f2;
+
+  --grid: #eef1f5;
+  /* Heatmap ramp — one hue, low to high. */
+  --heat-0: #eef2ff; --heat-1: #e0e7ff; --heat-2: #c7d2fe;
+  --heat-3: #a5b4fc; --heat-4: #818cf8; --heat-5: #4f46e5;
+  --tooltip-bg: #ffffff;
+  --tooltip-shadow: 0 6px 24px rgba(15, 23, 42, 0.12);
+  --row-hover: rgba(79, 70, 229, 0.05);
+}
+
+:root[data-theme="dark"] {
+  /* Deep navy rather than black — a research terminal, not a void. */
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-2: #172033;
+  --surface-sunken: #131c2e;
+  --sidebar-bg: #0b1220;
+  --header-bg: #0f172a;
+  --border: #334155;
+  --border-strong: #475569;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-hint: #64748b;
+
+  --accent: #818cf8;
+  --accent-text: #c7d2fe;
+  --accent-soft: rgba(99, 102, 241, 0.16);
+  --accent-border: rgba(129, 140, 248, 0.34);
+
+  /* Category surfaces become translucent tints of their own hue, so a pill
+     reads as the same colour family it does in light mode. */
+  --cat-markets-bg: rgba(37, 99, 235, 0.16);    --cat-markets-border: rgba(37, 99, 235, 0.34);
+  --cat-heatmaps-bg: rgba(225, 29, 72, 0.16);   --cat-heatmaps-border: rgba(225, 29, 72, 0.34);
+  --cat-sector-bg: rgba(13, 148, 136, 0.16);    --cat-sector-border: rgba(13, 148, 136, 0.34);
+  --cat-crypto-bg: rgba(234, 88, 12, 0.16);     --cat-crypto-border: rgba(234, 88, 12, 0.34);
+  --cat-analytics-bg: rgba(124, 58, 237, 0.18); --cat-analytics-border: rgba(124, 58, 237, 0.36);
+  --cat-tools-bg: rgba(22, 163, 74, 0.16);      --cat-tools-border: rgba(22, 163, 74, 0.34);
+  --cat-india-bg: rgba(217, 119, 6, 0.16);      --cat-india-border: rgba(217, 119, 6, 0.34);
+
+  --error: #f87171;
+  --error-bg: rgba(248, 113, 113, 0.14);
+
+  --grid: #24314a;
+  /* The light ramp inverts on a dark surface — its palest step reads as the
+     BRIGHTEST cell, so low counts would shout. Dark mode steps up from the
+     surface instead, keeping "darker background = fewer" intact. */
+  --heat-0: #1a2440; --heat-1: #24325c; --heat-2: #314179;
+  --heat-3: #415296; --heat-4: #5766c4; --heat-5: #818cf8;
+  --tooltip-bg: #1e293b;
+  --tooltip-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+  --row-hover: rgba(129, 140, 248, 0.1);
+}
+
+/* Chart hues — identical in both themes, on purpose.
+ *
+ * Order is the validated assignment order from the dataviz skill's checker
+ * (blue, pink, teal, orange, violet, green, amber). Re-ordering them re-opens
+ * a red/green pair that deuteranopes cannot separate — the first order tried
+ * failed at ΔE 2.7. Do not reshuffle without re-running the validator. */
+:root, :root[data-theme="dark"] {
+  --c-blue: #2563eb;    /* AI / application / primary signal */
+  --c-pink: #e11d48;    /* structural shift / declining category */
+  --c-teal: #0d9488;    /* secondary positive */
+  --c-orange: #ea580c;  /* infrastructure / dependency */
+  --c-violet: #7c3aed;  /* autonomy / software intelligence */
+  --c-green: #16a34a;   /* growth / physical expansion */
+  --c-amber: #d97706;   /* supporting category */
+  --c-neutral: #94a3b8; /* de-emphasis: context, not a series */
+}
+
+html, body, #root { height: 100%; margin: 0; padding: 0; }
+* { box-sizing: border-box; }
+body {
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* Smooth only the surfaces. Transitioning `all` would also animate chart
+     geometry on every re-render, which reads as lag rather than polish. */
+  transition: background-color .18s ease, color .18s ease;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+@keyframes frontier-spin { to { transform: rotate(360deg); } }

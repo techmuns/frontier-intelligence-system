@@ -30,12 +30,12 @@ function CustomTooltip({ active, payload, valueLabel }: any) {
   return (
     <div
       style={{
-        background: "#ffffff",
+        background: tokens.tooltipBg,
         border: `1px solid ${tokens.borderDefault}`,
         borderRadius: 8,
         padding: "8px 10px",
         fontSize: 14,
-        boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+        boxShadow: tokens.tooltipShadow,
       }}
     >
       <div style={{ fontWeight: 700, color: tokens.textPrimary }}>{d.fullName ?? d.name}</div>
@@ -61,7 +61,7 @@ export function BarChartCard({ data, layout = "vertical", height = 220, valueLab
       >
         <CartesianGrid
           strokeDasharray="3 3"
-          stroke={tokens.borderDefault}
+          stroke={tokens.grid}
           horizontal={!isHorizontal}
           vertical={isHorizontal}
         />

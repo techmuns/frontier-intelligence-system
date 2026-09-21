@@ -56,7 +56,7 @@ export function VelocityView() {
                 borderRadius: 999,
                 cursor: "pointer",
                 border: `1px solid ${archetype === a ? tokens.primaryBorder : tokens.borderDefault}`,
-                background: archetype === a ? tokens.primaryLight : "#ffffff",
+                background: archetype === a ? tokens.primaryLight : tokens.cardBackground,
                 color: archetype === a ? tokens.primaryText : tokens.textMuted,
               }}
             >

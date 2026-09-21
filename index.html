@@ -10,13 +10,29 @@
          async, or defer — load order matters. -->
     <script src="https://munshot.s3.ap-south-1.amazonaws.com/SDK+script/munshot-dashboard-sdk.v1.0.0.min.js"></script>
 
-    <style>
-      html, body, #root { margin: 0; padding: 0; height: 100%; }
-      body { overflow: hidden; } /* only the dashboard's Zone 2 scrolls */
-      * { box-sizing: border-box; }
-      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-      @keyframes frontier-spin { to { transform: rotate(360deg); } }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Paints the correct surface before React mounts, so a dark-mode reader
+         never gets a white flash on load. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("frontier.theme");
+          var mode = stored === "light" || stored === "dark"
+            ? stored
+            : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", mode);
+          document.documentElement.style.colorScheme = mode;
+          document.documentElement.style.background = mode === "dark" ? "#0f172a" : "#f8fafc";
+        } catch (e) {
+          /* Restricted iframe — the app sets this again on mount. */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

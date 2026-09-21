@@ -28,12 +28,12 @@ function TrendTooltip({ active, payload, label, unit }: any) {
   return (
     <div
       style={{
-        background: "#ffffff",
+        background: tokens.tooltipBg,
         border: `1px solid ${tokens.borderDefault}`,
         borderRadius: 8,
         padding: "8px 10px",
         fontSize: 14,
-        boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+        boxShadow: tokens.tooltipShadow,
       }}
     >
       <div style={{ fontWeight: 700, color: tokens.textPrimary }}>{row.batch ?? label}</div>
@@ -61,7 +61,7 @@ export function TrendChart({ data, series, height = 170, unit = "%" }: TrendChar
   return (
     <ResponsiveContainer width="100%" height={height}>
       <LineChart data={data} margin={{ top: 6, right: 10, bottom: 0, left: -18 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke={tokens.borderDefault} vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke={tokens.grid} vertical={false} />
         <XAxis
           dataKey="label"
           tick={{ fontSize: 12, fill: tokens.textMuted }}
