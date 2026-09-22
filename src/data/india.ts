@@ -23,6 +23,8 @@ export interface InvestorBet {
   amountUsdMn: number | null;
   stage: string;
   source: string;
+  /** The company's own site, verified at build time, or null if unconfirmed. */
+  website: string | null;
 }
 
 export interface IndiaInvestor {

@@ -13,6 +13,7 @@
 
 import { writeFileSync, readFileSync, existsSync } from "node:fs";
 import { fetchDeals } from "./adapters/inc42.mjs";
+import { resolveAll } from "./adapters/website.mjs";
 import { classifyDeal, rollUpInvestors, summarise } from "./india.mjs";
 
 const args = process.argv.slice(2);
@@ -42,7 +43,29 @@ if (existsSync(OUT)) {
   merged = [...raw, ...carried].sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-const deals = merged.map(classifyDeal);
+const classified = merged.map(classifyDeal);
+
+// Company websites. The source names companies but never links them, so each
+// one is resolved by guessing the obvious domains and verifying the page
+// actually names the company. Only the companies the dashboard displays are
+// resolved — the AI-service set — because an unverifiable guess is left null
+// and probing 870 names to fill a column nothing reads would be rude to the
+// sites being probed.
+const needWebsites = [...new Set(classified.filter((d) => d.isAIService).map((d) => d.name))];
+console.log(`\nResolving websites for ${needWebsites.length} companies…`);
+let found = 0;
+const websites = await resolveAll(needWebsites, {
+  log: (r) => {
+    if (r.website) found++;
+    console.log(`  ${r.website ? "✓" : "·"} ${r.name}${r.website ? ` → ${r.website}` : ""}`);
+  },
+});
+console.log(`Resolved ${found} of ${needWebsites.length}.`);
+
+const deals = classified.map((d) => ({
+  ...d,
+  website: websites.get(d.name)?.website ?? null,
+}));
 const investors = rollUpInvestors(deals);
 const summary = summarise(deals, investors, { sinceIso, months });
 

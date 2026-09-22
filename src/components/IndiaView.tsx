@@ -223,19 +223,20 @@ export function IndiaView({ query }: { query: string }) {
               {selected.companies.map((c) => (
                 <tr key={`${c.name}-${c.date}`}>
                   <td style={{ padding: "8px 0", borderBottom: `1px solid ${tokens.borderDefault}` }}>
-                    {/* The company name goes to the company, not to the article.
-                        We have no website for these: the source publishes one
-                        for roughly one deal in eighteen, so a link map would be
-                        wrong far more often than right. A search on the exact
-                        name always lands somewhere correct and never sends a
-                        reader to the wrong company. The article stays beside
-                        it, because every figure here has to remain traceable. */}
+                    {/* The company name opens the company's own site. The
+                        funding source never links one, so each was resolved at
+                        build time by guessing the obvious domains and reading
+                        the page to confirm it names the company. Where that
+                        could not be confirmed the link falls back to a search
+                        rather than guessing — better a second click than the
+                        wrong company. The article stays beside the name,
+                        because every figure here has to remain traceable. */}
                     <a
-                      href={`https://duckduckgo.com/?q=${encodeURIComponent(`${c.name} India startup`)}`}
+                      href={c.website ?? `https://duckduckgo.com/?q=${encodeURIComponent(`${c.name} India startup`)}`}
                       target="_blank"
                       rel="noreferrer"
                       style={{ fontWeight: 700, color: tokens.textPrimary, textDecoration: "none" }}
-                      title={`Find ${c.name}`}
+                      title={c.website ?? `No confirmed site — search for ${c.name}`}
                     >
                       {c.name}
                     </a>

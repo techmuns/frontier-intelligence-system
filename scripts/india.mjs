@@ -171,6 +171,8 @@ export function rollUpInvestors(deals) {
           amountUsdMn: d.amountUsdMn,
           stage: normaliseStage(d.roundType),
           source: d.source,
+          // Verified company site, or null when none could be confirmed.
+          website: d.website ?? null,
         })),
     });
   }
