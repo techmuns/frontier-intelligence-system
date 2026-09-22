@@ -223,14 +223,31 @@ export function IndiaView({ query }: { query: string }) {
               {selected.companies.map((c) => (
                 <tr key={`${c.name}-${c.date}`}>
                   <td style={{ padding: "8px 0", borderBottom: `1px solid ${tokens.borderDefault}` }}>
+                    {/* The company name goes to the company, not to the article.
+                        We have no website for these: the source publishes one
+                        for roughly one deal in eighteen, so a link map would be
+                        wrong far more often than right. A search on the exact
+                        name always lands somewhere correct and never sends a
+                        reader to the wrong company. The article stays beside
+                        it, because every figure here has to remain traceable. */}
+                    <a
+                      href={`https://duckduckgo.com/?q=${encodeURIComponent(`${c.name} India startup`)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ fontWeight: 700, color: tokens.textPrimary, textDecoration: "none" }}
+                      title={`Find ${c.name}`}
+                    >
+                      {c.name}
+                    </a>
                     <a
                       href={c.source}
                       target="_blank"
                       rel="noreferrer"
-                      style={{ fontWeight: 700, color: tokens.textPrimary, textDecoration: "none" }}
-                      title="Open the Inc42 roundup this deal came from"
+                      onClick={(e) => e.stopPropagation()}
+                      style={{ marginLeft: 7, fontSize: 11, color: tokens.textHint, textDecoration: "none" }}
+                      title="The Inc42 roundup this deal was read from"
                     >
-                      {c.name}
+                      source
                     </a>
                   </td>
                   <td

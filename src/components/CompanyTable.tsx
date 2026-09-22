@@ -1,13 +1,30 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Company } from "../data/companies";
-import { allBatches, allIndustries } from "../data/companies";
+import {
+  allBatches,
+  allCountries,
+  allIndustries,
+  allSubindustries,
+  countryOf,
+  displayDomain,
+  subindustryOf,
+} from "../data/companies";
 import { tokens, categoryColors } from "../lib/theme";
 import { EmptyState } from "./StatePanels";
 
-type SortKey = "name" | "batch" | "industry" | "team_size";
+type SortKey = "name" | "batch" | "industry" | "country";
 type SortDir = "asc" | "desc";
 
-const PAGE_SIZE = 14;
+/**
+ * Rows rendered before the reader has scrolled, and how many more arrive each
+ * time they reach the bottom.
+ *
+ * The table used to page in blocks of fourteen behind Prev/Next buttons, which
+ * meant fifty-one clicks to see the list. It now grows as you scroll. The
+ * window exists so the DOM stays small as the dataset grows — every batch adds
+ * companies, and rendering all of them on load would get slower every month.
+ */
+const PAGE_SIZE = 40;
 
 const selectStyle: React.CSSProperties = {
   fontSize: 14,
@@ -30,50 +47,79 @@ export function CompanyTable({ companies, selectedSlug, onSelect, initialSearch 
   const [search, setSearch] = useState(initialSearch);
   const [batch, setBatch] = useState("all");
   const [industry, setIndustry] = useState("all");
+  const [subindustry, setSubindustry] = useState("all");
+  const [country, setCountry] = useState("all");
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
-  const [page, setPage] = useState(0);
+  const [visible, setVisible] = useState(PAGE_SIZE);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   // Follow the header field while the reader is typing in it. Kept in local
   // state rather than driven straight from the prop so the table's own box
   // still works on its own once they start editing it here.
   useEffect(() => {
     setSearch(initialSearch);
-    setPage(0);
   }, [initialSearch]);
 
   const batches = useMemo(() => allBatches(companies), [companies]);
   const industries = useMemo(() => allIndustries(companies), [companies]);
+  const subindustries = useMemo(() => allSubindustries(companies, industry), [companies, industry]);
+  const countries = useMemo(() => allCountries(companies), [companies]);
+
+  // Changing the industry can strip the chosen subindustry of its parent, which
+  // would filter to nothing with no visible cause. Drop it instead.
+  useEffect(() => {
+    if (subindustry !== "all" && !subindustries.includes(subindustry)) setSubindustry("all");
+  }, [subindustries, subindustry]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
-    let rows = companies.filter((c) => {
+    const rows = companies.filter((c) => {
       if (batch !== "all" && c.batch !== batch) return false;
       if (industry !== "all" && c.industry !== industry) return false;
+      if (subindustry !== "all" && subindustryOf(c) !== subindustry) return false;
+      if (country !== "all" && countryOf(c.all_locations) !== country) return false;
       if (q && !c.name.toLowerCase().includes(q) && !(c.one_liner ?? "").toLowerCase().includes(q)) {
         return false;
       }
       return true;
     });
-    rows = [...rows].sort((a, b) => {
-      let av: string | number = "";
-      let bv: string | number = "";
-      if (sortKey === "team_size") {
-        av = a.team_size ?? 0;
-        bv = b.team_size ?? 0;
-      } else {
-        av = (a[sortKey] ?? "") as string;
-        bv = (b[sortKey] ?? "") as string;
-      }
-      const cmp = typeof av === "number" && typeof bv === "number" ? av - bv : String(av).localeCompare(String(bv));
+    return [...rows].sort((a, b) => {
+      const av = sortKey === "country" ? countryOf(a.all_locations) : ((a[sortKey] ?? "") as string);
+      const bv = sortKey === "country" ? countryOf(b.all_locations) : ((b[sortKey] ?? "") as string);
+      const cmp = String(av).localeCompare(String(bv));
       return sortDir === "asc" ? cmp : -cmp;
     });
-    return rows;
-  }, [companies, search, batch, industry, sortKey, sortDir]);
+  }, [companies, search, batch, industry, subindustry, country, sortKey, sortDir]);
 
-  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const clampedPage = Math.min(page, pageCount - 1);
-  const pageRows = filtered.slice(clampedPage * PAGE_SIZE, clampedPage * PAGE_SIZE + PAGE_SIZE);
+  // Any change to the result set starts the window over, and scrolls back to
+  // the top — otherwise a filter applied halfway down leaves the reader
+  // looking at blank space below a short list.
+  useEffect(() => {
+    setVisible(PAGE_SIZE);
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, [search, batch, industry, subindustry, country, sortKey, sortDir]);
+
+  // Grow the window when the sentinel below the last row comes into view.
+  useEffect(() => {
+    const node = sentinelRef.current;
+    const root = scrollRef.current;
+    if (!node || !root) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setVisible((v) => (v >= filtered.length ? v : v + PAGE_SIZE));
+        }
+      },
+      { root, rootMargin: "300px" },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, [filtered.length]);
+
+  const rows = filtered.slice(0, visible);
 
   function toggleSort(key: SortKey) {
     if (sortKey === key) {
@@ -82,10 +128,9 @@ export function CompanyTable({ companies, selectedSlug, onSelect, initialSearch 
       setSortKey(key);
       setSortDir("asc");
     }
-    setPage(0);
   }
 
-  function headerCell(label: string, key: SortKey, width: string) {
+  function headerCell(label: string, key: SortKey, width?: string) {
     const active = sortKey === key;
     return (
       <th
@@ -114,21 +159,11 @@ export function CompanyTable({ companies, selectedSlug, onSelect, initialSearch 
       <div style={{ display: "flex", gap: 8, marginBottom: 10, flexWrap: "wrap", flexShrink: 0 }}>
         <input
           value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setPage(0);
-          }}
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="Search companies…"
           style={{ ...selectStyle, flex: "1 1 160px", minWidth: 140 }}
         />
-        <select
-          value={batch}
-          onChange={(e) => {
-            setBatch(e.target.value);
-            setPage(0);
-          }}
-          style={selectStyle}
-        >
+        <select value={batch} onChange={(e) => setBatch(e.target.value)} style={selectStyle}>
           <option value="all">All batches</option>
           {batches.map((b) => (
             <option key={b} value={b}>
@@ -136,18 +171,33 @@ export function CompanyTable({ companies, selectedSlug, onSelect, initialSearch 
             </option>
           ))}
         </select>
-        <select
-          value={industry}
-          onChange={(e) => {
-            setIndustry(e.target.value);
-            setPage(0);
-          }}
-          style={selectStyle}
-        >
+        <select value={industry} onChange={(e) => setIndustry(e.target.value)} style={selectStyle}>
           <option value="all">All industries</option>
           {industries.map((i) => (
             <option key={i} value={i}>
               {i}
+            </option>
+          ))}
+        </select>
+        <select
+          value={subindustry}
+          onChange={(e) => setSubindustry(e.target.value)}
+          style={selectStyle}
+          disabled={subindustries.length === 0}
+          title={industry === "all" ? "Narrows within the chosen industry" : `Inside ${industry}`}
+        >
+          <option value="all">{industry === "all" ? "All sub-industries" : `All of ${industry}`}</option>
+          {subindustries.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+        <select value={country} onChange={(e) => setCountry(e.target.value)} style={selectStyle}>
+          <option value="all">All countries</option>
+          {countries.map((c) => (
+            <option key={c} value={c}>
+              {c}
             </option>
           ))}
         </select>
@@ -156,123 +206,99 @@ export function CompanyTable({ companies, selectedSlug, onSelect, initialSearch 
       {filtered.length === 0 ? (
         <EmptyState message="No companies match these filters" hint="Try clearing the search or filters." />
       ) : (
-        <div style={{ flex: 1, minHeight: 0, overflowY: "auto", border: `1px solid ${tokens.borderDefault}`, borderRadius: 8 }}>
+        <div
+          ref={scrollRef}
+          style={{ flex: 1, minHeight: 0, overflowY: "auto", border: `1px solid ${tokens.borderDefault}`, borderRadius: 8 }}
+        >
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
             <thead style={{ position: "sticky", top: 0, background: tokens.cardHeader, zIndex: 1 }}>
               <tr style={{ borderBottom: `1px solid ${tokens.borderDefault}` }}>
-                {headerCell("Company", "name", "22%")}
+                {headerCell("Company", "name", "20%")}
                 <th style={{ textAlign: "left", padding: "8px 10px", fontSize: 13, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase" }}>
                   Description
                 </th>
-                {headerCell("Batch", "batch", "13%")}
-                {headerCell("Industry", "industry", "16%")}
-                {headerCell("Team", "team_size", "7%")}
-                <th style={{ textAlign: "left", padding: "8px 10px", fontSize: 13, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", width: "8%" }}>
-                  Hiring
+                {headerCell("Batch", "batch", "12%")}
+                {headerCell("Industry", "industry", "15%")}
+                {headerCell("Country", "country", "10%")}
+                <th style={{ textAlign: "left", padding: "8px 10px", fontSize: 13, fontWeight: 700, color: tokens.textMuted, textTransform: "uppercase", width: "14%" }}>
+                  Website
                 </th>
               </tr>
             </thead>
             <tbody>
-              {pageRows.map((c) => (
-                <tr
-                  key={c.slug}
-                  onClick={() => onSelect?.(c.slug)}
-                  style={{
-                    borderBottom: `1px solid ${tokens.borderDefault}`,
-                    cursor: onSelect ? "pointer" : "default",
-                    background: c.slug === selectedSlug ? tokens.primaryLight : "transparent",
-                  }}
-                >
-                  <td style={{ padding: "8px 10px", fontWeight: 600, color: tokens.textPrimary }}>
-                    <a
-                      href={c.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ color: tokens.textPrimary, textDecoration: "none" }}
-                    >
-                      {c.name}
-                    </a>
-                  </td>
-                  <td style={{ padding: "8px 10px", color: tokens.textSecondary, maxWidth: 320 }}>
-                    {c.one_liner ?? "—"}
-                  </td>
-                  <td style={{ padding: "8px 10px", color: tokens.textSecondary, whiteSpace: "nowrap" }}>{c.batch}</td>
-                  <td style={{ padding: "8px 10px" }}>
-                    {c.industry && (
-                      <span
-                        style={{
-                          fontSize: 13,
-                          fontWeight: 600,
-                          color: categoryColors.analytics.text,
-                          background: categoryColors.analytics.bg,
-                          border: `1px solid ${categoryColors.analytics.border}`,
-                          borderRadius: 999,
-                          padding: "2px 8px",
-                        }}
-                      >
-                        {c.industry}
-                      </span>
-                    )}
-                  </td>
-                  <td style={{ padding: "8px 10px", color: tokens.textSecondary }}>{c.team_size ?? "—"}</td>
-                  <td style={{ padding: "8px 10px" }}>
-                    {c.isHiring ? (
-                      <span style={{ color: categoryColors.tools.text, fontWeight: 700, fontSize: 13 }}>Yes</span>
-                    ) : (
-                      <span style={{ color: tokens.textHint, fontSize: 13 }}>—</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
+              {rows.map((c) => {
+                const domain = displayDomain(c.website);
+                return (
+                  <tr
+                    key={c.slug}
+                    onClick={() => onSelect?.(c.slug)}
+                    style={{
+                      borderBottom: `1px solid ${tokens.borderDefault}`,
+                      cursor: onSelect ? "pointer" : "default",
+                      background: c.slug === selectedSlug ? tokens.primaryLight : "transparent",
+                    }}
+                  >
+                    <td style={{ padding: "8px 10px", fontWeight: 600, color: tokens.textPrimary }}>
+                      <a href={c.url} target="_blank" rel="noreferrer" style={{ color: tokens.textPrimary, textDecoration: "none" }}>
+                        {c.name}
+                      </a>
+                    </td>
+                    <td style={{ padding: "8px 10px", color: tokens.textSecondary, maxWidth: 320 }}>
+                      {c.one_liner ?? "—"}
+                    </td>
+                    <td style={{ padding: "8px 10px", color: tokens.textSecondary, whiteSpace: "nowrap" }}>{c.batch}</td>
+                    <td style={{ padding: "8px 10px" }}>
+                      {c.industry && (
+                        <span
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 600,
+                            color: categoryColors.analytics.text,
+                            background: categoryColors.analytics.bg,
+                            border: `1px solid ${categoryColors.analytics.border}`,
+                            borderRadius: 999,
+                            padding: "2px 8px",
+                          }}
+                        >
+                          {c.industry}
+                        </span>
+                      )}
+                    </td>
+                    <td style={{ padding: "8px 10px", color: tokens.textSecondary, whiteSpace: "nowrap" }}>
+                      {countryOf(c.all_locations)}
+                    </td>
+                    <td style={{ padding: "8px 10px", whiteSpace: "nowrap", maxWidth: 190, overflow: "hidden", textOverflow: "ellipsis" }}>
+                      {domain ? (
+                        <a
+                          href={c.website!}
+                          target="_blank"
+                          rel="noreferrer"
+                          // The row's own click handler must not swallow the link.
+                          onClick={(e) => e.stopPropagation()}
+                          style={{ color: tokens.primaryText, textDecoration: "none" }}
+                          title={c.website!}
+                        >
+                          {domain}
+                        </a>
+                      ) : (
+                        <span style={{ color: tokens.textHint }}>—</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
+          <div ref={sentinelRef} style={{ height: 1 }} />
         </div>
       )}
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginTop: 8,
-          fontSize: 13,
-          color: tokens.textHint,
-          flexShrink: 0,
-        }}
-      >
-        <span>
-          {filtered.length.toLocaleString()} companies · page {clampedPage + 1} of {pageCount}
-        </span>
-        <div style={{ display: "flex", gap: 6 }}>
-          <button
-            onClick={() => setPage((p) => Math.max(0, p - 1))}
-            disabled={clampedPage === 0}
-            style={pagerButtonStyle(clampedPage === 0)}
-          >
-            Prev
-          </button>
-          <button
-            onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
-            disabled={clampedPage >= pageCount - 1}
-            style={pagerButtonStyle(clampedPage >= pageCount - 1)}
-          >
-            Next
-          </button>
-        </div>
+      <div style={{ marginTop: 8, fontSize: 13, color: tokens.textHint, flexShrink: 0 }}>
+        {filtered.length === companies.length
+          ? `${filtered.length.toLocaleString()} companies`
+          : `${filtered.length.toLocaleString()} of ${companies.length.toLocaleString()} companies`}
+        {visible < filtered.length && ` · showing ${rows.length.toLocaleString()}, scroll for more`}
       </div>
     </div>
   );
-}
-
-function pagerButtonStyle(disabled: boolean): React.CSSProperties {
-  return {
-    fontSize: 13,
-    fontWeight: 600,
-    padding: "4px 10px",
-    borderRadius: 6,
-    border: `1px solid ${tokens.borderDefault}`,
-    background: disabled ? tokens.sunken : tokens.cardBackground,
-    color: disabled ? tokens.textHint : tokens.textSecondary,
-    cursor: disabled ? "default" : "pointer",
-  };
 }

@@ -140,6 +140,50 @@ export function allIndustries(list: Company[]): string[] {
   return [...new Set(list.map((c) => c.industry).filter((x): x is string => !!x))].sort();
 }
 
+/**
+ * The child half of YC's "B2B -> Analytics" subindustry string.
+ *
+ * Returns null when a company has no child, which is common: 133 of them are
+ * filed as plain "B2B". Treating that as a subindustry called "B2B" would put
+ * a category inside itself in the filter, so an absent child stays absent.
+ */
+export function subindustryOf(c: Company): string | null {
+  if (!c.subindustry?.includes("->")) return null;
+  return c.subindustry.split("->").pop()!.trim() || null;
+}
+
+/**
+ * Subindustries available for a given industry, so the second filter offers
+ * only children of the first. "B2B" alone is too coarse to narrow a list of
+ * 704 companies; "B2B -> Security" is the level a reader actually wants.
+ */
+export function allSubindustries(list: Company[], industry: string): string[] {
+  const names = new Set<string>();
+  for (const c of list) {
+    if (industry !== "all" && c.industry !== industry) continue;
+    const leaf = subindustryOf(c);
+    if (leaf) names.add(leaf);
+  }
+  return [...names].sort();
+}
+
+export function allCountries(list: Company[]): string[] {
+  return [...new Set(list.map((c) => countryOf(c.all_locations)))].sort((a, b) =>
+    // "Unknown" is not a country; it belongs at the end of the list.
+    a === "Unknown" ? 1 : b === "Unknown" ? -1 : a.localeCompare(b),
+  );
+}
+
+/** "https://www.menza.ai/" -> "menza.ai", for a table cell that must stay narrow. */
+export function displayDomain(website: string | null): string | null {
+  if (!website) return null;
+  try {
+    return new URL(website).hostname.replace(/^www\./, "");
+  } catch {
+    return website.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "") || null;
+  }
+}
+
 export function allBatches(list: Company[]): string[] {
   return BATCH_ORDER.filter((b) => list.some((c) => c.batch === b));
 }
@@ -149,7 +193,7 @@ export function allBatches(list: Company[]): string[] {
  * "City, Region, Country", sometimes with a "; Remote" suffix, so take the
  * last comma-separated part and drop any trailing qualifier.
  */
-function countryOf(location: string | null): string {
+export function countryOf(location: string | null): string {
   if (!location) return "Unknown";
   const country = location.split(",").pop()?.split(";")[0]?.trim();
   return country || "Unknown";

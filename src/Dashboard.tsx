@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { toBlob } from "html-to-image";
 import { sdk } from "./lib/sdk";
 import { useHostContext } from "./hooks/useHostContext";
-import { checkProxyAvailable } from "./lib/news";
 import { tokens, categoryColors } from "./lib/theme";
 import {
   companiesByBatch,
@@ -26,8 +25,10 @@ import { TrendChart } from "./components/TrendChart";
 import { Card } from "./components/Card";
 import { BarChartCard, type BarDatum } from "./components/BarChartCard";
 import { CompanyTable } from "./components/CompanyTable";
-import { SignalsPanel } from "./components/SignalsPanel";
-import { CompanyDetail } from "./components/CompanyDetail";
+// SignalsPanel and CompanyDetail are no longer mounted anywhere: the Companies
+// page is now the table alone. The files are kept rather than deleted so the
+// live-news work is not lost if a signals view returns on another page, but
+// nothing imports them, so none of it ships.
 import { TestModePanel } from "./components/TestModePanel";
 import { FrontierRadar } from "./components/FrontierRadar";
 import { WorldStack } from "./components/WorldStack";
@@ -99,40 +100,13 @@ export function Dashboard() {
       // sessionStorage unavailable (e.g. restricted iframe) — in-memory state still works for this session
     }
   }
-  // Server-side proxy fallback (see worker/index.ts) — testing only, and only
-  // when neither a real host session nor a manually-entered token exists.
-  const [proxyAvailable, setProxyAvailable] = useState(false);
-  const [probeDone, setProbeDone] = useState(false);
-  useEffect(() => {
-    let cancelled = false;
-    checkProxyAvailable().then((ok) => {
-      if (cancelled) return;
-      setProxyAvailable(ok);
-      setProbeDone(true);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  // The host handshake has no failure callback — when the dashboard is opened
-  // as a plain link rather than inside Munshot, `host:init` simply never
-  // arrives. So the panels that need a session were stuck on "Waiting for
-  // session…" indefinitely, which reads as a hung panel. After this grace
-  // period, with the proxy probe also answered, we can say plainly that live
-  // news is not connected instead of implying it is still coming.
-  const [handshakeGraceElapsed, setHandshakeGraceElapsed] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setHandshakeGraceElapsed(true), 4000);
-    return () => clearTimeout(t);
-  }, []);
-
-  const effectiveToken = session.token ?? devToken;
+  // The news proxy probe and the handshake grace timer went with the panels
+  // they served. Nothing on screen fetches live news any more, so probing for
+  // a fallback that nothing would use was a request on every page load for
+  // nothing. The worker endpoint and lib/news.ts are untouched and still work
+  // if a signals view comes back.
   const effectiveTicker = ticker ?? devTicker;
   const effectiveTickerCompany = tickerCompany ?? (devTicker ? devTicker : null);
-  // Use the proxy only as a last resort — a real token always takes priority.
-  const useProxy = !effectiveToken && proxyAvailable;
-  const sessionSettled = probeDone && handshakeGraceElapsed;
 
   type Page =
     | "overview"
@@ -224,18 +198,11 @@ export function Dashboard() {
     setSelectedThemeId(id);
     setPage("themes");
   }
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
-  const selectedCompany = useMemo(
-    () => (selectedSlug ? companies.find((c) => c.slug === selectedSlug) ?? null : null),
-    [companies, selectedSlug],
-  );
-
   const batchCounts = useMemo(() => companiesByBatch(companies), [companies]);
   const industries = useMemo(() => topIndustries(companies, 5), [companies]);
   const tags = useMemo(() => topTags(companies, 5), [companies]);
   const industryCount = useMemo(() => allIndustries(companies).length, [companies]);
   const hiringCount = useMemo(() => companies.filter((c) => c.isHiring).length, [companies]);
-  const topTheme = tags[0]?.name ?? industries[0]?.name ?? "AI startups";
 
   const batchChartData: BarDatum[] = batchCounts.map((b) => ({
     name: b.batch.replace(" 20", " '"),
@@ -292,7 +259,9 @@ export function Dashboard() {
   const snapshotRef = useRef<() => unknown>(() => ({}));
   snapshotRef.current = () => ({
     context: { ticker, dataset: DATASET_SOURCE },
-    selection: { selectedCompanySlug: selectedSlug },
+    // Kept in the payload so the export contract keeps its shape, but the
+    // Companies page no longer has a detail pane to select a company into.
+    selection: { selectedCompanySlug: null },
     data: {
       totalCompanies: companies.length,
       batchCounts,
@@ -386,7 +355,10 @@ export function Dashboard() {
         </>
       }
     >
-      <MetricRow metrics={metrics} />
+      {/* Companies is a working list, not a summary: the four totals above it
+          describe the whole dataset and say nothing about what has been
+          filtered to, so they only cost the table vertical space. */}
+      {page !== "companies" && <MetricRow metrics={metrics} />}
 
       {/* Sub-views inside a section. The sidebar is the only place the seven
           sections appear; these are the views within the current one. */}
@@ -567,39 +539,20 @@ export function Dashboard() {
         </div>
         )}
 
-        {/* Company explorer + signals — Companies and Trends pages */}
+        {/* Companies — the table and nothing else.
+            The live-signals column and the company-detail panel both went: the
+            page is a list to search and filter, and half its width was spent on
+            a panel that needed a host session to say anything. The website
+            column now carries the one thing a reader wanted the detail pane
+            for, which is where to go next. */}
         {page === "companies" && (
-        <div style={{ flex: 1, minHeight: 0, display: "grid", gridTemplateColumns: "2.2fr 1fr", gap: 8 }}>
+        <div style={{ flex: 1, minHeight: 0, display: "flex" }}>
           <Card
             title="Company explorer"
-            subtitle={`${companies.length} companies · click a row for detail`}
+            subtitle={`${companies.length} companies`}
             bodyStyle={{ display: "flex", flexDirection: "column", minHeight: 0 }}
           >
-            <CompanyTable companies={companies} selectedSlug={selectedSlug} onSelect={setSelectedSlug} initialSearch={search} />
-          </Card>
-          <Card
-            title={selectedCompany ? selectedCompany.name : "Live signals"}
-            subtitle={selectedCompany ? "Company detail" : "Recent news via Munshot news search"}
-            bodyStyle={{ display: "flex", flexDirection: "column", minHeight: 0 }}
-          >
-            {selectedCompany ? (
-              <CompanyDetail
-                company={selectedCompany}
-                token={effectiveToken}
-                useProxy={useProxy}
-                sessionSettled={sessionSettled}
-                onClose={() => setSelectedSlug(null)}
-              />
-            ) : (
-              <SignalsPanel
-                token={effectiveToken}
-                ticker={effectiveTicker}
-                tickerCompany={effectiveTickerCompany}
-                topTheme={topTheme}
-                useProxy={useProxy}
-                sessionSettled={sessionSettled}
-              />
-            )}
+            <CompanyTable companies={companies} initialSearch={search} />
           </Card>
         </div>
         )}
