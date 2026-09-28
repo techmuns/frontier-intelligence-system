@@ -1,25 +1,25 @@
 {
- "generatedAt": "2026-09-22",
- "windowStart": "2025-09-22",
+ "generatedAt": "2026-09-28",
+ "windowStart": "2025-09-28",
  "windowMonths": 12,
  "source": "Inc42 Funding Galore weekly roundups",
  "sourceUrl": "https://inc42.com/tag/funding-galore/",
  "summary": {
-  "windowStart": "2025-09-22",
+  "windowStart": "2025-09-28",
   "windowMonths": 12,
-  "totalDeals": 921,
-  "aiDeals": 133,
-  "serviceDeals": 109,
-  "serviceCompanies": 102,
-  "serviceInvestors": 275,
-  "serviceRoundValueUsdMn": 788.4,
-  "serviceDisclosedDeals": 101,
+  "totalDeals": 914,
+  "aiDeals": 135,
+  "serviceDeals": 110,
+  "serviceCompanies": 103,
+  "serviceInvestors": 273,
+  "serviceRoundValueUsdMn": 831.5,
+  "serviceDisclosedDeals": 102,
   "serviceUndisclosedDeals": 8,
-  "medianServiceRoundUsdMn": 3.8,
+  "medianServiceRoundUsdMn": 3.5,
   "stages": [
    {
     "stage": "Pre-seed",
-    "count": 16
+    "count": 18
    },
    {
     "stage": "Seed",
@@ -27,15 +27,15 @@
    },
    {
     "stage": "Pre-Series A",
-    "count": 11
+    "count": 10
    },
    {
     "stage": "Series A",
-    "count": 23
+    "count": 22
    },
    {
     "stage": "Series B",
-    "count": 5
+    "count": 6
    },
    {
     "stage": "Other",
@@ -45,10 +45,10 @@
   "monthly": [
    {
     "month": "2025-09",
-    "all": 41,
-    "ai": 6,
-    "service": 6,
-    "serviceUsdMn": 49.6
+    "all": 13,
+    "ai": 3,
+    "service": 3,
+    "serviceUsdMn": 7.4
    },
    {
     "month": "2025-10",
@@ -129,10 +129,10 @@
    },
    {
     "month": "2026-09",
-    "all": 53,
-    "ai": 7,
-    "service": 6,
-    "serviceUsdMn": 22.1
+    "all": 74,
+    "ai": 12,
+    "service": 10,
+    "serviceUsdMn": 107.4
    }
   ]
  },
@@ -142,15 +142,15 @@
    "key": "ycombinator",
    "bets": 8,
    "disclosedBets": 8,
-   "roundValueUsdMn": 151.8,
-   "medianRoundUsdMn": 16,
-   "allDeals": 16,
+   "roundValueUsdMn": 129.8,
+   "medianRoundUsdMn": 10.7,
+   "allDeals": 15,
    "aiDeals": 10,
-   "aiShare": 63,
+   "aiShare": 67,
    "stages": [
     {
      "stage": "Pre-seed",
-     "count": 1
+     "count": 2
     },
     {
      "stage": "Seed",
@@ -158,16 +158,24 @@
     },
     {
      "stage": "Series A",
-     "count": 4
+     "count": 3
     },
     {
      "stage": "Other",
      "count": 1
     }
    ],
-   "firstBet": "2025-09-24",
-   "lastBet": "2026-07-15",
+   "firstBet": "2025-10-29",
+   "lastBet": "2026-09-24",
    "companies": [
+    {
+     "name": "ByteAsk",
+     "date": "2026-09-24",
+     "amountUsdMn": 1,
+     "stage": "Pre-seed",
+     "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+     "website": "https://byteask.ai/"
+    },
     {
      "name": "Vorflux",
      "date": "2026-07-15",
@@ -182,7 +190,7 @@
      "amountUsdMn": 17,
      "stage": "Series A",
      "source": "https://inc42.com/buzz/from-cred-to-square-yards-indian-startups-raised-1-1-bn-this-week/",
-     "website": "https://justai.in/"
+     "website": "https://justai.fr/fr"
     },
     {
      "name": "Bolna",
@@ -223,14 +231,6 @@
      "stage": "Series A",
      "source": "https://inc42.com/buzz/from-snapmint-to-snabbit-indian-startups-raised-371-mn-this-week/",
      "website": "https://mem0.ai/"
-    },
-    {
-     "name": "Emergent",
-     "date": "2025-09-24",
-     "amountUsdMn": 23,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://emergent.sh/"
     }
    ]
   },
@@ -322,9 +322,9 @@
    "disclosedBets": 5,
    "roundValueUsdMn": 71,
    "medianRoundUsdMn": 15,
-   "allDeals": 27,
+   "allDeals": 28,
    "aiDeals": 6,
-   "aiShare": 22,
+   "aiShare": 21,
    "stages": [
     {
      "stage": "Seed",
@@ -364,7 +364,7 @@
      "amountUsdMn": 17,
      "stage": "Series A",
      "source": "https://inc42.com/buzz/from-cred-to-square-yards-indian-startups-raised-1-1-bn-this-week/",
-     "website": "https://justai.in/"
+     "website": "https://justai.fr/fr"
     },
     {
      "name": "Synthio Labs",
@@ -385,6 +385,71 @@
    ]
   },
   {
+   "name": "Elevation Capital",
+   "key": "elevationcapital",
+   "bets": 5,
+   "disclosedBets": 5,
+   "roundValueUsdMn": 48,
+   "medianRoundUsdMn": 10,
+   "allDeals": 16,
+   "aiDeals": 5,
+   "aiShare": 31,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 2
+    },
+    {
+     "stage": "Series A",
+     "count": 3
+    }
+   ],
+   "firstBet": "2025-10-06",
+   "lastBet": "2026-09-25",
+   "companies": [
+    {
+     "name": "Dextr AI",
+     "date": "2026-09-25",
+     "amountUsdMn": 6.7,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+     "website": "https://dextr.ai/"
+    },
+    {
+     "name": "Reo.Dev",
+     "date": "2026-07-16",
+     "amountUsdMn": 11.3,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-emergent-to-neo-group-indian-startups-raised-281-mn-this-week/",
+     "website": "https://reodev.co/"
+    },
+    {
+     "name": "Portkey",
+     "date": "2026-02-20",
+     "amountUsdMn": 15,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-spinny-to-statiq-indian-startups-raised-285-mn-this-week/",
+     "website": "https://portkey.ai/"
+    },
+    {
+     "name": "Synthio Labs",
+     "date": "2025-11-19",
+     "amountUsdMn": 5,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-yubi-to-agrostar-indian-startups-raised-171-mn-funding-this-week/",
+     "website": "https://www.synthio.ai/"
+    },
+    {
+     "name": "GreyLabs AI",
+     "date": "2025-10-06",
+     "amountUsdMn": 10,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-dhan-to-intangles-indian-startups-raised-285-mn-this-week/",
+     "website": "https://greylabs.ai/"
+    }
+   ]
+  },
+  {
    "name": "DeVC",
    "key": "devc",
    "bets": 5,
@@ -392,8 +457,8 @@
    "roundValueUsdMn": 23,
    "medianRoundUsdMn": 6.5,
    "allDeals": 18,
-   "aiDeals": 6,
-   "aiShare": 33,
+   "aiDeals": 7,
+   "aiShare": 39,
    "stages": [
     {
      "stage": "Pre-seed",
@@ -460,9 +525,9 @@
    "disclosedBets": 4,
    "roundValueUsdMn": 184,
    "medianRoundUsdMn": 44,
-   "allDeals": 16,
-   "aiDeals": 4,
-   "aiShare": 25,
+   "allDeals": 17,
+   "aiDeals": 5,
+   "aiShare": 29,
    "stages": [
     {
      "stage": "Seed",
@@ -515,85 +580,40 @@
    ]
   },
   {
-   "name": "Together Fund",
-   "key": "togetherfund",
-   "bets": 4,
-   "disclosedBets": 4,
-   "roundValueUsdMn": 64,
-   "medianRoundUsdMn": 18,
-   "allDeals": 6,
-   "aiDeals": 5,
-   "aiShare": 83,
-   "stages": [
-    {
-     "stage": "Seed",
-     "count": 2
-    },
-    {
-     "stage": "Series A",
-     "count": 2
-    }
-   ],
-   "firstBet": "2025-09-23",
-   "lastBet": "2026-08-26",
-   "companies": [
-    {
-     "name": "Runable",
-     "date": "2026-08-26",
-     "amountUsdMn": 21,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-third-wave-coffee-to-matter-indian-startups-raised-over-210-mn-this-week/",
-     "website": "https://runable.com/"
-    },
-    {
-     "name": "Coreworks AI",
-     "date": "2026-03-10",
-     "amountUsdMn": 5,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-mozark-to-captain-fresh-indian-startups-raised-207-mn-this-week/",
-     "website": "https://www.coreworks.ai/"
-    },
-    {
-     "name": "Emergent",
-     "date": "2025-09-24",
-     "amountUsdMn": 23,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://emergent.sh/"
-    },
-    {
-     "name": "Rocket",
-     "date": "2025-09-23",
-     "amountUsdMn": 15,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": null
-    }
-   ]
-  },
-  {
    "name": "Accel",
    "key": "accel",
    "bets": 4,
    "disclosedBets": 4,
-   "roundValueUsdMn": 52,
-   "medianRoundUsdMn": 10.5,
+   "roundValueUsdMn": 114,
+   "medianRoundUsdMn": 16.5,
    "allDeals": 28,
    "aiDeals": 5,
    "aiShare": 18,
    "stages": [
     {
      "stage": "Seed",
-     "count": 3
+     "count": 2
     },
     {
      "stage": "Pre-Series A",
      "count": 1
+    },
+    {
+     "stage": "Series B",
+     "count": 1
     }
    ],
-   "firstBet": "2025-09-23",
-   "lastBet": "2026-09-08",
+   "firstBet": "2026-04-08",
+   "lastBet": "2026-09-24",
    "companies": [
+    {
+     "name": "Ema",
+     "date": "2026-09-24",
+     "amountUsdMn": 77,
+     "stage": "Series B",
+     "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+     "website": "https://www.ema.ai/"
+    },
     {
      "name": "Fundly.ai",
      "date": "2026-09-08",
@@ -617,71 +637,6 @@
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-kreditbee-to-nava-indian-startups-raised-362-mn-this-week/",
      "website": "https://atlas.in/"
-    },
-    {
-     "name": "Rocket",
-     "date": "2025-09-23",
-     "amountUsdMn": 15,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": null
-    }
-   ]
-  },
-  {
-   "name": "Elevation Capital",
-   "key": "elevationcapital",
-   "bets": 4,
-   "disclosedBets": 4,
-   "roundValueUsdMn": 41.3,
-   "medianRoundUsdMn": 10.7,
-   "allDeals": 15,
-   "aiDeals": 4,
-   "aiShare": 27,
-   "stages": [
-    {
-     "stage": "Seed",
-     "count": 1
-    },
-    {
-     "stage": "Series A",
-     "count": 3
-    }
-   ],
-   "firstBet": "2025-10-06",
-   "lastBet": "2026-07-16",
-   "companies": [
-    {
-     "name": "Reo.Dev",
-     "date": "2026-07-16",
-     "amountUsdMn": 11.3,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-emergent-to-neo-group-indian-startups-raised-281-mn-this-week/",
-     "website": "https://reodev.co/"
-    },
-    {
-     "name": "Portkey",
-     "date": "2026-02-20",
-     "amountUsdMn": 15,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-spinny-to-statiq-indian-startups-raised-285-mn-this-week/",
-     "website": "https://portkey.ai/"
-    },
-    {
-     "name": "Synthio Labs",
-     "date": "2025-11-19",
-     "amountUsdMn": 5,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-yubi-to-agrostar-indian-startups-raised-171-mn-funding-this-week/",
-     "website": "https://www.synthio.ai/"
-    },
-    {
-     "name": "GreyLabs AI",
-     "date": "2025-10-06",
-     "amountUsdMn": 10,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-dhan-to-intangles-indian-startups-raised-285-mn-this-week/",
-     "website": "https://greylabs.ai/"
     }
    ]
   },
@@ -920,9 +875,9 @@
    "disclosedBets": 3,
    "roundValueUsdMn": 17.2,
    "medianRoundUsdMn": 6.3,
-   "allDeals": 18,
+   "allDeals": 19,
    "aiDeals": 3,
-   "aiShare": 17,
+   "aiShare": 16,
    "stages": [
     {
      "stage": "Seed",
@@ -1071,9 +1026,9 @@
    "disclosedBets": 3,
    "roundValueUsdMn": 8.9,
    "medianRoundUsdMn": 3.1,
-   "allDeals": 20,
+   "allDeals": 19,
    "aiDeals": 3,
-   "aiShare": 15,
+   "aiShare": 16,
    "stages": [
     {
      "stage": "Pre-seed",
@@ -1124,9 +1079,9 @@
    "disclosedBets": 3,
    "roundValueUsdMn": 8.6,
    "medianRoundUsdMn": 3,
-   "allDeals": 10,
+   "allDeals": 9,
    "aiDeals": 4,
-   "aiShare": 40,
+   "aiShare": 44,
    "stages": [
     {
      "stage": "Seed",
@@ -1230,9 +1185,9 @@
    "disclosedBets": 3,
    "roundValueUsdMn": 3.1,
    "medianRoundUsdMn": 0.7,
-   "allDeals": 32,
+   "allDeals": 31,
    "aiDeals": 3,
-   "aiShare": 9,
+   "aiShare": 10,
    "stages": [
     {
      "stage": "Seed",
@@ -1314,84 +1269,6 @@
    ]
   },
   {
-   "name": "Balaji Srinivasan",
-   "key": "balajisrinivasan",
-   "bets": 2,
-   "disclosedBets": 2,
-   "roundValueUsdMn": 38,
-   "medianRoundUsdMn": 19,
-   "allDeals": 2,
-   "aiDeals": 2,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Series A",
-     "count": 1
-    },
-    {
-     "stage": "Other",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-24",
-   "lastBet": "2026-07-15",
-   "companies": [
-    {
-     "name": "Vorflux",
-     "date": "2026-07-15",
-     "amountUsdMn": 15,
-     "stage": "Other",
-     "source": "https://inc42.com/buzz/from-emergent-to-neo-group-indian-startups-raised-281-mn-this-week/",
-     "website": "https://vorflux.ai/"
-    },
-    {
-     "name": "Emergent",
-     "date": "2025-09-24",
-     "amountUsdMn": 23,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://emergent.sh/"
-    }
-   ]
-  },
-  {
-   "name": "Lightspeed",
-   "key": "lightspeed",
-   "bets": 2,
-   "disclosedBets": 2,
-   "roundValueUsdMn": 38,
-   "medianRoundUsdMn": 19,
-   "allDeals": 17,
-   "aiDeals": 4,
-   "aiShare": 24,
-   "stages": [
-    {
-     "stage": "Series A",
-     "count": 2
-    }
-   ],
-   "firstBet": "2025-09-24",
-   "lastBet": "2026-02-20",
-   "companies": [
-    {
-     "name": "Portkey",
-     "date": "2026-02-20",
-     "amountUsdMn": 15,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-spinny-to-statiq-indian-startups-raised-285-mn-this-week/",
-     "website": "https://portkey.ai/"
-    },
-    {
-     "name": "Emergent",
-     "date": "2025-09-24",
-     "amountUsdMn": 23,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://emergent.sh/"
-    }
-   ]
-  },
-  {
    "name": "Susquehanna Venture Capital",
    "key": "susquehannaventurecapital",
    "bets": 2,
@@ -1466,6 +1343,47 @@
      "stage": "Series A",
      "source": "https://inc42.com/buzz/from-snapmint-to-snabbit-indian-startups-raised-371-mn-this-week/",
      "website": "https://mem0.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Together Fund",
+   "key": "togetherfund",
+   "bets": 2,
+   "disclosedBets": 2,
+   "roundValueUsdMn": 26,
+   "medianRoundUsdMn": 13,
+   "allDeals": 4,
+   "aiDeals": 3,
+   "aiShare": 75,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 1
+    },
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-03-10",
+   "lastBet": "2026-08-26",
+   "companies": [
+    {
+     "name": "Runable",
+     "date": "2026-08-26",
+     "amountUsdMn": 21,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-third-wave-coffee-to-matter-indian-startups-raised-over-210-mn-this-week/",
+     "website": "https://runable.com/"
+    },
+    {
+     "name": "Coreworks AI",
+     "date": "2026-03-10",
+     "amountUsdMn": 5,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-mozark-to-captain-fresh-indian-startups-raised-207-mn-this-week/",
+     "website": "https://www.coreworks.ai/"
     }
    ]
   },
@@ -1671,15 +1589,15 @@
    ]
   },
   {
-   "name": "IndiaQuotient",
+   "name": "India Quotient",
    "key": "indiaquotient",
    "bets": 2,
    "disclosedBets": 2,
    "roundValueUsdMn": 15.3,
    "medianRoundUsdMn": 7.7,
-   "allDeals": 13,
+   "allDeals": 11,
    "aiDeals": 2,
-   "aiShare": 15,
+   "aiShare": 18,
    "stages": [
     {
      "stage": "Seed",
@@ -1708,47 +1626,6 @@
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-dhan-to-intangles-indian-startups-raised-285-mn-this-week/",
      "website": "https://reodev.co/"
-    }
-   ]
-  },
-  {
-   "name": "Indian Angel Network",
-   "key": "indianangelnetwork",
-   "bets": 2,
-   "disclosedBets": 2,
-   "roundValueUsdMn": 14.2,
-   "medianRoundUsdMn": 7.1,
-   "allDeals": 7,
-   "aiDeals": 2,
-   "aiShare": 29,
-   "stages": [
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    },
-    {
-     "stage": "Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-22",
-   "lastBet": "2026-06-04",
-   "companies": [
-    {
-     "name": "TrueFan AI",
-     "date": "2026-06-04",
-     "amountUsdMn": 10,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-firstclub-to-innefu-indian-startups-raised-187-mn-this-week/",
-     "website": "https://truefan.com/"
-    },
-    {
-     "name": "OnFinance",
-     "date": "2025-09-22",
-     "amountUsdMn": 4.2,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://onfinance.ai/"
     }
    ]
   },
@@ -1790,56 +1667,15 @@
    ]
   },
   {
-   "name": "Shyamal Hitesh Anadkat",
-   "key": "shyamalhiteshanadkat",
-   "bets": 2,
-   "disclosedBets": 2,
-   "roundValueUsdMn": 12.2,
-   "medianRoundUsdMn": 6.1,
-   "allDeals": 2,
-   "aiDeals": 2,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Seed",
-     "count": 1
-    },
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-22",
-   "lastBet": "2025-10-13",
-   "companies": [
-    {
-     "name": "smallest.ai",
-     "date": "2025-10-13",
-     "amountUsdMn": 8,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-zepto-to-kuku-fm-indian-startups-raised-737-mn-this-week/",
-     "website": "https://smallest.ai/"
-    },
-    {
-     "name": "OnFinance",
-     "date": "2025-09-22",
-     "amountUsdMn": 4.2,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://onfinance.ai/"
-    }
-   ]
-  },
-  {
-   "name": "PeerCheque",
+   "name": "Peercheque",
    "key": "peercheque",
    "bets": 2,
    "disclosedBets": 2,
    "roundValueUsdMn": 10,
    "medianRoundUsdMn": 5,
-   "allDeals": 2,
-   "aiDeals": 2,
-   "aiShare": 100,
+   "allDeals": 4,
+   "aiDeals": 3,
+   "aiShare": 75,
    "stages": [
     {
      "stage": "Seed",
@@ -1982,7 +1818,7 @@
      "amountUsdMn": 1.4,
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-snapmint-to-snabbit-indian-startups-raised-371-mn-this-week/",
-     "website": "https://www.redacto.ai/en-in"
+     "website": "https://redacto.ai/en-in"
     }
    ]
   },
@@ -2060,7 +1896,7 @@
      "amountUsdMn": 1.4,
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-snapmint-to-snabbit-indian-startups-raised-371-mn-this-week/",
-     "website": "https://www.redacto.ai/en-in"
+     "website": "https://redacto.ai/en-in"
     }
    ]
   },
@@ -2071,9 +1907,9 @@
    "disclosedBets": 2,
    "roundValueUsdMn": 2.3,
    "medianRoundUsdMn": 1.2,
-   "allDeals": 19,
+   "allDeals": 17,
    "aiDeals": 3,
-   "aiShare": 16,
+   "aiShare": 18,
    "stages": [
     {
      "stage": "Pre-seed",
@@ -2112,9 +1948,9 @@
    "disclosedBets": 2,
    "roundValueUsdMn": 0.9,
    "medianRoundUsdMn": 0.5,
-   "allDeals": 3,
+   "allDeals": 2,
    "aiDeals": 2,
-   "aiShare": 67,
+   "aiShare": 100,
    "stages": [
     {
      "stage": "Seed",
@@ -2184,15 +2020,15 @@
    ]
   },
   {
-   "name": "AJVC",
+   "name": "ajvc",
    "key": "ajvc",
    "bets": 2,
    "disclosedBets": 2,
    "roundValueUsdMn": 0.4,
    "medianRoundUsdMn": 0.2,
-   "allDeals": 10,
+   "allDeals": 9,
    "aiDeals": 2,
-   "aiShare": 20,
+   "aiShare": 22,
    "stages": [
     {
      "stage": "Other",
@@ -2217,6 +2053,93 @@
      "stage": "Other",
      "source": "https://inc42.com/buzz/from-fibe-to-smart-joules-indian-startups-raised-127-mn-this-week/",
      "website": "https://faraday.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Creaegis",
+   "key": "creaegis",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 77,
+   "medianRoundUsdMn": 77,
+   "allDeals": 2,
+   "aiDeals": 2,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Series B",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-09-24",
+   "lastBet": "2026-09-24",
+   "companies": [
+    {
+     "name": "Ema",
+     "date": "2026-09-24",
+     "amountUsdMn": 77,
+     "stage": "Series B",
+     "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+     "website": "https://www.ema.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Prosus",
+   "key": "prosus",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 77,
+   "medianRoundUsdMn": 77,
+   "allDeals": 8,
+   "aiDeals": 3,
+   "aiShare": 38,
+   "stages": [
+    {
+     "stage": "Series B",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-09-24",
+   "lastBet": "2026-09-24",
+   "companies": [
+    {
+     "name": "Ema",
+     "date": "2026-09-24",
+     "amountUsdMn": 77,
+     "stage": "Series B",
+     "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+     "website": "https://www.ema.ai/"
+    }
+   ]
+  },
+  {
+   "name": "S32",
+   "key": "s32",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 77,
+   "medianRoundUsdMn": 77,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Series B",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-09-24",
+   "lastBet": "2026-09-24",
+   "companies": [
+    {
+     "name": "Ema",
+     "date": "2026-09-24",
+     "amountUsdMn": 77,
+     "stage": "Series B",
+     "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+     "website": "https://www.ema.ai/"
     }
    ]
   },
@@ -2946,93 +2869,6 @@
    ]
   },
   {
-   "name": "Devendra Chaplot",
-   "key": "devendrachaplot",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 23,
-   "medianRoundUsdMn": 23,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-24",
-   "lastBet": "2025-09-24",
-   "companies": [
-    {
-     "name": "Emergent",
-     "date": "2025-09-24",
-     "amountUsdMn": 23,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://emergent.sh/"
-    }
-   ]
-  },
-  {
-   "name": "Jeff Dean",
-   "key": "jeffdean",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 23,
-   "medianRoundUsdMn": 23,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-24",
-   "lastBet": "2025-09-24",
-   "companies": [
-    {
-     "name": "Emergent",
-     "date": "2025-09-24",
-     "amountUsdMn": 23,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://emergent.sh/"
-    }
-   ]
-  },
-  {
-   "name": "Prosus",
-   "key": "prosus",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 23,
-   "medianRoundUsdMn": 23,
-   "allDeals": 8,
-   "aiDeals": 3,
-   "aiShare": 38,
-   "stages": [
-    {
-     "stage": "Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-24",
-   "lastBet": "2025-09-24",
-   "companies": [
-    {
-     "name": "Emergent",
-     "date": "2025-09-24",
-     "amountUsdMn": 23,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://emergent.sh/"
-    }
-   ]
-  },
-  {
    "name": "Greenoaks",
    "key": "greenoaks",
    "bets": 1,
@@ -3144,7 +2980,7 @@
      "amountUsdMn": 17,
      "stage": "Series A",
      "source": "https://inc42.com/buzz/from-cred-to-square-yards-indian-startups-raised-1-1-bn-this-week/",
-     "website": "https://justai.in/"
+     "website": "https://justai.fr/fr"
     }
    ]
   },
@@ -3173,13 +3009,42 @@
      "amountUsdMn": 17,
      "stage": "Series A",
      "source": "https://inc42.com/buzz/from-cred-to-square-yards-indian-startups-raised-1-1-bn-this-week/",
-     "website": "https://justai.in/"
+     "website": "https://justai.fr/fr"
     }
    ]
   },
   {
    "name": "Alliance",
    "key": "alliance",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 15,
+   "medianRoundUsdMn": 15,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-07-15",
+   "lastBet": "2026-07-15",
+   "companies": [
+    {
+     "name": "Vorflux",
+     "date": "2026-07-15",
+     "amountUsdMn": 15,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-emergent-to-neo-group-indian-startups-raised-281-mn-this-week/",
+     "website": "https://vorflux.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Balaji Srinivasan",
+   "key": "balajisrinivasan",
    "bets": 1,
    "disclosedBets": 1,
    "roundValueUsdMn": 15,
@@ -3232,6 +3097,35 @@
      "stage": "Other",
      "source": "https://inc42.com/buzz/from-emergent-to-neo-group-indian-startups-raised-281-mn-this-week/",
      "website": "https://vorflux.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Lightspeed",
+   "key": "lightspeed",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 15,
+   "medianRoundUsdMn": 15,
+   "allDeals": 15,
+   "aiDeals": 3,
+   "aiShare": 20,
+   "stages": [
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-02-20",
+   "lastBet": "2026-02-20",
+   "companies": [
+    {
+     "name": "Portkey",
+     "date": "2026-02-20",
+     "amountUsdMn": 15,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-spinny-to-statiq-indian-startups-raised-285-mn-this-week/",
+     "website": "https://portkey.ai/"
     }
    ]
   },
@@ -3290,35 +3184,6 @@
      "stage": "Other",
      "source": "https://inc42.com/buzz/from-emergent-to-neo-group-indian-startups-raised-281-mn-this-week/",
      "website": "https://vorflux.ai/"
-    }
-   ]
-  },
-  {
-   "name": "Salesforce Ventures",
-   "key": "salesforceventures",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 15,
-   "medianRoundUsdMn": 15,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Seed",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-23",
-   "lastBet": "2025-09-23",
-   "companies": [
-    {
-     "name": "Rocket",
-     "date": "2025-09-23",
-     "amountUsdMn": 15,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": null
     }
    ]
   },
@@ -3584,6 +3449,35 @@
    ]
   },
   {
+   "name": "Indian Angel Network",
+   "key": "indianangelnetwork",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 10,
+   "medianRoundUsdMn": 10,
+   "allDeals": 6,
+   "aiDeals": 1,
+   "aiShare": 17,
+   "stages": [
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-06-04",
+   "lastBet": "2026-06-04",
+   "companies": [
+    {
+     "name": "TrueFan AI",
+     "date": "2026-06-04",
+     "amountUsdMn": 10,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-firstclub-to-innefu-indian-startups-raised-187-mn-this-week/",
+     "website": "https://truefan.com/"
+    }
+   ]
+  },
+  {
    "name": "Z3Partners",
    "key": "z3partners",
    "bets": 1,
@@ -3619,9 +3513,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 10,
    "medianRoundUsdMn": 10,
-   "allDeals": 8,
+   "allDeals": 7,
    "aiDeals": 1,
-   "aiShare": 13,
+   "aiShare": 14,
    "stages": [
     {
      "stage": "Series A",
@@ -3990,6 +3884,35 @@
    ]
   },
   {
+   "name": "Shyamal Hitesh Anadkat",
+   "key": "shyamalhiteshanadkat",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 8,
+   "medianRoundUsdMn": 8,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 1
+    }
+   ],
+   "firstBet": "2025-10-13",
+   "lastBet": "2025-10-13",
+   "companies": [
+    {
+     "name": "smallest.ai",
+     "date": "2025-10-13",
+     "amountUsdMn": 8,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-zepto-to-kuku-fm-indian-startups-raised-737-mn-this-week/",
+     "website": "https://smallest.ai/"
+    }
+   ]
+  },
+  {
    "name": "SIG Tattva",
    "key": "sigtattva",
    "bets": 1,
@@ -4309,6 +4232,35 @@
    ]
   },
   {
+   "name": "Foundation Capital",
+   "key": "foundationcapital",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 6.7,
+   "medianRoundUsdMn": 6.7,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-09-25",
+   "lastBet": "2026-09-25",
+   "companies": [
+    {
+     "name": "Dextr AI",
+     "date": "2026-09-25",
+     "amountUsdMn": 6.7,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+     "website": "https://dextr.ai/"
+    }
+   ]
+  },
+  {
    "name": "Eight Capital",
    "key": "eightcapital",
    "bets": 1,
@@ -4344,9 +4296,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 6.3,
    "medianRoundUsdMn": 6.3,
-   "allDeals": 5,
-   "aiDeals": 1,
-   "aiShare": 20,
+   "allDeals": 6,
+   "aiDeals": 2,
+   "aiShare": 33,
    "stages": [
     {
      "stage": "Seed",
@@ -4518,9 +4470,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 5.5,
    "medianRoundUsdMn": 5.5,
-   "allDeals": 3,
+   "allDeals": 2,
    "aiDeals": 1,
-   "aiShare": 33,
+   "aiShare": 50,
    "stages": [
     {
      "stage": "Series A",
@@ -4576,9 +4528,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 5.3,
    "medianRoundUsdMn": 5.3,
-   "allDeals": 1,
+   "allDeals": 2,
    "aiDeals": 1,
-   "aiShare": 100,
+   "aiShare": 50,
    "stages": [
     {
      "stage": "Pre-Series A",
@@ -4634,9 +4586,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 5.3,
    "medianRoundUsdMn": 5.3,
-   "allDeals": 3,
+   "allDeals": 4,
    "aiDeals": 1,
-   "aiShare": 33,
+   "aiShare": 25,
    "stages": [
     {
      "stage": "Pre-Series A",
@@ -4889,122 +4841,6 @@
    ]
   },
   {
-   "name": "Climber Capital",
-   "key": "climbercapital",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 4.2,
-   "medianRoundUsdMn": 4.2,
-   "allDeals": 2,
-   "aiDeals": 1,
-   "aiShare": 50,
-   "stages": [
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-22",
-   "lastBet": "2025-09-22",
-   "companies": [
-    {
-     "name": "OnFinance",
-     "date": "2025-09-22",
-     "amountUsdMn": 4.2,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://onfinance.ai/"
-    }
-   ]
-  },
-  {
-   "name": "Groww Founder Fund",
-   "key": "growwfounderfund",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 4.2,
-   "medianRoundUsdMn": 4.2,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-22",
-   "lastBet": "2025-09-22",
-   "companies": [
-    {
-     "name": "OnFinance",
-     "date": "2025-09-22",
-     "amountUsdMn": 4.2,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://onfinance.ai/"
-    }
-   ]
-  },
-  {
-   "name": "MarsShot VC",
-   "key": "marsshotvc",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 4.2,
-   "medianRoundUsdMn": 4.2,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-22",
-   "lastBet": "2025-09-22",
-   "companies": [
-    {
-     "name": "OnFinance",
-     "date": "2025-09-22",
-     "amountUsdMn": 4.2,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://onfinance.ai/"
-    }
-   ]
-  },
-  {
-   "name": "Peak XV",
-   "key": "peakxv",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 4.2,
-   "medianRoundUsdMn": 4.2,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-22",
-   "lastBet": "2025-09-22",
-   "companies": [
-    {
-     "name": "OnFinance",
-     "date": "2025-09-22",
-     "amountUsdMn": 4.2,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://onfinance.ai/"
-    }
-   ]
-  },
-  {
    "name": "Ronnie Screwala",
    "key": "ronniescrewala",
    "bets": 1,
@@ -5088,35 +4924,6 @@
      "stage": "Series A",
      "source": "https://inc42.com/buzz/from-pixxel-to-swish-indian-startups-raised-over-321-9-mn-this-week/",
      "website": "https://navana.ai/"
-    }
-   ]
-  },
-  {
-   "name": "Silverneedle Ventures",
-   "key": "silverneedleventures",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 4.2,
-   "medianRoundUsdMn": 4.2,
-   "allDeals": 3,
-   "aiDeals": 1,
-   "aiShare": 33,
-   "stages": [
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-22",
-   "lastBet": "2025-09-22",
-   "companies": [
-    {
-     "name": "OnFinance",
-     "date": "2025-09-22",
-     "amountUsdMn": 4.2,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-     "website": "https://onfinance.ai/"
     }
    ]
   },
@@ -5562,9 +5369,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 3.1,
    "medianRoundUsdMn": 3.1,
-   "allDeals": 9,
+   "allDeals": 8,
    "aiDeals": 1,
-   "aiShare": 11,
+   "aiShare": 13,
    "stages": [
     {
      "stage": "Pre-Series A",
@@ -5678,9 +5485,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 3,
    "medianRoundUsdMn": 3,
-   "allDeals": 10,
-   "aiDeals": 3,
-   "aiShare": 30,
+   "allDeals": 11,
+   "aiDeals": 4,
+   "aiShare": 36,
    "stages": [
     {
      "stage": "Seed",
@@ -6113,9 +5920,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 2.2,
    "medianRoundUsdMn": 2.2,
-   "allDeals": 6,
+   "allDeals": 5,
    "aiDeals": 1,
-   "aiShare": 17,
+   "aiShare": 20,
    "stages": [
     {
      "stage": "Other",
@@ -6490,9 +6297,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 1.9,
    "medianRoundUsdMn": 1.9,
-   "allDeals": 3,
+   "allDeals": 2,
    "aiDeals": 1,
-   "aiShare": 33,
+   "aiShare": 50,
    "stages": [
     {
      "stage": "Pre-Series A",
@@ -6925,9 +6732,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 1.3,
    "medianRoundUsdMn": 1.3,
-   "allDeals": 9,
+   "allDeals": 8,
    "aiDeals": 1,
-   "aiShare": 11,
+   "aiShare": 13,
    "stages": [
     {
      "stage": "Seed",
@@ -6954,9 +6761,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 1.3,
    "medianRoundUsdMn": 1.3,
-   "allDeals": 2,
+   "allDeals": 1,
    "aiDeals": 1,
-   "aiShare": 50,
+   "aiShare": 100,
    "stages": [
     {
      "stage": "Seed",
@@ -7354,6 +7161,35 @@
    ]
   },
   {
+   "name": "Entrepreneur First",
+   "key": "entrepreneurfirst",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 1,
+   "medianRoundUsdMn": 1,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Pre-seed",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-09-24",
+   "lastBet": "2026-09-24",
+   "companies": [
+    {
+     "name": "ByteAsk",
+     "date": "2026-09-24",
+     "amountUsdMn": 1,
+     "stage": "Pre-seed",
+     "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+     "website": "https://byteask.ai/"
+    }
+   ]
+  },
+  {
    "name": "Huddle Ventures",
    "key": "huddleventures",
    "bets": 1,
@@ -7528,15 +7364,73 @@
    ]
   },
   {
+   "name": "Lumikai",
+   "key": "lumikai",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 0.6,
+   "medianRoundUsdMn": 0.6,
+   "allDeals": 4,
+   "aiDeals": 1,
+   "aiShare": 25,
+   "stages": [
+    {
+     "stage": "Pre-seed",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-09-22",
+   "lastBet": "2026-09-22",
+   "companies": [
+    {
+     "name": "Demoverse",
+     "date": "2026-09-22",
+     "amountUsdMn": 0.6,
+     "stage": "Pre-seed",
+     "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+     "website": "https://demoverse.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Marlan Space",
+   "key": "marlanspace",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 0.6,
+   "medianRoundUsdMn": 0.6,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Pre-seed",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-09-22",
+   "lastBet": "2026-09-22",
+   "companies": [
+    {
+     "name": "Demoverse",
+     "date": "2026-09-22",
+     "amountUsdMn": 0.6,
+     "stage": "Pre-seed",
+     "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+     "website": "https://demoverse.ai/"
+    }
+   ]
+  },
+  {
    "name": "Zeropearl VC",
    "key": "zeropearlvc",
    "bets": 1,
    "disclosedBets": 1,
    "roundValueUsdMn": 0.6,
    "medianRoundUsdMn": 0.6,
-   "allDeals": 9,
+   "allDeals": 10,
    "aiDeals": 1,
-   "aiShare": 11,
+   "aiShare": 10,
    "stages": [
     {
      "stage": "Pre-seed",
@@ -8607,9 +8501,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 0.1,
    "medianRoundUsdMn": 0.1,
-   "allDeals": 6,
+   "allDeals": 4,
    "aiDeals": 1,
-   "aiShare": 17,
+   "aiShare": 25,
    "stages": [
     {
      "stage": "Other",
@@ -8828,7 +8722,7 @@
      "amountUsdMn": null,
      "stage": "Pre-seed",
      "source": "https://inc42.com/buzz/from-snapmint-to-snabbit-indian-startups-raised-371-mn-this-week/",
-     "website": "https://www.satarkai.com/"
+     "website": "https://www.satarkai.in/"
     }
    ]
   },
@@ -8950,6 +8844,422 @@
   }
  ],
  "deals": [
+  {
+   "date": "2026-09-25",
+   "name": "Rivet",
+   "sector": "Media & Entertainment",
+   "subsector": "Social Networking Platform",
+   "businessModel": "B2C",
+   "amountUsdMn": 10.5,
+   "amountRaw": "$10.5 Mn",
+   "roundType": "Seed",
+   "investors": [
+    "Peak XV Partners",
+    "Shine Capital",
+    "Blume Ventures"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-25",
+   "name": "Dextr AI",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2B",
+   "amountUsdMn": 6.7,
+   "amountRaw": "$6.7 Mn",
+   "roundType": "Seed",
+   "investors": [
+    "Elevation Capital",
+    "Foundation Capital"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": true,
+   "website": "https://dextr.ai/"
+  },
+  {
+   "date": "2026-09-25",
+   "name": "GalaxEye",
+   "sector": "Advanced Hardware",
+   "subsector": "Spacetech",
+   "businessModel": "B2B",
+   "amountUsdMn": 6.7,
+   "amountRaw": "$6.7 Mn",
+   "roundType": "",
+   "investors": [
+    "RDI Fund"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-25",
+   "name": "1312 Interactive",
+   "sector": "Media & Entertainment",
+   "subsector": "Gaming",
+   "businessModel": "B2B2C",
+   "amountUsdMn": 1,
+   "amountRaw": "$1 Mn",
+   "roundType": "Seed",
+   "investors": [
+    "Chimera VC",
+    "T-Accelerate Capital",
+    "Ventana Ventures",
+    "Rahul Reddy",
+    "Rohan Murukutla",
+    "Dasari Srinivas"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-24",
+   "name": "Ema",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2B",
+   "amountUsdMn": 77,
+   "amountRaw": "$77 Mn",
+   "roundType": "Series B",
+   "investors": [
+    "Creaegis",
+    "Accel",
+    "S32",
+    "Prosus"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": true,
+   "website": "https://www.ema.ai/"
+  },
+  {
+   "date": "2026-09-24",
+   "name": "Rio Health",
+   "sector": "Consumer Services",
+   "subsector": "Quick Commerce",
+   "businessModel": "B2C",
+   "amountUsdMn": 4.5,
+   "amountRaw": "$4.5 Mn",
+   "roundType": "Pre-Series A",
+   "investors": [
+    "Version One Ventures",
+    "Xeed Ventures",
+    "Good Capital",
+    "Amplify"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-24",
+   "name": "ONYA",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": 1.3,
+   "amountRaw": "$1.3 Mn",
+   "roundType": "Pre-Series A",
+   "investors": [
+    "Divisa Family Office",
+    "Zeropearl VC"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-24",
+   "name": "ByteAsk",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2B",
+   "amountUsdMn": 1,
+   "amountRaw": "$1 Mn",
+   "roundType": "Pre-Seed",
+   "investors": [
+    "Y Combinator",
+    "Entrepreneur First"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": true,
+   "website": "https://byteask.ai/"
+  },
+  {
+   "date": "2026-09-24",
+   "name": "Nuvah",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": 0.417,
+   "amountRaw": "$417K",
+   "roundType": "Pre-Seed",
+   "investors": [
+    "Amit Jain",
+    "Shantanu Deshpande",
+    "Ishendra Agarwal"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-24",
+   "name": "YNOS",
+   "sector": "Enterprise Tech",
+   "subsector": "Horizontal SaaS",
+   "businessModel": "B2B",
+   "amountUsdMn": 0.221,
+   "amountRaw": "$221K",
+   "roundType": "",
+   "investors": [
+    "Gyan Circle Ventures"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-24",
+   "name": "MyRx",
+   "sector": "Health Tech",
+   "subsector": "Telemedicine",
+   "businessModel": "B2B2C",
+   "amountUsdMn": null,
+   "amountRaw": "-",
+   "roundType": "Seed",
+   "investors": [
+    "SteerX VC"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-24",
+   "name": "Unniyarcha",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": null,
+   "amountRaw": "-",
+   "roundType": "",
+   "investors": [
+    "Sauce.VC",
+    "Atrium.VC"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-23",
+   "name": "Ultraviolette Automotive",
+   "sector": "Clean Tech",
+   "subsector": "Electric Vehicles",
+   "businessModel": "B2C",
+   "amountUsdMn": 85,
+   "amountRaw": "$85 Mn",
+   "roundType": "Series E",
+   "investors": [
+    "Yali Capital",
+    "TDK Ventures",
+    "Lip-Bu Tan"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-23",
+   "name": "betterhood",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": 1.2,
+   "amountRaw": "$1.2 Mn",
+   "roundType": "Seed",
+   "investors": [
+    "Sauce.VC",
+    "Kairon Capital"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-23",
+   "name": "Indian Walker",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": null,
+   "amountRaw": "-",
+   "roundType": "Pre-Seed",
+   "investors": [
+    "Palette Wealth Management"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-23",
+   "name": "TimBuckDo",
+   "sector": "Consumer Services",
+   "subsector": "Job Portals",
+   "businessModel": "B2B2C",
+   "amountUsdMn": null,
+   "amountRaw": "-",
+   "roundType": "",
+   "investors": [
+    "Srinath Setty",
+    "Adarsh Narahari"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-23",
+   "name": "Space Philic",
+   "sector": "Advanced Hardware",
+   "subsector": "Space Tech",
+   "businessModel": "B2B",
+   "amountUsdMn": null,
+   "amountRaw": "-",
+   "roundType": "",
+   "investors": [],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-22",
+   "name": "Sol Foundry",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2C",
+   "amountUsdMn": 4,
+   "amountRaw": "$4 Mn",
+   "roundType": "",
+   "investors": [
+    "General Catalyst",
+    "Nexus Venture Partners",
+    "DeVC",
+    "Peercheque",
+    "Kunal Shah"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-22",
+   "name": "Definedge",
+   "sector": "Fintech",
+   "subsector": "Investment Tech",
+   "businessModel": "B2C",
+   "amountUsdMn": 2.3,
+   "amountRaw": "$2.3 Mn",
+   "roundType": "Pre-Series A",
+   "investors": [
+    "Nitin Agarwal",
+    "D. Prasad",
+    "Anant Jain",
+    "Sachin Kasera"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-22",
+   "name": "Protein Pantry",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": 0.939,
+   "amountRaw": "$939K",
+   "roundType": "Seed",
+   "investors": [
+    "Sharrp Ventures",
+    "Peercheque",
+    "Consumer Collective by Atrium",
+    "Indian Silicon Valley Capital",
+    "Varun Alagh",
+    "Rishubh Satiya",
+    "Avnish Anand",
+    "Arush Chopra",
+    "Saurabh Munjal",
+    "Signal Ventures"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-22",
+   "name": "Demoverse",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2B",
+   "amountUsdMn": 0.6,
+   "amountRaw": "$600K",
+   "roundType": "Pre-Seed",
+   "investors": [
+    "Lumikai",
+    "Marlan Space"
+   ],
+   "source": "https://inc42.com/buzz/from-ultraviolette-automotive-to-galaxeye-indian-startups-raised-over-203-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": true,
+   "website": "https://demoverse.ai/"
+  },
   {
    "date": "2026-09-18",
    "name": "MoroMaa",
@@ -12374,7 +12684,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": false,
-   "website": "https://emergent.sh/"
+   "website": null
   },
   {
    "date": "2026-07-15",
@@ -13063,7 +13373,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": true,
-   "website": "https://justai.in/"
+   "website": "https://justai.fr/fr"
   },
   {
    "date": "2026-06-25",
@@ -17303,7 +17613,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": true,
-   "website": "https://www.satarkai.com/"
+   "website": "https://www.satarkai.in/"
   },
   {
    "date": "2026-04-03",
@@ -20865,7 +21175,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": false,
-   "website": "https://emergent.sh/"
+   "website": null
   },
   {
    "date": "2026-01-20",
@@ -22570,7 +22880,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": false,
-   "website": "https://emergent.sh/"
+   "website": null
   },
   {
    "date": "2025-12-08",
@@ -25000,7 +25310,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": true,
-   "website": "https://www.redacto.ai/en-in"
+   "website": "https://redacto.ai/en-in"
   },
   {
    "date": "2025-10-30",
@@ -25259,7 +25569,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": true,
-   "website": "https://www.satarkai.com/"
+   "website": "https://www.satarkai.in/"
   },
   {
    "date": "2025-10-29",
@@ -26888,582 +27198,6 @@
    "aiLayer": "application",
    "isAIService": true,
    "website": "https://vaaniai.com/"
-  },
-  {
-   "date": "2025-09-26",
-   "name": "Curefoods",
-   "sector": "Foodtech",
-   "subsector": "Cloud Kitchen",
-   "businessModel": "B2C",
-   "amountUsdMn": 18,
-   "amountRaw": "$18 Mn",
-   "roundType": "",
-   "investors": [
-    "3State Ventures"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-26",
-   "name": "Vedantu",
-   "sector": "Edtech",
-   "subsector": "Digital Learning Platform",
-   "businessModel": "B2C",
-   "amountUsdMn": 11,
-   "amountRaw": "$11 Mn",
-   "roundType": "",
-   "investors": [],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-26",
-   "name": "KisanKonnect",
-   "sector": "Agritech",
-   "subsector": "Market Linkage",
-   "businessModel": "B2B-B2C",
-   "amountUsdMn": 8.1,
-   "amountRaw": "$8.1 Mn",
-   "roundType": "Pre-Series A",
-   "investors": [
-    "Bajaj Finserv Group",
-    "Mistry Ventures",
-    "Desai Foods",
-    "Dhanuka Agritech",
-    "Action Tessa Family Office"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-26",
-   "name": "Akashalabdhi",
-   "sector": "Advanced Hardware",
-   "subsector": "Space Tech",
-   "businessModel": "B2B",
-   "amountUsdMn": 1.2,
-   "amountRaw": "$1.2 Mn",
-   "roundType": "Pre-Seed",
-   "investors": [
-    "LVX",
-    "1Crowd",
-    "Riceberg Ventures",
-    "Aeroflex Enterprises",
-    "Uday Chatterjee",
-    "Romesh Sobti",
-    "Suraj Nalin"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-26",
-   "name": "Gaadimech",
-   "sector": "Consumer Services",
-   "subsector": "Hyperlocal Services",
-   "businessModel": "B2C",
-   "amountUsdMn": 0.169,
-   "amountRaw": "$169K",
-   "roundType": "",
-   "investors": [
-    "AJVC"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-25",
-   "name": "Handpickd",
-   "sector": "Consumer Services",
-   "subsector": "Hyperlocal Services",
-   "businessModel": "B2C",
-   "amountUsdMn": 15,
-   "amountRaw": "$15 Mn",
-   "roundType": "Series A",
-   "investors": [
-    "Bertelsmann India Investments",
-    "Titan Capital"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-25",
-   "name": "Simple Energy",
-   "sector": "Clean Tech",
-   "subsector": "Electric Vehicles",
-   "businessModel": "B2C",
-   "amountUsdMn": 10,
-   "amountRaw": "$10 Mn",
-   "roundType": "",
-   "investors": [
-    "Dr Arokiaswamy Velumani"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-25",
-   "name": "Cosmoserve Space",
-   "sector": "Advanced Hardware",
-   "subsector": "Space Tech",
-   "businessModel": "B2B",
-   "amountUsdMn": 3.2,
-   "amountRaw": "$3.2 Mn",
-   "roundType": "Pre-Seed",
-   "investors": [
-    "AVCF",
-    "AUM Ventures",
-    "Shakti VC",
-    "Ram Shriram"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-25",
-   "name": "Bharat Intelligence",
-   "sector": "Agritech",
-   "subsector": "Farmtech",
-   "businessModel": "B2B",
-   "amountUsdMn": 0.79,
-   "amountRaw": "$790K",
-   "roundType": "Pre-Seed",
-   "investors": [
-    "Sahyadri Farms"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-25",
-   "name": "Recove",
-   "sector": "Clean Tech",
-   "subsector": "Climate Tech",
-   "businessModel": "B2B",
-   "amountUsdMn": 0.598,
-   "amountRaw": "$598K",
-   "roundType": "",
-   "investors": [
-    "Momentum Capital",
-    "Ganesh Natarajan",
-    "Ashish Goel"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-25",
-   "name": "Samaaro",
-   "sector": "Enterprise Tech",
-   "subsector": "Vertical SaaS",
-   "businessModel": "B2C",
-   "amountUsdMn": 0.5,
-   "amountRaw": "$500K",
-   "roundType": "Pre-Series A",
-   "investors": [
-    "Inflection Point Ventures",
-    "Silver Needle Ventures",
-    "Lets Venture",
-    "SucSEED Indovation Fund"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-24",
-   "name": "PharmEasy",
-   "sector": "Health Tech",
-   "subsector": "Online Pharmacy",
-   "businessModel": "B2C",
-   "amountUsdMn": 191.7,
-   "amountRaw": "$191.7 Mn",
-   "roundType": "Debt",
-   "investors": [],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-24",
-   "name": "Emergent",
-   "sector": "AI",
-   "subsector": "Application Layer",
-   "businessModel": "B2C, B2B",
-   "amountUsdMn": 23,
-   "amountRaw": "$23 Mn",
-   "roundType": "Series A",
-   "investors": [
-    "Lightspeed",
-    "Y Combinator",
-    "Together Fund",
-    "Prosus",
-    "Jeff Dean",
-    "Devendra Chaplot",
-    "Balaji Srinivasan"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": true,
-   "aiLayer": "application",
-   "isAIService": true,
-   "website": "https://emergent.sh/"
-  },
-  {
-   "date": "2025-09-24",
-   "name": "Gullak",
-   "sector": "Fintech",
-   "subsector": "Investment Tech",
-   "businessModel": "B2C",
-   "amountUsdMn": 7.5,
-   "amountRaw": "$7.5 Mn",
-   "roundType": "Series A",
-   "investors": [
-    "Chiratae Ventures",
-    "White Venture Capital",
-    "Samved Ventures",
-    "Y Combinator",
-    "GMO Venture Partners",
-    "Rebel Funds"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-24",
-   "name": "Oolka",
-   "sector": "Fintech",
-   "subsector": "Lendingtech",
-   "businessModel": "B2C",
-   "amountUsdMn": 7,
-   "amountRaw": "$7 Mn",
-   "roundType": "Seed",
-   "investors": [
-    "Lightspeed",
-    "Z47",
-    "8i Ventures",
-    "Vidit Aatrey",
-    "Sanjeev Barnwal",
-    "Ramakant Sharma",
-    "Abhishek Goyal",
-    "Rajesh Yabaji",
-    "Nitin Gupta",
-    "Madhusudan R",
-    "Anil Goteti",
-    "Arnav Kumar"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-24",
-   "name": "P-TAL",
-   "sector": "Ecommerce",
-   "subsector": "D2C",
-   "businessModel": "B2C",
-   "amountUsdMn": 3,
-   "amountRaw": "$3 Mn",
-   "roundType": "Series A",
-   "investors": [
-    "Venture Catalysts",
-    "Rainmatter",
-    "Connecticut Innovations",
-    "Zero Pearl",
-    "Anicut Capital",
-    "Jaipur Rugs Family Office",
-    "Ramakant Sharma",
-    "Sanjay Kapoor",
-    "Avnish Anand",
-    "Sibabrata Das",
-    "Ritesh Malik"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-24",
-   "name": "Xbattery",
-   "sector": "Clean Tech",
-   "subsector": "Electric Vehicles",
-   "businessModel": "B2B",
-   "amountUsdMn": 2.3,
-   "amountRaw": "$2.3 Mn",
-   "roundType": "Seed",
-   "investors": [
-    "Bipin Patel Family Office",
-    "Jhaveri Credits"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-24",
-   "name": "Navo",
-   "sector": "Ecommerce",
-   "subsector": "Vertical Marketplace",
-   "businessModel": "B2B",
-   "amountUsdMn": 0.902,
-   "amountRaw": "$902K",
-   "roundType": "Seed",
-   "investors": [
-    "IndiaQuotient",
-    "Antler",
-    "Bharat Founders Fund"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-23",
-   "name": "Rocket",
-   "sector": "AI",
-   "subsector": "Application Layer",
-   "businessModel": "B2B",
-   "amountUsdMn": 15,
-   "amountRaw": "$15 Mn",
-   "roundType": "Seed",
-   "investors": [
-    "Salesforce Ventures",
-    "Accel",
-    "Together Fund"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": true,
-   "aiLayer": "application",
-   "isAIService": true,
-   "website": null
-  },
-  {
-   "date": "2025-09-23",
-   "name": "Distil",
-   "sector": "Ecommerce",
-   "subsector": "Marketplace",
-   "businessModel": "B2B",
-   "amountUsdMn": 7.7,
-   "amountRaw": "$7.7 Mn",
-   "roundType": "Series A",
-   "investors": [
-    "Jungle Ventures",
-    "CE-Ventures",
-    "Rubamin",
-    "IndiaQuotient",
-    "Mayank Singhal"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-23",
-   "name": "PRISM",
-   "sector": "Travel Tech",
-   "subsector": "Hospitality",
-   "businessModel": "B2C",
-   "amountUsdMn": 5.6,
-   "amountRaw": "$5.6 Mn",
-   "roundType": "",
-   "investors": [
-    "InCred",
-    "Analah Capital"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-23",
-   "name": "Amwoodo",
-   "sector": "Ecommerce",
-   "subsector": "D2C",
-   "businessModel": "B2C",
-   "amountUsdMn": 4,
-   "amountRaw": "$4 Mn",
-   "roundType": "Pre-Series A",
-   "investors": [
-    "Rainmatter",
-    "Adventz Group",
-    "Thinkuvate",
-    "Caspian"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-23",
-   "name": "Grest",
-   "sector": "Ecommerce",
-   "subsector": "Recommerce",
-   "businessModel": "B2C",
-   "amountUsdMn": 1.8,
-   "amountRaw": "$1.8 Mn",
-   "roundType": "",
-   "investors": [
-    "Equentis",
-    "The Chennai Angels",
-    "Lead Invest",
-    "India Accelerator"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-23",
-   "name": "Paar Autonomy",
-   "sector": "Advanced Hardware",
-   "subsector": "Robotics",
-   "businessModel": "B2B",
-   "amountUsdMn": 0.5,
-   "amountRaw": "$500K",
-   "roundType": "Seed",
-   "investors": [
-    "Venture Catalysts"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-23",
-   "name": "Gabit",
-   "sector": "Ecommerce",
-   "subsector": "D2C",
-   "businessModel": "B2C",
-   "amountUsdMn": null,
-   "amountRaw": "-",
-   "roundType": "",
-   "investors": [
-    "Ranbir Kapoor",
-    "Badshah"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-22",
-   "name": "Chakr Innovation",
-   "sector": "Clean Tech",
-   "subsector": "Climate Tech",
-   "businessModel": "B2B",
-   "amountUsdMn": 23,
-   "amountRaw": "$23 Mn",
-   "roundType": "Series C",
-   "investors": [
-    "Iron Pillar"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-22",
-   "name": "OnFinance",
-   "sector": "AI",
-   "subsector": "Application Layer",
-   "businessModel": "B2B",
-   "amountUsdMn": 4.2,
-   "amountRaw": "$4.2 Mn",
-   "roundType": "Pre-Series A",
-   "investors": [
-    "Peak XV",
-    "Groww Founder Fund",
-    "MarsShot VC",
-    "Climber Capital",
-    "Shyamal Hitesh Anadkat",
-    "Indian Angel Network",
-    "Silverneedle Ventures"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": true,
-   "aiLayer": "application",
-   "isAIService": true,
-   "website": "https://onfinance.ai/"
-  },
-  {
-   "date": "2025-09-22",
-   "name": "VyomIC",
-   "sector": "Advanced Hardware",
-   "subsector": "Space Tech",
-   "businessModel": "B2B",
-   "amountUsdMn": 1.6,
-   "amountRaw": "$1.6 Mn",
-   "roundType": "Pre-Seed",
-   "investors": [
-    "Speciale Invest",
-    "BYT Capital",
-    "DeVC"
-   ],
-   "source": "https://inc42.com/buzz/from-pharmeasy-to-curefoods-indian-startups-raised-377-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
   }
  ]
 }
