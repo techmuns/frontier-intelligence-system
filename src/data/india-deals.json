@@ -1,20 +1,20 @@
 {
- "generatedAt": "2026-09-28",
- "windowStart": "2025-09-28",
+ "generatedAt": "2026-10-05",
+ "windowStart": "2025-10-05",
  "windowMonths": 12,
  "source": "Inc42 Funding Galore weekly roundups",
  "sourceUrl": "https://inc42.com/tag/funding-galore/",
  "summary": {
-  "windowStart": "2025-09-28",
+  "windowStart": "2025-10-05",
   "windowMonths": 12,
-  "totalDeals": 914,
-  "aiDeals": 135,
-  "serviceDeals": 110,
-  "serviceCompanies": 103,
-  "serviceInvestors": 273,
-  "serviceRoundValueUsdMn": 831.5,
-  "serviceDisclosedDeals": 102,
-  "serviceUndisclosedDeals": 8,
+  "totalDeals": 916,
+  "aiDeals": 133,
+  "serviceDeals": 108,
+  "serviceCompanies": 101,
+  "serviceInvestors": 264,
+  "serviceRoundValueUsdMn": 824.1,
+  "serviceDisclosedDeals": 99,
+  "serviceUndisclosedDeals": 9,
   "medianServiceRoundUsdMn": 3.5,
   "stages": [
    {
@@ -39,20 +39,13 @@
    },
    {
     "stage": "Other",
-    "count": 22
+    "count": 20
    }
   ],
   "monthly": [
    {
-    "month": "2025-09",
-    "all": 13,
-    "ai": 3,
-    "service": 3,
-    "serviceUsdMn": 7.4
-   },
-   {
     "month": "2025-10",
-    "all": 91,
+    "all": 90,
     "ai": 20,
     "service": 19,
     "serviceUsdMn": 129.6
@@ -129,10 +122,17 @@
    },
    {
     "month": "2026-09",
-    "all": 74,
+    "all": 85,
     "ai": 12,
     "service": 10,
     "serviceUsdMn": 107.4
+   },
+   {
+    "month": "2026-10",
+    "all": 5,
+    "ai": 1,
+    "service": 1,
+    "serviceUsdMn": 0
    }
   ]
  },
@@ -322,9 +322,9 @@
    "disclosedBets": 5,
    "roundValueUsdMn": 71,
    "medianRoundUsdMn": 15,
-   "allDeals": 28,
+   "allDeals": 27,
    "aiDeals": 6,
-   "aiShare": 21,
+   "aiShare": 22,
    "stages": [
     {
      "stage": "Seed",
@@ -647,9 +647,9 @@
    "disclosedBets": 4,
    "roundValueUsdMn": 30.5,
    "medianRoundUsdMn": 7.8,
-   "allDeals": 26,
+   "allDeals": 25,
    "aiDeals": 6,
-   "aiShare": 23,
+   "aiShare": 24,
    "stages": [
     {
      "stage": "Seed",
@@ -1079,9 +1079,9 @@
    "disclosedBets": 3,
    "roundValueUsdMn": 8.6,
    "medianRoundUsdMn": 3,
-   "allDeals": 9,
+   "allDeals": 10,
    "aiDeals": 4,
-   "aiShare": 44,
+   "aiShare": 40,
    "stages": [
     {
      "stage": "Seed",
@@ -1517,9 +1517,9 @@
    "disclosedBets": 2,
    "roundValueUsdMn": 15.5,
    "medianRoundUsdMn": 7.8,
-   "allDeals": 9,
+   "allDeals": 8,
    "aiDeals": 2,
-   "aiShare": 22,
+   "aiShare": 25,
    "stages": [
     {
      "stage": "Series A",
@@ -1636,9 +1636,9 @@
    "disclosedBets": 2,
    "roundValueUsdMn": 12.7,
    "medianRoundUsdMn": 6.4,
-   "allDeals": 7,
+   "allDeals": 6,
    "aiDeals": 2,
-   "aiShare": 29,
+   "aiShare": 33,
    "stages": [
     {
      "stage": "Seed",
@@ -1901,47 +1901,6 @@
    ]
   },
   {
-   "name": "Venture Catalysts",
-   "key": "venturecatalysts",
-   "bets": 2,
-   "disclosedBets": 2,
-   "roundValueUsdMn": 2.3,
-   "medianRoundUsdMn": 1.2,
-   "allDeals": 17,
-   "aiDeals": 3,
-   "aiShare": 18,
-   "stages": [
-    {
-     "stage": "Pre-seed",
-     "count": 1
-    },
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-29",
-   "lastBet": "2025-10-19",
-   "companies": [
-    {
-     "name": "Fundamento",
-     "date": "2025-10-19",
-     "amountUsdMn": 1.9,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-zepto-to-kuku-fm-indian-startups-raised-737-mn-this-week/",
-     "website": "https://fundamento.ai/"
-    },
-    {
-     "name": "Vaani AI",
-     "date": "2025-09-29",
-     "amountUsdMn": 0.4,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": "https://vaaniai.com/"
-    }
-   ]
-  },
-  {
    "name": "SucSEED Indovation Fund",
    "key": "sucseedindovationfund",
    "bets": 2,
@@ -1979,43 +1938,6 @@
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-emergent-to-juspay-indian-startups-raised-303-mn-this-week/",
      "website": "https://fireai.in/"
-    }
-   ]
-  },
-  {
-   "name": "Uday Sodhi",
-   "key": "udaysodhi",
-   "bets": 2,
-   "disclosedBets": 2,
-   "roundValueUsdMn": 0.6,
-   "medianRoundUsdMn": 0.3,
-   "allDeals": 2,
-   "aiDeals": 2,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-seed",
-     "count": 2
-    }
-   ],
-   "firstBet": "2025-09-29",
-   "lastBet": "2026-04-09",
-   "companies": [
-    {
-     "name": "Angoor AI",
-     "date": "2026-04-09",
-     "amountUsdMn": 0.215,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-kreditbee-to-nava-indian-startups-raised-362-mn-this-week/",
-     "website": "https://angoor.ai/"
-    },
-    {
-     "name": "Vaani AI",
-     "date": "2025-09-29",
-     "amountUsdMn": 0.4,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": "https://vaaniai.com/"
     }
    ]
   },
@@ -2411,9 +2333,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 30.5,
    "medianRoundUsdMn": 30.5,
-   "allDeals": 2,
+   "allDeals": 1,
    "aiDeals": 1,
-   "aiShare": 50,
+   "aiShare": 100,
    "stages": [
     {
      "stage": "Series B",
@@ -2469,9 +2391,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 30,
    "medianRoundUsdMn": 30,
-   "allDeals": 1,
+   "allDeals": 2,
    "aiDeals": 1,
-   "aiShare": 100,
+   "aiShare": 50,
    "stages": [
     {
      "stage": "Series B",
@@ -3513,9 +3435,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 10,
    "medianRoundUsdMn": 10,
-   "allDeals": 7,
+   "allDeals": 8,
    "aiDeals": 1,
-   "aiShare": 14,
+   "aiShare": 13,
    "stages": [
     {
      "stage": "Series A",
@@ -4615,9 +4537,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 5,
    "medianRoundUsdMn": 5,
-   "allDeals": 15,
+   "allDeals": 16,
    "aiDeals": 1,
-   "aiShare": 7,
+   "aiShare": 6,
    "stages": [
     {
      "stage": "Seed",
@@ -4638,44 +4560,15 @@
    ]
   },
   {
-   "name": "Foxhog Ventures",
-   "key": "foxhogventures",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 5,
-   "medianRoundUsdMn": 5,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Other",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-30",
-   "lastBet": "2025-09-30",
-   "companies": [
-    {
-     "name": "Assessli",
-     "date": "2025-09-30",
-     "amountUsdMn": 5,
-     "stage": "Other",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": "https://www.assessli.com/"
-    }
-   ]
-  },
-  {
    "name": "Lashit Sanghvi",
    "key": "lashitsanghvi",
    "bets": 1,
    "disclosedBets": 1,
    "roundValueUsdMn": 5,
    "medianRoundUsdMn": 5,
-   "allDeals": 4,
+   "allDeals": 5,
    "aiDeals": 1,
-   "aiShare": 25,
+   "aiShare": 20,
    "stages": [
     {
      "stage": "Seed",
@@ -5282,9 +5175,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 3.4,
    "medianRoundUsdMn": 3.4,
-   "allDeals": 13,
+   "allDeals": 14,
    "aiDeals": 1,
-   "aiShare": 8,
+   "aiShare": 7,
    "stages": [
     {
      "stage": "Pre-Series A",
@@ -5485,9 +5378,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 3,
    "medianRoundUsdMn": 3,
-   "allDeals": 11,
+   "allDeals": 10,
    "aiDeals": 4,
-   "aiShare": 36,
+   "aiShare": 40,
    "stages": [
     {
      "stage": "Seed",
@@ -6065,9 +5958,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 2,
    "medianRoundUsdMn": 2,
-   "allDeals": 4,
+   "allDeals": 3,
    "aiDeals": 1,
-   "aiShare": 25,
+   "aiShare": 33,
    "stages": [
     {
      "stage": "Seed",
@@ -6233,35 +6126,6 @@
    ]
   },
   {
-   "name": "Turbostart",
-   "key": "turbostart",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 2,
-   "medianRoundUsdMn": 2,
-   "allDeals": 4,
-   "aiDeals": 2,
-   "aiShare": 50,
-   "stages": [
-    {
-     "stage": "Other",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-30",
-   "lastBet": "2025-09-30",
-   "companies": [
-    {
-     "name": "Climaty AI",
-     "date": "2025-09-30",
-     "amountUsdMn": 2,
-     "stage": "Other",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": null
-    }
-   ]
-  },
-  {
    "name": "Epic Angels",
    "key": "epicangels",
    "bets": 1,
@@ -6329,6 +6193,35 @@
    "allDeals": 1,
    "aiDeals": 1,
    "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Pre-Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2025-10-19",
+   "lastBet": "2025-10-19",
+   "companies": [
+    {
+     "name": "Fundamento",
+     "date": "2025-10-19",
+     "amountUsdMn": 1.9,
+     "stage": "Pre-Series A",
+     "source": "https://inc42.com/buzz/from-zepto-to-kuku-fm-indian-startups-raised-737-mn-this-week/",
+     "website": "https://fundamento.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Venture Catalysts",
+   "key": "venturecatalysts",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 1.9,
+   "medianRoundUsdMn": 1.9,
+   "allDeals": 15,
+   "aiDeals": 2,
+   "aiShare": 13,
    "stages": [
     {
      "stage": "Pre-Series A",
@@ -6587,9 +6480,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 1.5,
    "medianRoundUsdMn": 1.5,
-   "allDeals": 1,
+   "allDeals": 2,
    "aiDeals": 1,
-   "aiShare": 100,
+   "aiShare": 50,
    "stages": [
     {
      "stage": "Other",
@@ -6732,9 +6625,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 1.3,
    "medianRoundUsdMn": 1.3,
-   "allDeals": 8,
+   "allDeals": 7,
    "aiDeals": 1,
-   "aiShare": 13,
+   "aiShare": 14,
    "stages": [
     {
      "stage": "Seed",
@@ -7741,238 +7634,6 @@
    ]
   },
   {
-   "name": "Dr Abhishek Sharma",
-   "key": "drabhisheksharma",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 0.4,
-   "medianRoundUsdMn": 0.4,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-seed",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-29",
-   "lastBet": "2025-09-29",
-   "companies": [
-    {
-     "name": "Vaani AI",
-     "date": "2025-09-29",
-     "amountUsdMn": 0.4,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": "https://vaaniai.com/"
-    }
-   ]
-  },
-  {
-   "name": "Dr Viveka Kulharia",
-   "key": "drvivekakulharia",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 0.4,
-   "medianRoundUsdMn": 0.4,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-seed",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-29",
-   "lastBet": "2025-09-29",
-   "companies": [
-    {
-     "name": "Vaani AI",
-     "date": "2025-09-29",
-     "amountUsdMn": 0.4,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": "https://vaaniai.com/"
-    }
-   ]
-  },
-  {
-   "name": "Ejaz Ahmed",
-   "key": "ejazahmed",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 0.4,
-   "medianRoundUsdMn": 0.4,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-seed",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-29",
-   "lastBet": "2025-09-29",
-   "companies": [
-    {
-     "name": "Vaani AI",
-     "date": "2025-09-29",
-     "amountUsdMn": 0.4,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": "https://vaaniai.com/"
-    }
-   ]
-  },
-  {
-   "name": "KK Venkata",
-   "key": "kkvenkata",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 0.4,
-   "medianRoundUsdMn": 0.4,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-seed",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-29",
-   "lastBet": "2025-09-29",
-   "companies": [
-    {
-     "name": "Vaani AI",
-     "date": "2025-09-29",
-     "amountUsdMn": 0.4,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": "https://vaaniai.com/"
-    }
-   ]
-  },
-  {
-   "name": "Michele Barbazza",
-   "key": "michelebarbazza",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 0.4,
-   "medianRoundUsdMn": 0.4,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-seed",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-29",
-   "lastBet": "2025-09-29",
-   "companies": [
-    {
-     "name": "Vaani AI",
-     "date": "2025-09-29",
-     "amountUsdMn": 0.4,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": "https://vaaniai.com/"
-    }
-   ]
-  },
-  {
-   "name": "Nikhil Tripathi",
-   "key": "nikhiltripathi",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 0.4,
-   "medianRoundUsdMn": 0.4,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-seed",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-29",
-   "lastBet": "2025-09-29",
-   "companies": [
-    {
-     "name": "Vaani AI",
-     "date": "2025-09-29",
-     "amountUsdMn": 0.4,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": "https://vaaniai.com/"
-    }
-   ]
-  },
-  {
-   "name": "Shashikant Chaudhary",
-   "key": "shashikantchaudhary",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 0.4,
-   "medianRoundUsdMn": 0.4,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-seed",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-29",
-   "lastBet": "2025-09-29",
-   "companies": [
-    {
-     "name": "Vaani AI",
-     "date": "2025-09-29",
-     "amountUsdMn": 0.4,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": "https://vaaniai.com/"
-    }
-   ]
-  },
-  {
-   "name": "Swapnil Sheth",
-   "key": "swapnilsheth",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 0.4,
-   "medianRoundUsdMn": 0.4,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-seed",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-09-29",
-   "lastBet": "2025-09-29",
-   "companies": [
-    {
-     "name": "Vaani AI",
-     "date": "2025-09-29",
-     "amountUsdMn": 0.4,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-     "website": "https://vaaniai.com/"
-    }
-   ]
-  },
-  {
    "name": "Anurag Jain",
    "key": "anuragjain",
    "bets": 1,
@@ -8292,6 +7953,35 @@
    ]
   },
   {
+   "name": "Uday Sodhi",
+   "key": "udaysodhi",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 0.2,
+   "medianRoundUsdMn": 0.2,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Pre-seed",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-04-09",
+   "lastBet": "2026-04-09",
+   "companies": [
+    {
+     "name": "Angoor AI",
+     "date": "2026-04-09",
+     "amountUsdMn": 0.215,
+     "stage": "Pre-seed",
+     "source": "https://inc42.com/buzz/from-kreditbee-to-nava-indian-startups-raised-362-mn-this-week/",
+     "website": "https://angoor.ai/"
+    }
+   ]
+  },
+  {
    "name": "Venturizer",
    "key": "venturizer",
    "bets": 1,
@@ -8559,7 +8249,7 @@
    "disclosedBets": 0,
    "roundValueUsdMn": 0,
    "medianRoundUsdMn": null,
-   "allDeals": 13,
+   "allDeals": 12,
    "aiDeals": 1,
    "aiShare": 8,
    "stages": [
@@ -8607,6 +8297,35 @@
      "stage": "Other",
      "source": "https://inc42.com/buzz/from-easy-home-finance-to-4basecare-indian-startups-raised-96-mn-this-week/",
      "website": "https://kore.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Aviral Bhatnagar",
+   "key": "aviralbhatnagar",
+   "bets": 1,
+   "disclosedBets": 0,
+   "roundValueUsdMn": 0,
+   "medianRoundUsdMn": null,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Pre-seed",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-01",
+   "lastBet": "2026-10-01",
+   "companies": [
+    {
+     "name": "Unveilr AI",
+     "date": "2026-10-01",
+     "amountUsdMn": null,
+     "stage": "Pre-seed",
+     "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+     "website": "https://unveilr.ai/"
     }
    ]
   },
@@ -8722,7 +8441,7 @@
      "amountUsdMn": null,
      "stage": "Pre-seed",
      "source": "https://inc42.com/buzz/from-snapmint-to-snabbit-indian-startups-raised-371-mn-this-week/",
-     "website": "https://www.satarkai.in/"
+     "website": "https://www.satarkai.com/"
     }
    ]
   },
@@ -8844,6 +8563,324 @@
   }
  ],
  "deals": [
+  {
+   "date": "2026-10-01",
+   "name": "Seeds Fincap",
+   "sector": "Fintech",
+   "subsector": "Lending Tech",
+   "businessModel": "B2B",
+   "amountUsdMn": 10.4,
+   "amountRaw": "$10.4 Mn",
+   "roundType": "Series B",
+   "investors": [
+    "Michael",
+    "Susan Dell Foundation",
+    "Z47",
+    "Lok Capital",
+    "Norinchukin Capital",
+    "Alteria Capital"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-01",
+   "name": "Banglore Watch Company",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": 1.4,
+   "amountRaw": "$1.4 Mn",
+   "roundType": "Seed",
+   "investors": [],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-01",
+   "name": "Zaperon",
+   "sector": "Enterprise Tech",
+   "subsector": "Horizontal SaaS",
+   "businessModel": "B2B",
+   "amountUsdMn": 0.728,
+   "amountRaw": "$728K",
+   "roundType": "Seed",
+   "investors": [
+    "Inflection Point Ventures"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-01",
+   "name": "Aignosis",
+   "sector": "Health Tech",
+   "subsector": "Diagnostics",
+   "businessModel": "B2B",
+   "amountUsdMn": 0.416,
+   "amountRaw": "$416K",
+   "roundType": "Seed",
+   "investors": [
+    "Antler",
+    "Nikhil Kamath",
+    "Varun Dua",
+    "IIMA Ventures"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-01",
+   "name": "Unveilr AI",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2B",
+   "amountUsdMn": null,
+   "amountRaw": "-",
+   "roundType": "Pre-Seed",
+   "investors": [
+    "Aviral Bhatnagar"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": true,
+   "website": "https://unveilr.ai/"
+  },
+  {
+   "date": "2026-09-30",
+   "name": "Simple Energy",
+   "sector": "Clean Tech",
+   "subsector": "Electric Vehicles",
+   "businessModel": "B2C",
+   "amountUsdMn": 180,
+   "amountRaw": "$180 Mn",
+   "roundType": "Series C",
+   "investors": [
+    "Dr. Arokiaswamy Velumani Family Office",
+    "Haran Family Office",
+    "Amit Mishra",
+    "Suhas Rajkumar",
+    "Ankit Gupta"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-30",
+   "name": "Gravity",
+   "sector": "Real Estate Tech",
+   "subsector": "Real Estate Services",
+   "businessModel": "B2B",
+   "amountUsdMn": 15,
+   "amountRaw": "$15 Mn *",
+   "roundType": "",
+   "investors": [
+    "3one4 Capital",
+    "Info Edge Ventures",
+    "Alteria Capital",
+    "Genesia Ventures"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-30",
+   "name": "Arivihan",
+   "sector": "Edtech",
+   "subsector": "Digital Learning Platform",
+   "businessModel": "B2C",
+   "amountUsdMn": 10.2,
+   "amountRaw": "$10.2 Mn",
+   "roundType": "Series A",
+   "investors": [
+    "Accel",
+    "Prosus Ventures",
+    "Dinesh Chandra Agrawal",
+    "Dinesh Gulati",
+    "Rajesh Sawhney"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-30",
+   "name": "EDT",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": 2.4,
+   "amountRaw": "$2.4 Mn",
+   "roundType": "Pre-Series A",
+   "investors": [
+    "Sauce.VC",
+    "Alteria Capital",
+    "Raul Rai",
+    "Atomberg Shibam Das",
+    "Arindam Paul",
+    "Ajith Pai",
+    "Anushree Tainwala"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-30",
+   "name": "Vytalyou",
+   "sector": "Health Tech",
+   "subsector": "In-Clinic Healthcare",
+   "businessModel": "B2C",
+   "amountUsdMn": 0.936,
+   "amountRaw": "$936K",
+   "roundType": "Pre-Series A",
+   "investors": [
+    "Chetan Jain",
+    "Ratan Jain"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-29",
+   "name": "Balwaan Krishi",
+   "sector": "Agritech",
+   "subsector": "Farmtech",
+   "businessModel": "B2B2C",
+   "amountUsdMn": 10.4,
+   "amountRaw": "$10.4 Mn",
+   "roundType": "Series B",
+   "investors": [
+    "First Bridge India Growth Fund Private Equity"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-29",
+   "name": "FIG Living",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": null,
+   "amountRaw": "-",
+   "roundType": "",
+   "investors": [
+    "Aman Gupta"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-28",
+   "name": "Alive App",
+   "sector": "Consumer Services",
+   "subsector": "Listing & Discovery Services",
+   "businessModel": "B2C",
+   "amountUsdMn": 1,
+   "amountRaw": "$1 Mn",
+   "roundType": "",
+   "investors": [
+    "Powerhouse Ventures",
+    "Flipkart Ventures"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-28",
+   "name": "Primerry",
+   "sector": "Health Tech",
+   "subsector": "Pharmaceutical",
+   "businessModel": "B2C",
+   "amountUsdMn": 0.738,
+   "amountRaw": "$738K",
+   "roundType": "Pre-Seed",
+   "investors": [
+    "Ashish Kacholia",
+    "Lashit Sanghvi",
+    "Mohit Sadaani",
+    "Hitesh Dhingra",
+    "Ajay Mehra",
+    "Samir Palod"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-28",
+   "name": "Arovia Consumer",
+   "sector": "Ecommerce",
+   "subsector": "Roll Ups",
+   "businessModel": "B2C",
+   "amountUsdMn": null,
+   "amountRaw": "-",
+   "roundType": "",
+   "investors": [
+    "Fireside Ventures"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-09-28",
+   "name": "Keploy",
+   "sector": "Enterprise Tech",
+   "subsector": "Horizontal SaaS",
+   "businessModel": "B2B",
+   "amountUsdMn": null,
+   "amountRaw": "-",
+   "roundType": "",
+   "investors": [
+    "Flipkart Ventures"
+   ],
+   "source": "https://inc42.com/buzz/from-simple-energy-to-arivihan-indian-startups-raised-over-233-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
   {
    "date": "2026-09-25",
    "name": "Rivet",
@@ -17613,7 +17650,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": true,
-   "website": "https://www.satarkai.in/"
+   "website": "https://www.satarkai.com/"
   },
   {
    "date": "2026-04-03",
@@ -25569,7 +25606,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": true,
-   "website": "https://www.satarkai.in/"
+   "website": "https://www.satarkai.com/"
   },
   {
    "date": "2025-10-29",
@@ -26897,307 +26934,6 @@
    "aiLayer": "application",
    "isAIService": true,
    "website": null
-  },
-  {
-   "date": "2025-10-01",
-   "name": "Mishmash Naturals",
-   "sector": "Ecommerce",
-   "subsector": "D2C",
-   "businessModel": "B2C",
-   "amountUsdMn": 0.27,
-   "amountRaw": "$270K",
-   "roundType": "Pre-Seed",
-   "investors": [
-    "Inflection Point Ventures",
-    "IIT Delhi Angels Network",
-    "Nihit Jain",
-    "Rahul Anurag",
-    "Kamlakar Rao",
-    "Piyush Kumar",
-    "Riddhi Verma Ayyagari",
-    "Anurag Tayal"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-30",
-   "name": "Assessli",
-   "sector": "AI",
-   "subsector": "Application Layer",
-   "businessModel": "B2B",
-   "amountUsdMn": 5,
-   "amountRaw": "$5 Mn",
-   "roundType": "",
-   "investors": [
-    "Foxhog Ventures"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": true,
-   "aiLayer": "application",
-   "isAIService": true,
-   "website": "https://www.assessli.com/"
-  },
-  {
-   "date": "2025-09-30",
-   "name": "Ignosis",
-   "sector": "Fintech",
-   "subsector": "Fintech SaaS",
-   "businessModel": "B2B",
-   "amountUsdMn": 4,
-   "amountRaw": "$4 Mn",
-   "roundType": "Pre-Series A",
-   "investors": [
-    "Peak XV Partners",
-    "Razorpay Ventures",
-    "Force Ventures",
-    "Kunal Shah"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-30",
-   "name": "Fyno",
-   "sector": "Enterprise Tech",
-   "subsector": "Horizontal SaaS",
-   "businessModel": "B2B",
-   "amountUsdMn": 4,
-   "amountRaw": "$4 Mn",
-   "roundType": "",
-   "investors": [
-    "Arkam Ventures",
-    "3one4 Capital"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-30",
-   "name": "VAMA",
-   "sector": "Consumer Services",
-   "subsector": "eDarshan Services",
-   "businessModel": "B2C",
-   "amountUsdMn": 2.5,
-   "amountRaw": "$2.5 Mn",
-   "roundType": "Pre-Series A",
-   "investors": [
-    "Wavemaker Partners",
-    "500 Global",
-    "Sadev Ventures",
-    "Venture Catalysts",
-    "Silverneedle Ventures",
-    "Alok Nanavaty",
-    "Harit Nagpal",
-    "Swati Parikh",
-    "Mahesh Kamdar"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-30",
-   "name": "Climaty AI",
-   "sector": "AI",
-   "subsector": "Application Layer",
-   "businessModel": "B2B",
-   "amountUsdMn": 2,
-   "amountRaw": "$2 Mn",
-   "roundType": "",
-   "investors": [
-    "Turbostart"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": true,
-   "aiLayer": "application",
-   "isAIService": true,
-   "website": null
-  },
-  {
-   "date": "2025-09-30",
-   "name": "Unmannd",
-   "sector": "Advanced Hardware",
-   "subsector": "Defence Tech",
-   "businessModel": "B2B",
-   "amountUsdMn": 2,
-   "amountRaw": "$2 Mn",
-   "roundType": "Pre-Seed",
-   "investors": [
-    "Speciale Invest",
-    "Accel"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-30",
-   "name": "Plazza",
-   "sector": "Consumer Services",
-   "subsector": "Quick Commerce",
-   "businessModel": "B2C",
-   "amountUsdMn": 1.4,
-   "amountRaw": "$1.4 Mn",
-   "roundType": "",
-   "investors": [
-    "All In Capital",
-    "Better Capital",
-    "Abhishek Goyal",
-    "Singhania family office"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-30",
-   "name": "SuperFam",
-   "sector": "Consumer Services",
-   "subsector": "-",
-   "businessModel": "B2C",
-   "amountUsdMn": 0.4,
-   "amountRaw": "$400K",
-   "roundType": "Pre-Seed",
-   "investors": [
-    "Fundamental VC",
-    "Untitled Ventures",
-    "SSV Fund"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-29",
-   "name": "Kapiva",
-   "sector": "Ecommerce",
-   "subsector": "D2C",
-   "businessModel": "B2C",
-   "amountUsdMn": 60,
-   "amountRaw": "$60 Mn**",
-   "roundType": "Series D",
-   "investors": [
-    "360 ONE Asset",
-    "Vertex Growth",
-    "Vertex Ventures",
-    "3one4 Capital"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-29",
-   "name": "Recur Club",
-   "sector": "Fintech",
-   "subsector": "Lending Tech",
-   "businessModel": "B2B",
-   "amountUsdMn": 50,
-   "amountRaw": "$50 Mn*",
-   "roundType": "",
-   "investors": [
-    "InfoEdge Ventures",
-    "LC Nueva",
-    "Physis Capital",
-    "String Ventures",
-    "iA Finvolve",
-    "Incred",
-    "Ugro",
-    "Lighthouse Canton"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-29",
-   "name": "Petpooja",
-   "sector": "Enterprise Tech",
-   "subsector": "Horizontal SaaS",
-   "businessModel": "B2B",
-   "amountUsdMn": 15.4,
-   "amountRaw": "$15.4 Mn**",
-   "roundType": "",
-   "investors": [
-    "Dharana Capital",
-    "Ashish Gupta",
-    "Abhiraj Singh Bhal",
-    "Varun Khaitan",
-    "Raghav Chandra",
-    "Mukund Kulashekaran"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-29",
-   "name": "Hocco",
-   "sector": "Ecommerce",
-   "subsector": "D2C",
-   "businessModel": "B2C",
-   "amountUsdMn": 12.9,
-   "amountRaw": "$12.9 Mn",
-   "roundType": "",
-   "investors": [
-    "Sauce.VC"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-09-29",
-   "name": "Vaani AI",
-   "sector": "AI",
-   "subsector": "Application Layer",
-   "businessModel": "B2B, B2C",
-   "amountUsdMn": 0.4,
-   "amountRaw": "$400K",
-   "roundType": "Pre-Seed",
-   "investors": [
-    "Venture Catalysts",
-    "Dr Abhishek Sharma",
-    "Dr Viveka Kulharia",
-    "Shashikant Chaudhary",
-    "Ejaz Ahmed",
-    "Nikhil Tripathi",
-    "Uday Sodhi",
-    "KK Venkata",
-    "Swapnil Sheth",
-    "Michele Barbazza"
-   ],
-   "source": "https://inc42.com/buzz/from-kapiva-to-petpooja-indian-startups-raised-160-mn-this-week/",
-   "isAI": true,
-   "aiLayer": "application",
-   "isAIService": true,
-   "website": "https://vaaniai.com/"
   }
  ]
 }
