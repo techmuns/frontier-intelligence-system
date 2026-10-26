@@ -1,21 +1,21 @@
 {
- "generatedAt": "2026-10-19",
- "windowStart": "2025-10-19",
+ "generatedAt": "2026-10-26",
+ "windowStart": "2025-10-26",
  "windowMonths": 12,
  "source": "Inc42 Funding Galore weekly roundups",
  "sourceUrl": "https://inc42.com/tag/funding-galore/",
  "summary": {
-  "windowStart": "2025-10-19",
+  "windowStart": "2025-10-26",
   "windowMonths": 12,
-  "totalDeals": 911,
-  "aiDeals": 130,
-  "serviceDeals": 106,
-  "serviceCompanies": 103,
-  "serviceInvestors": 256,
-  "serviceRoundValueUsdMn": 842.7,
-  "serviceDisclosedDeals": 98,
+  "totalDeals": 924,
+  "aiDeals": 134,
+  "serviceDeals": 110,
+  "serviceCompanies": 107,
+  "serviceInvestors": 274,
+  "serviceRoundValueUsdMn": 884.7,
+  "serviceDisclosedDeals": 102,
   "serviceUndisclosedDeals": 8,
-  "medianServiceRoundUsdMn": 3.5,
+  "medianServiceRoundUsdMn": 3.7,
   "stages": [
    {
     "stage": "Pre-seed",
@@ -23,32 +23,32 @@
    },
    {
     "stage": "Seed",
-    "count": 31
+    "count": 33
    },
    {
     "stage": "Pre-Series A",
-    "count": 9
+    "count": 8
    },
    {
     "stage": "Series A",
-    "count": 22
+    "count": 24
    },
    {
     "stage": "Series B",
-    "count": 7
+    "count": 6
    },
    {
     "stage": "Other",
-    "count": 20
+    "count": 22
    }
   ],
   "monthly": [
    {
     "month": "2025-10",
-    "all": 35,
-    "ai": 8,
-    "service": 8,
-    "serviceUsdMn": 90.6
+    "all": 31,
+    "ai": 6,
+    "service": 6,
+    "serviceUsdMn": 38.7
    },
    {
     "month": "2025-11",
@@ -129,10 +129,10 @@
    },
    {
     "month": "2026-10",
-    "all": 54,
-    "ai": 9,
-    "service": 9,
-    "serviceUsdMn": 57.3
+    "all": 71,
+    "ai": 15,
+    "service": 15,
+    "serviceUsdMn": 151.2
    },
    {
     "month": "2926-10",
@@ -147,13 +147,13 @@
   {
    "name": "Y Combinator",
    "key": "ycombinator",
-   "bets": 9,
-   "disclosedBets": 9,
-   "roundValueUsdMn": 139.8,
-   "medianRoundUsdMn": 10,
-   "allDeals": 16,
-   "aiDeals": 11,
-   "aiShare": 69,
+   "bets": 10,
+   "disclosedBets": 10,
+   "roundValueUsdMn": 154.8,
+   "medianRoundUsdMn": 12.5,
+   "allDeals": 17,
+   "aiDeals": 12,
+   "aiShare": 71,
    "stages": [
     {
      "stage": "Pre-seed",
@@ -165,7 +165,7 @@
     },
     {
      "stage": "Series A",
-     "count": 4
+     "count": 5
     },
     {
      "stage": "Other",
@@ -173,8 +173,16 @@
     }
    ],
    "firstBet": "2025-10-29",
-   "lastBet": "2026-10-13",
+   "lastBet": "2026-10-23",
    "companies": [
+    {
+     "name": "Firstwork",
+     "date": "2026-10-23",
+     "amountUsdMn": 15,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://www.firstwork.com/"
+    },
     {
      "name": "Clueso",
      "date": "2026-10-13",
@@ -367,7 +375,7 @@
      "amountUsdMn": 0.445,
      "stage": "Pre-seed",
      "source": "https://inc42.com/buzz/from-ultrahuman-to-comet-indian-startups-raised-over-177-mn-this-week/",
-     "website": "https://oppex.ai/"
+     "website": "https://www.oppex.ai/"
     },
     {
      "name": "Revspot",
@@ -662,9 +670,9 @@
    "disclosedBets": 4,
    "roundValueUsdMn": 25.7,
    "medianRoundUsdMn": 7.4,
-   "allDeals": 14,
+   "allDeals": 15,
    "aiDeals": 4,
-   "aiShare": 29,
+   "aiShare": 27,
    "stages": [
     {
      "stage": "Seed",
@@ -723,13 +731,13 @@
   {
    "name": "Blume Ventures",
    "key": "blumeventures",
-   "bets": 3,
-   "disclosedBets": 3,
-   "roundValueUsdMn": 17.2,
-   "medianRoundUsdMn": 6.3,
-   "allDeals": 20,
-   "aiDeals": 3,
-   "aiShare": 15,
+   "bets": 4,
+   "disclosedBets": 4,
+   "roundValueUsdMn": 21.4,
+   "medianRoundUsdMn": 5.3,
+   "allDeals": 21,
+   "aiDeals": 4,
+   "aiShare": 19,
    "stages": [
     {
      "stage": "Seed",
@@ -742,11 +750,23 @@
     {
      "stage": "Series A",
      "count": 1
+    },
+    {
+     "stage": "Other",
+     "count": 1
     }
    ],
    "firstBet": "2026-01-12",
-   "lastBet": "2026-01-27",
+   "lastBet": "2026-10-19",
    "companies": [
+    {
+     "name": "Hunar",
+     "date": "2026-10-19",
+     "amountUsdMn": 4.2,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://hunar.ai/"
+    },
     {
      "name": "Mysa",
      "date": "2026-01-27",
@@ -770,6 +790,59 @@
      "stage": "Series A",
      "source": "https://inc42.com/buzz/from-pee-safe-to-etherealx-indian-startups-raised-269-mn-this-week/",
      "website": "https://www.bluecopa.com/"
+    }
+   ]
+  },
+  {
+   "name": "Together Fund",
+   "key": "togetherfund",
+   "bets": 3,
+   "disclosedBets": 3,
+   "roundValueUsdMn": 30.2,
+   "medianRoundUsdMn": 5,
+   "allDeals": 6,
+   "aiDeals": 4,
+   "aiShare": 67,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 1
+    },
+    {
+     "stage": "Series A",
+     "count": 1
+    },
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-03-10",
+   "lastBet": "2026-10-19",
+   "companies": [
+    {
+     "name": "Hunar",
+     "date": "2026-10-19",
+     "amountUsdMn": 4.2,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://hunar.ai/"
+    },
+    {
+     "name": "Runable",
+     "date": "2026-08-26",
+     "amountUsdMn": 21,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-third-wave-coffee-to-matter-indian-startups-raised-over-210-mn-this-week/",
+     "website": "https://runable.com/"
+    },
+    {
+     "name": "Coreworks AI",
+     "date": "2026-03-10",
+     "amountUsdMn": 5,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-mozark-to-captain-fresh-indian-startups-raised-207-mn-this-week/",
+     "website": "https://www.coreworks.ai/"
     }
    ]
   },
@@ -982,6 +1055,55 @@
    ]
   },
   {
+   "name": "Cedar Hill Capital",
+   "key": "cedarhillcapital",
+   "bets": 3,
+   "disclosedBets": 3,
+   "roundValueUsdMn": 7,
+   "medianRoundUsdMn": 2.5,
+   "allDeals": 3,
+   "aiDeals": 3,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 2
+    },
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-03-31",
+   "lastBet": "2026-10-22",
+   "companies": [
+    {
+     "name": "Karta AI",
+     "date": "2026-10-22",
+     "amountUsdMn": 3,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://karta.com/"
+    },
+    {
+     "name": "RevRag.AI",
+     "date": "2026-10-14",
+     "amountUsdMn": 2.5,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-boldfit-to-origin-indian-startups-raised-about-236-mn-this-week/",
+     "website": "https://www.revrag.ai/"
+    },
+    {
+     "name": "Sign3",
+     "date": "2026-03-31",
+     "amountUsdMn": 1.5,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-noon-to-palmonas-indian-startups-raised-132-mn-this-week/",
+     "website": "https://sign3.ai/"
+    }
+   ]
+  },
+  {
    "name": "Neon Fund",
    "key": "neonfund",
    "bets": 3,
@@ -1031,6 +1153,51 @@
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-moengage-to-agnikul-indian-startups-raised-238-mn-this-week/",
      "website": "https://gamestatelabs.com/"
+    }
+   ]
+  },
+  {
+   "name": "PeerCapital",
+   "key": "peercapital",
+   "bets": 3,
+   "disclosedBets": 3,
+   "roundValueUsdMn": 6.4,
+   "medianRoundUsdMn": 2,
+   "allDeals": 6,
+   "aiDeals": 3,
+   "aiShare": 50,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 3
+    }
+   ],
+   "firstBet": "2025-10-30",
+   "lastBet": "2026-10-22",
+   "companies": [
+    {
+     "name": "Karta AI",
+     "date": "2026-10-22",
+     "amountUsdMn": 3,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://karta.com/"
+    },
+    {
+     "name": "Game State Labs",
+     "date": "2025-11-06",
+     "amountUsdMn": 2,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-moengage-to-agnikul-indian-startups-raised-238-mn-this-week/",
+     "website": "https://gamestatelabs.com/"
+    },
+    {
+     "name": "Redacto",
+     "date": "2025-10-30",
+     "amountUsdMn": 1.4,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-snapmint-to-snabbit-indian-startups-raised-371-mn-this-week/",
+     "website": "https://redacto.ai/"
     }
    ]
   },
@@ -1129,6 +1296,43 @@
    ]
   },
   {
+   "name": "General Catalyst",
+   "key": "generalcatalyst",
+   "bets": 2,
+   "disclosedBets": 2,
+   "roundValueUsdMn": 54.3,
+   "medianRoundUsdMn": 27.2,
+   "allDeals": 6,
+   "aiDeals": 3,
+   "aiShare": 50,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 2
+    }
+   ],
+   "firstBet": "2026-01-21",
+   "lastBet": "2026-10-22",
+   "companies": [
+    {
+     "name": "Different",
+     "date": "2026-10-22",
+     "amountUsdMn": 48,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://www.different.ai/"
+    },
+    {
+     "name": "Bolna",
+     "date": "2026-01-21",
+     "amountUsdMn": 6.3,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-emergent-to-juspay-indian-startups-raised-303-mn-this-week/",
+     "website": "https://www.bolna.ai/"
+    }
+   ]
+  },
+  {
    "name": "Insight Partners",
    "key": "insightpartners",
    "bets": 2,
@@ -1157,7 +1361,7 @@
      "amountUsdMn": 13.3,
      "stage": "Series A",
      "source": "https://inc42.com/buzz/from-pixxel-to-swish-indian-startups-raised-over-321-9-mn-this-week/",
-     "website": "https://graphai.app/"
+     "website": "https://www.graphai.tech/"
     },
     {
      "name": "Attentive AI",
@@ -1248,47 +1452,6 @@
    ]
   },
   {
-   "name": "Together Fund",
-   "key": "togetherfund",
-   "bets": 2,
-   "disclosedBets": 2,
-   "roundValueUsdMn": 26,
-   "medianRoundUsdMn": 13,
-   "allDeals": 5,
-   "aiDeals": 3,
-   "aiShare": 60,
-   "stages": [
-    {
-     "stage": "Seed",
-     "count": 1
-    },
-    {
-     "stage": "Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2026-03-10",
-   "lastBet": "2026-08-26",
-   "companies": [
-    {
-     "name": "Runable",
-     "date": "2026-08-26",
-     "amountUsdMn": 21,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-third-wave-coffee-to-matter-indian-startups-raised-over-210-mn-this-week/",
-     "website": "https://runable.com/"
-    },
-    {
-     "name": "Coreworks AI",
-     "date": "2026-03-10",
-     "amountUsdMn": 5,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-mozark-to-captain-fresh-indian-startups-raised-207-mn-this-week/",
-     "website": "https://www.coreworks.ai/"
-    }
-   ]
-  },
-  {
    "name": "Unicorn India Ventures",
    "key": "unicornindiaventures",
    "bets": 2,
@@ -1336,9 +1499,9 @@
    "disclosedBets": 2,
    "roundValueUsdMn": 17.9,
    "medianRoundUsdMn": 9,
-   "allDeals": 11,
+   "allDeals": 12,
    "aiDeals": 3,
-   "aiShare": 27,
+   "aiShare": 25,
    "stages": [
     {
      "stage": "Seed",
@@ -1358,7 +1521,7 @@
      "amountUsdMn": 13.3,
      "stage": "Series A",
      "source": "https://inc42.com/buzz/from-pixxel-to-swish-indian-startups-raised-over-321-9-mn-this-week/",
-     "website": "https://graphai.app/"
+     "website": "https://www.graphai.tech/"
     },
     {
      "name": "Aivar",
@@ -1486,47 +1649,6 @@
    ]
   },
   {
-   "name": "IIFL",
-   "key": "iifl",
-   "bets": 2,
-   "disclosedBets": 2,
-   "roundValueUsdMn": 9.9,
-   "medianRoundUsdMn": 5,
-   "allDeals": 4,
-   "aiDeals": 2,
-   "aiShare": 50,
-   "stages": [
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    },
-    {
-     "stage": "Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-10-19",
-   "lastBet": "2026-04-14",
-   "companies": [
-    {
-     "name": "TraqCheck",
-     "date": "2026-04-14",
-     "amountUsdMn": 8,
-     "stage": "Series A",
-     "source": "https://inc42.com/buzz/from-hosteller-to-gobblecube-indian-startups-raised-60-mn-this-week/",
-     "website": "https://www.traqcheck.com/"
-    },
-    {
-     "name": "Fundamento",
-     "date": "2025-10-19",
-     "amountUsdMn": 1.9,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-zepto-to-kuku-fm-indian-startups-raised-737-mn-this-week/",
-     "website": "https://fundamento.ai/"
-    }
-   ]
-  },
-  {
    "name": "Flourish Ventures",
    "key": "flourishventures",
    "bets": 2,
@@ -1642,6 +1764,47 @@
    ]
   },
   {
+   "name": "Seedstars",
+   "key": "seedstars",
+   "bets": 2,
+   "disclosedBets": 2,
+   "roundValueUsdMn": 7.2,
+   "medianRoundUsdMn": 3.6,
+   "allDeals": 2,
+   "aiDeals": 2,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 1
+    },
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-19",
+   "lastBet": "2026-10-22",
+   "companies": [
+    {
+     "name": "Karta AI",
+     "date": "2026-10-22",
+     "amountUsdMn": 3,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://karta.com/"
+    },
+    {
+     "name": "Hunar",
+     "date": "2026-10-19",
+     "amountUsdMn": 4.2,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://hunar.ai/"
+    }
+   ]
+  },
+  {
    "name": "Antler India",
    "key": "antlerindia",
    "bets": 2,
@@ -1678,7 +1841,7 @@
      "amountUsdMn": 1.4,
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-snapmint-to-snabbit-indian-startups-raised-371-mn-this-week/",
-     "website": "https://redacto.ai/en-in"
+     "website": "https://redacto.ai/"
     }
    ]
   },
@@ -1724,59 +1887,18 @@
    ]
   },
   {
-   "name": "Venture Catalysts",
-   "key": "venturecatalysts",
+   "name": "SenseAI Ventures",
+   "key": "senseaiventures",
    "bets": 2,
    "disclosedBets": 2,
-   "roundValueUsdMn": 4.4,
-   "medianRoundUsdMn": 2.2,
-   "allDeals": 14,
+   "roundValueUsdMn": 3.8,
+   "medianRoundUsdMn": 1.9,
+   "allDeals": 3,
    "aiDeals": 3,
-   "aiShare": 21,
-   "stages": [
-    {
-     "stage": "Seed",
-     "count": 1
-    },
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-10-19",
-   "lastBet": "2026-10-14",
-   "companies": [
-    {
-     "name": "RevRag.AI",
-     "date": "2026-10-14",
-     "amountUsdMn": 2.5,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-boldfit-to-origin-indian-startups-raised-about-236-mn-this-week/",
-     "website": "https://www.revrag.ai/"
-    },
-    {
-     "name": "Fundamento",
-     "date": "2025-10-19",
-     "amountUsdMn": 1.9,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-zepto-to-kuku-fm-indian-startups-raised-737-mn-this-week/",
-     "website": "https://fundamento.ai/"
-    }
-   ]
-  },
-  {
-   "name": "Cedar Hill Capital",
-   "key": "cedarhillcapital",
-   "bets": 2,
-   "disclosedBets": 2,
-   "roundValueUsdMn": 4,
-   "medianRoundUsdMn": 2,
-   "allDeals": 2,
-   "aiDeals": 2,
    "aiShare": 100,
    "stages": [
     {
-     "stage": "Seed",
+     "stage": "Pre-seed",
      "count": 1
     },
     {
@@ -1784,61 +1906,24 @@
      "count": 1
     }
    ],
-   "firstBet": "2026-03-31",
-   "lastBet": "2026-10-14",
+   "firstBet": "2026-06-23",
+   "lastBet": "2026-10-23",
    "companies": [
     {
-     "name": "RevRag.AI",
-     "date": "2026-10-14",
-     "amountUsdMn": 2.5,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-boldfit-to-origin-indian-startups-raised-about-236-mn-this-week/",
-     "website": "https://www.revrag.ai/"
-    },
-    {
-     "name": "Sign3",
-     "date": "2026-03-31",
-     "amountUsdMn": 1.5,
+     "name": "Vectorial",
+     "date": "2026-10-23",
+     "amountUsdMn": 3,
      "stage": "Other",
-     "source": "https://inc42.com/buzz/from-noon-to-palmonas-indian-startups-raised-132-mn-this-week/",
-     "website": "https://sign3.ai/"
-    }
-   ]
-  },
-  {
-   "name": "PeerCapital",
-   "key": "peercapital",
-   "bets": 2,
-   "disclosedBets": 2,
-   "roundValueUsdMn": 3.4,
-   "medianRoundUsdMn": 1.7,
-   "allDeals": 5,
-   "aiDeals": 2,
-   "aiShare": 40,
-   "stages": [
-    {
-     "stage": "Seed",
-     "count": 2
-    }
-   ],
-   "firstBet": "2025-10-30",
-   "lastBet": "2025-11-06",
-   "companies": [
-    {
-     "name": "Game State Labs",
-     "date": "2025-11-06",
-     "amountUsdMn": 2,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-moengage-to-agnikul-indian-startups-raised-238-mn-this-week/",
-     "website": "https://gamestatelabs.com/"
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": null
     },
     {
-     "name": "Redacto",
-     "date": "2025-10-30",
-     "amountUsdMn": 1.4,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-snapmint-to-snabbit-indian-startups-raised-371-mn-this-week/",
-     "website": "https://redacto.ai/en-in"
+     "name": "Sherlocks AI",
+     "date": "2026-06-23",
+     "amountUsdMn": 0.795,
+     "stage": "Pre-seed",
+     "source": "https://inc42.com/buzz/from-cred-to-square-yards-indian-startups-raised-1-1-bn-this-week/",
+     "website": "https://www.sherlocks.ai/"
     }
    ]
   },
@@ -2128,60 +2213,31 @@
    ]
   },
   {
-   "name": "ICONIQ",
-   "key": "iconiq",
+   "name": "Lightspeed Venture Partners",
+   "key": "lightspeedventurepartners",
    "bets": 1,
    "disclosedBets": 1,
-   "roundValueUsdMn": 50,
-   "medianRoundUsdMn": 50,
+   "roundValueUsdMn": 48,
+   "medianRoundUsdMn": 48,
    "allDeals": 1,
    "aiDeals": 1,
    "aiShare": 100,
    "stages": [
     {
-     "stage": "Series B",
+     "stage": "Seed",
      "count": 1
     }
    ],
-   "firstBet": "2025-10-22",
-   "lastBet": "2025-10-22",
+   "firstBet": "2026-10-22",
+   "lastBet": "2026-10-22",
    "companies": [
     {
-     "name": "UnifyApps",
-     "date": "2025-10-22",
-     "amountUsdMn": 50,
-     "stage": "Series B",
-     "source": "https://inc42.com/buzz/from-uniphore-to-unifyapps-indian-startups-raised-312-mn-this-week/",
-     "website": "https://www.unifyapps.com/"
-    }
-   ]
-  },
-  {
-   "name": "WestBridge Capital",
-   "key": "westbridgecapital",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 50,
-   "medianRoundUsdMn": 50,
-   "allDeals": 5,
-   "aiDeals": 1,
-   "aiShare": 20,
-   "stages": [
-    {
-     "stage": "Series B",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-10-22",
-   "lastBet": "2025-10-22",
-   "companies": [
-    {
-     "name": "UnifyApps",
-     "date": "2025-10-22",
-     "amountUsdMn": 50,
-     "stage": "Series B",
-     "source": "https://inc42.com/buzz/from-uniphore-to-unifyapps-indian-startups-raised-312-mn-this-week/",
-     "website": "https://www.unifyapps.com/"
+     "name": "Different",
+     "date": "2026-10-22",
+     "amountUsdMn": 48,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://www.different.ai/"
     }
    ]
   },
@@ -2743,9 +2799,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 27,
    "medianRoundUsdMn": 27,
-   "allDeals": 4,
+   "allDeals": 5,
    "aiDeals": 4,
-   "aiShare": 100,
+   "aiShare": 80,
    "stages": [
     {
      "stage": "Seed",
@@ -2969,6 +3025,122 @@
    ]
   },
   {
+   "name": "Amit Zavery",
+   "key": "amitzavery",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 20.7,
+   "medianRoundUsdMn": 20.7,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-21",
+   "lastBet": "2026-10-21",
+   "companies": [
+    {
+     "name": "AuxoAI",
+     "date": "2026-10-21",
+     "amountUsdMn": 20.7,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://auxoai.com/"
+    }
+   ]
+  },
+  {
+   "name": "George Still Jr",
+   "key": "georgestilljr",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 20.7,
+   "medianRoundUsdMn": 20.7,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-21",
+   "lastBet": "2026-10-21",
+   "companies": [
+    {
+     "name": "AuxoAI",
+     "date": "2026-10-21",
+     "amountUsdMn": 20.7,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://auxoai.com/"
+    }
+   ]
+  },
+  {
+   "name": "Giacomo Sonnino",
+   "key": "giacomosonnino",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 20.7,
+   "medianRoundUsdMn": 20.7,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-21",
+   "lastBet": "2026-10-21",
+   "companies": [
+    {
+     "name": "AuxoAI",
+     "date": "2026-10-21",
+     "amountUsdMn": 20.7,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://auxoai.com/"
+    }
+   ]
+  },
+  {
+   "name": "NTTVC",
+   "key": "nttvc",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 20.7,
+   "medianRoundUsdMn": 20.7,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-21",
+   "lastBet": "2026-10-21",
+   "companies": [
+    {
+     "name": "AuxoAI",
+     "date": "2026-10-21",
+     "amountUsdMn": 20.7,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://auxoai.com/"
+    }
+   ]
+  },
+  {
    "name": "Base10",
    "key": "base10",
    "bets": 1,
@@ -3085,6 +3257,93 @@
    ]
   },
   {
+   "name": "Deel Ventures",
+   "key": "deelventures",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 15,
+   "medianRoundUsdMn": 15,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-23",
+   "lastBet": "2026-10-23",
+   "companies": [
+    {
+     "name": "Firstwork",
+     "date": "2026-10-23",
+     "amountUsdMn": 15,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://www.firstwork.com/"
+    }
+   ]
+  },
+  {
+   "name": "Earlybird Venture Capital",
+   "key": "earlybirdventurecapital",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 15,
+   "medianRoundUsdMn": 15,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-23",
+   "lastBet": "2026-10-23",
+   "companies": [
+    {
+     "name": "Firstwork",
+     "date": "2026-10-23",
+     "amountUsdMn": 15,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://www.firstwork.com/"
+    }
+   ]
+  },
+  {
+   "name": "Gradient",
+   "key": "gradient",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 15,
+   "medianRoundUsdMn": 15,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-23",
+   "lastBet": "2026-10-23",
+   "companies": [
+    {
+     "name": "Firstwork",
+     "date": "2026-10-23",
+     "amountUsdMn": 15,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://www.firstwork.com/"
+    }
+   ]
+  },
+  {
    "name": "Immad Akhund",
    "key": "immadakhund",
    "bets": 1,
@@ -3110,6 +3369,35 @@
      "stage": "Other",
      "source": "https://inc42.com/buzz/from-emergent-to-neo-group-indian-startups-raised-281-mn-this-week/",
      "website": "https://vorflux.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Legion VC",
+   "key": "legionvc",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 15,
+   "medianRoundUsdMn": 15,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-23",
+   "lastBet": "2026-10-23",
+   "companies": [
+    {
+     "name": "Firstwork",
+     "date": "2026-10-23",
+     "amountUsdMn": 15,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://www.firstwork.com/"
     }
    ]
   },
@@ -3839,6 +4127,35 @@
    ]
   },
   {
+   "name": "IIFL",
+   "key": "iifl",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 8,
+   "medianRoundUsdMn": 8,
+   "allDeals": 3,
+   "aiDeals": 1,
+   "aiShare": 33,
+   "stages": [
+    {
+     "stage": "Series A",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-04-14",
+   "lastBet": "2026-04-14",
+   "companies": [
+    {
+     "name": "TraqCheck",
+     "date": "2026-04-14",
+     "amountUsdMn": 8,
+     "stage": "Series A",
+     "source": "https://inc42.com/buzz/from-hosteller-to-gobblecube-indian-startups-raised-60-mn-this-week/",
+     "website": "https://www.traqcheck.com/"
+    }
+   ]
+  },
+  {
    "name": "PFNYC",
    "key": "pfnyc",
    "bets": 1,
@@ -4019,9 +4336,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 8,
    "medianRoundUsdMn": 8,
-   "allDeals": 5,
+   "allDeals": 7,
    "aiDeals": 1,
-   "aiShare": 20,
+   "aiShare": 14,
    "stages": [
     {
      "stage": "Series B",
@@ -4361,35 +4678,6 @@
    ]
   },
   {
-   "name": "General Catalyst",
-   "key": "generalcatalyst",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 6.3,
-   "medianRoundUsdMn": 6.3,
-   "allDeals": 5,
-   "aiDeals": 2,
-   "aiShare": 40,
-   "stages": [
-    {
-     "stage": "Seed",
-     "count": 1
-    }
-   ],
-   "firstBet": "2026-01-21",
-   "lastBet": "2026-01-21",
-   "companies": [
-    {
-     "name": "Bolna",
-     "date": "2026-01-21",
-     "amountUsdMn": 6.3,
-     "stage": "Seed",
-     "source": "https://inc42.com/buzz/from-emergent-to-juspay-indian-startups-raised-303-mn-this-week/",
-     "website": "https://www.bolna.ai/"
-    }
-   ]
-  },
-  {
    "name": "Orange Collective",
    "key": "orangecollective",
    "bets": 1,
@@ -4541,9 +4829,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 5.5,
    "medianRoundUsdMn": 5.5,
-   "allDeals": 2,
+   "allDeals": 3,
    "aiDeals": 1,
-   "aiShare": 50,
+   "aiShare": 33,
    "stages": [
     {
      "stage": "Series A",
@@ -4773,9 +5061,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 4.6,
    "medianRoundUsdMn": 4.6,
-   "allDeals": 5,
+   "allDeals": 6,
    "aiDeals": 2,
-   "aiShare": 40,
+   "aiShare": 33,
    "stages": [
     {
      "stage": "Seed",
@@ -4792,6 +5080,151 @@
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-even-healthcare-to-takeme2space-indian-startups-raised-68-mn-this-week/",
      "website": "https://aivar.io/"
+    }
+   ]
+  },
+  {
+   "name": "Aditya Vuchi",
+   "key": "adityavuchi",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 4.2,
+   "medianRoundUsdMn": 4.2,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-19",
+   "lastBet": "2026-10-19",
+   "companies": [
+    {
+     "name": "Hunar",
+     "date": "2026-10-19",
+     "amountUsdMn": 4.2,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://hunar.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Alakh Pandey",
+   "key": "alakhpandey",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 4.2,
+   "medianRoundUsdMn": 4.2,
+   "allDeals": 2,
+   "aiDeals": 1,
+   "aiShare": 50,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-19",
+   "lastBet": "2026-10-19",
+   "companies": [
+    {
+     "name": "Hunar",
+     "date": "2026-10-19",
+     "amountUsdMn": 4.2,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://hunar.ai/"
+    }
+   ]
+  },
+  {
+   "name": "AVNM Ventures",
+   "key": "avnmventures",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 4.2,
+   "medianRoundUsdMn": 4.2,
+   "allDeals": 3,
+   "aiDeals": 1,
+   "aiShare": 33,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-19",
+   "lastBet": "2026-10-19",
+   "companies": [
+    {
+     "name": "Hunar",
+     "date": "2026-10-19",
+     "amountUsdMn": 4.2,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://hunar.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Hyderabad Angels Fund",
+   "key": "hyderabadangelsfund",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 4.2,
+   "medianRoundUsdMn": 4.2,
+   "allDeals": 2,
+   "aiDeals": 1,
+   "aiShare": 50,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-19",
+   "lastBet": "2026-10-19",
+   "companies": [
+    {
+     "name": "Hunar",
+     "date": "2026-10-19",
+     "amountUsdMn": 4.2,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://hunar.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Prateek Maheshwari",
+   "key": "prateekmaheshwari",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 4.2,
+   "medianRoundUsdMn": 4.2,
+   "allDeals": 3,
+   "aiDeals": 1,
+   "aiShare": 33,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-19",
+   "lastBet": "2026-10-19",
+   "companies": [
+    {
+     "name": "Hunar",
+     "date": "2026-10-19",
+     "amountUsdMn": 4.2,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://hunar.ai/"
     }
    ]
   },
@@ -5405,6 +5838,64 @@
    ]
   },
   {
+   "name": "Berkeley AI Research Lab",
+   "key": "berkeleyairesearchlab",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 3,
+   "medianRoundUsdMn": 3,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-23",
+   "lastBet": "2026-10-23",
+   "companies": [
+    {
+     "name": "Vectorial",
+     "date": "2026-10-23",
+     "amountUsdMn": 3,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": null
+    }
+   ]
+  },
+  {
+   "name": "Berkeley SkyDeck",
+   "key": "berkeleyskydeck",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 3,
+   "medianRoundUsdMn": 3,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-23",
+   "lastBet": "2026-10-23",
+   "companies": [
+    {
+     "name": "Vectorial",
+     "date": "2026-10-23",
+     "amountUsdMn": 3,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": null
+    }
+   ]
+  },
+  {
    "name": "Capital A",
    "key": "capitala",
    "bets": 1,
@@ -5430,6 +5921,64 @@
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-spinny-to-statiq-indian-startups-raised-285-mn-this-week/",
      "website": "https://craftifai.com/"
+    }
+   ]
+  },
+  {
+   "name": "CDM Capital",
+   "key": "cdmcapital",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 3,
+   "medianRoundUsdMn": 3,
+   "allDeals": 5,
+   "aiDeals": 1,
+   "aiShare": 20,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-22",
+   "lastBet": "2026-10-22",
+   "companies": [
+    {
+     "name": "Karta AI",
+     "date": "2026-10-22",
+     "amountUsdMn": 3,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://karta.com/"
+    }
+   ]
+  },
+  {
+   "name": "Dent Capital",
+   "key": "dentcapital",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 3,
+   "medianRoundUsdMn": 3,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-23",
+   "lastBet": "2026-10-23",
+   "companies": [
+    {
+     "name": "Vectorial",
+     "date": "2026-10-23",
+     "amountUsdMn": 3,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": null
     }
    ]
   },
@@ -5488,6 +6037,122 @@
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-even-healthcare-to-takeme2space-indian-startups-raised-68-mn-this-week/",
      "website": "https://arrowhead.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Motus Ventures",
+   "key": "motusventures",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 3,
+   "medianRoundUsdMn": 3,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-23",
+   "lastBet": "2026-10-23",
+   "companies": [
+    {
+     "name": "Vectorial",
+     "date": "2026-10-23",
+     "amountUsdMn": 3,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": null
+    }
+   ]
+  },
+  {
+   "name": "Smilegate",
+   "key": "smilegate",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 3,
+   "medianRoundUsdMn": 3,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-23",
+   "lastBet": "2026-10-23",
+   "companies": [
+    {
+     "name": "Vectorial",
+     "date": "2026-10-23",
+     "amountUsdMn": 3,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": null
+    }
+   ]
+  },
+  {
+   "name": "SUM Ventures",
+   "key": "sumventures",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 3,
+   "medianRoundUsdMn": 3,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Other",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-23",
+   "lastBet": "2026-10-23",
+   "companies": [
+    {
+     "name": "Vectorial",
+     "date": "2026-10-23",
+     "amountUsdMn": 3,
+     "stage": "Other",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": null
+    }
+   ]
+  },
+  {
+   "name": "Wyser VC",
+   "key": "wyservc",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 3,
+   "medianRoundUsdMn": 3,
+   "allDeals": 1,
+   "aiDeals": 1,
+   "aiShare": 100,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-22",
+   "lastBet": "2026-10-22",
+   "companies": [
+    {
+     "name": "Karta AI",
+     "date": "2026-10-22",
+     "amountUsdMn": 3,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+     "website": "https://karta.com/"
     }
    ]
   },
@@ -5807,6 +6472,35 @@
      "stage": "Pre-seed",
      "source": "https://inc42.com/buzz/from-emergent-to-neo-group-indian-startups-raised-281-mn-this-week/",
      "website": "https://logcat.ai/"
+    }
+   ]
+  },
+  {
+   "name": "Venture Catalysts",
+   "key": "venturecatalysts",
+   "bets": 1,
+   "disclosedBets": 1,
+   "roundValueUsdMn": 2.5,
+   "medianRoundUsdMn": 2.5,
+   "allDeals": 13,
+   "aiDeals": 2,
+   "aiShare": 15,
+   "stages": [
+    {
+     "stage": "Seed",
+     "count": 1
+    }
+   ],
+   "firstBet": "2026-10-14",
+   "lastBet": "2026-10-14",
+   "companies": [
+    {
+     "name": "RevRag.AI",
+     "date": "2026-10-14",
+     "amountUsdMn": 2.5,
+     "stage": "Seed",
+     "source": "https://inc42.com/buzz/from-boldfit-to-origin-indian-startups-raised-about-236-mn-this-week/",
+     "website": "https://www.revrag.ai/"
     }
    ]
   },
@@ -6246,93 +6940,6 @@
    ]
   },
   {
-   "name": "Epic Angels",
-   "key": "epicangels",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 1.9,
-   "medianRoundUsdMn": 1.9,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-10-19",
-   "lastBet": "2025-10-19",
-   "companies": [
-    {
-     "name": "Fundamento",
-     "date": "2025-10-19",
-     "amountUsdMn": 1.9,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-zepto-to-kuku-fm-indian-startups-raised-737-mn-this-week/",
-     "website": "https://fundamento.ai/"
-    }
-   ]
-  },
-  {
-   "name": "Lead Invest",
-   "key": "leadinvest",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 1.9,
-   "medianRoundUsdMn": 1.9,
-   "allDeals": 2,
-   "aiDeals": 1,
-   "aiShare": 50,
-   "stages": [
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-10-19",
-   "lastBet": "2025-10-19",
-   "companies": [
-    {
-     "name": "Fundamento",
-     "date": "2025-10-19",
-     "amountUsdMn": 1.9,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-zepto-to-kuku-fm-indian-startups-raised-737-mn-this-week/",
-     "website": "https://fundamento.ai/"
-    }
-   ]
-  },
-  {
-   "name": "The Players Fund",
-   "key": "theplayersfund",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 1.9,
-   "medianRoundUsdMn": 1.9,
-   "allDeals": 1,
-   "aiDeals": 1,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-Series A",
-     "count": 1
-    }
-   ],
-   "firstBet": "2025-10-19",
-   "lastBet": "2025-10-19",
-   "companies": [
-    {
-     "name": "Fundamento",
-     "date": "2025-10-19",
-     "amountUsdMn": 1.9,
-     "stage": "Pre-Series A",
-     "source": "https://inc42.com/buzz/from-zepto-to-kuku-fm-indian-startups-raised-737-mn-this-week/",
-     "website": "https://fundamento.ai/"
-    }
-   ]
-  },
-  {
    "name": "Himanshu Singhal",
    "key": "himanshusinghal",
    "bets": 1,
@@ -6473,7 +7080,7 @@
      "amountUsdMn": 1.5,
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-fairdeal-market-to-abcoffee-indian-startups-raised-52-mn-this-week/",
-     "website": "https://flexprice.io/"
+     "website": "https://flexprice.in/"
     }
    ]
   },
@@ -6560,7 +7167,7 @@
      "amountUsdMn": 1.5,
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-fairdeal-market-to-abcoffee-indian-startups-raised-52-mn-this-week/",
-     "website": "https://flexprice.io/"
+     "website": "https://flexprice.in/"
     }
    ]
   },
@@ -6618,7 +7225,7 @@
      "amountUsdMn": 1.5,
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-fairdeal-market-to-abcoffee-indian-startups-raised-52-mn-this-week/",
-     "website": "https://flexprice.io/"
+     "website": "https://flexprice.in/"
     }
    ]
   },
@@ -6909,35 +7516,6 @@
      "stage": "Seed",
      "source": "https://inc42.com/buzz/from-ultraviolette-to-furlenco-indian-startups-raised-133-mn-this-week/",
      "website": "https://getreplies.ai/"
-    }
-   ]
-  },
-  {
-   "name": "SenseAI Ventures",
-   "key": "senseaiventures",
-   "bets": 1,
-   "disclosedBets": 1,
-   "roundValueUsdMn": 0.8,
-   "medianRoundUsdMn": 0.8,
-   "allDeals": 2,
-   "aiDeals": 2,
-   "aiShare": 100,
-   "stages": [
-    {
-     "stage": "Pre-seed",
-     "count": 1
-    }
-   ],
-   "firstBet": "2026-06-23",
-   "lastBet": "2026-06-23",
-   "companies": [
-    {
-     "name": "Sherlocks AI",
-     "date": "2026-06-23",
-     "amountUsdMn": 0.795,
-     "stage": "Pre-seed",
-     "source": "https://inc42.com/buzz/from-cred-to-square-yards-indian-startups-raised-1-1-bn-this-week/",
-     "website": "https://www.sherlocks.ai/"
     }
    ]
   },
@@ -7470,9 +8048,9 @@
    "disclosedBets": 1,
    "roundValueUsdMn": 0.3,
    "medianRoundUsdMn": 0.3,
-   "allDeals": 9,
+   "allDeals": 10,
    "aiDeals": 1,
-   "aiShare": 11,
+   "aiShare": 10,
    "stages": [
     {
      "stage": "Other",
@@ -8322,6 +8900,356 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": true,
+   "website": null
+  },
+  {
+   "date": "2026-10-23",
+   "name": "Firstwork",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2B",
+   "amountUsdMn": 15,
+   "amountRaw": "$15 Mn",
+   "roundType": "Series A",
+   "investors": [
+    "Earlybird Venture Capital",
+    "Legion VC",
+    "Deel Ventures",
+    "Gradient",
+    "Y Combinator"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": true,
+   "website": "https://www.firstwork.com/"
+  },
+  {
+   "date": "2026-10-23",
+   "name": "Vectorial",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2B",
+   "amountUsdMn": 3,
+   "amountRaw": "$3 Mn",
+   "roundType": "",
+   "investors": [
+    "SenseAI Ventures",
+    "Smilegate",
+    "Berkeley SkyDeck",
+    "Berkeley AI Research Lab",
+    "Dent Capital",
+    "Motus Ventures",
+    "SUM Ventures"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": true,
+   "website": null
+  },
+  {
+   "date": "2026-10-23",
+   "name": "Paar Autonomy",
+   "sector": "Advanced Hardware",
+   "subsector": "Defence Tech",
+   "businessModel": "B2B",
+   "amountUsdMn": 1,
+   "amountRaw": "$1 Mn",
+   "roundType": "Seed",
+   "investors": [
+    "AdvantEdge Founders"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-23",
+   "name": "SpectraGaze Systems",
+   "sector": "Advanced Hardware",
+   "subsector": "Space Tech",
+   "businessModel": "B2B",
+   "amountUsdMn": 0.389,
+   "amountRaw": "$389K",
+   "roundType": "Seed",
+   "investors": [
+    "GVFL"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-22",
+   "name": "Different",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2B",
+   "amountUsdMn": 48,
+   "amountRaw": "$48 Mn",
+   "roundType": "Seed",
+   "investors": [
+    "General Catalyst",
+    "Lightspeed Venture Partners"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": true,
+   "website": "https://www.different.ai/"
+  },
+  {
+   "date": "2026-10-22",
+   "name": "CureBay",
+   "sector": "Health Tech",
+   "subsector": "In-Clinic Healthcare",
+   "businessModel": "B2C",
+   "amountUsdMn": 10.6,
+   "amountRaw": "$10.6 Mn *",
+   "roundType": "Pre-Series C",
+   "investors": [
+    "IvyCap Ventures",
+    "Trifecta Capital",
+    "Alteria Capital",
+    "VentureSoul Partners"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-22",
+   "name": "Chapter Homes",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": 6.6,
+   "amountRaw": "$6.6 Mn*",
+   "roundType": "",
+   "investors": [
+    "Bessemer Venture Partners",
+    "Stride Ventures",
+    "Tanmay Bhat"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-22",
+   "name": "TravClan",
+   "sector": "Travel Tech",
+   "subsector": "Travel Solutions",
+   "businessModel": "B2B",
+   "amountUsdMn": 5,
+   "amountRaw": "$5 Mn*",
+   "roundType": "",
+   "investors": [
+    "Flipkart",
+    "August One",
+    "Trifecta Capital"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-22",
+   "name": "Harajuku Tokyo Café",
+   "sector": "Foodtech",
+   "subsector": "QSR",
+   "businessModel": "B2C",
+   "amountUsdMn": 3,
+   "amountRaw": "$3 Mn",
+   "roundType": "Pre-Series A",
+   "investors": [
+    "ZeroW",
+    "India Angel Network",
+    "Samved VC",
+    "Blume Founders Fund",
+    "Brijesh Parekh Family Office",
+    "Rahul Jain"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-22",
+   "name": "Karta AI",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2B",
+   "amountUsdMn": 3,
+   "amountRaw": "$3 Mn",
+   "roundType": "Seed",
+   "investors": [
+    "PeerCapital",
+    "Cedar Hill Capital",
+    "Wyser VC",
+    "CDM Capital",
+    "Seedstars"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": true,
+   "website": "https://karta.com/"
+  },
+  {
+   "date": "2026-10-21",
+   "name": "AuxoAI",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2B",
+   "amountUsdMn": 20.7,
+   "amountRaw": "$20.7 Mn",
+   "roundType": "Series A",
+   "investors": [
+    "NTTVC",
+    "George Still Jr",
+    "Amit Zavery",
+    "Giacomo Sonnino"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": true,
+   "website": "https://auxoai.com/"
+  },
+  {
+   "date": "2026-10-21",
+   "name": "Onto",
+   "sector": "Travel Tech",
+   "subsector": "Booking Services",
+   "businessModel": "B2C",
+   "amountUsdMn": 1,
+   "amountRaw": "$1 Mn",
+   "roundType": "Pre-Seed",
+   "investors": [
+    "Stargazer Fund",
+    "White Venture Capital"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-21",
+   "name": "RAAHO",
+   "sector": "Logistics",
+   "subsector": "Shipping & Delivery",
+   "businessModel": "B2B",
+   "amountUsdMn": null,
+   "amountRaw": "-",
+   "roundType": "Pre-Series A",
+   "investors": [
+    "Enrission India Capital Inc"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-19",
+   "name": "Even Health",
+   "sector": "Health Tech",
+   "subsector": "In-Clinic Healthcare",
+   "businessModel": "B2C",
+   "amountUsdMn": 50,
+   "amountRaw": "$50 Mn",
+   "roundType": "Series B",
+   "investors": [
+    "Khosla Ventures",
+    "Alpha Wave"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-19",
+   "name": "The Pant Project",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": 11.5,
+   "amountRaw": "$11.5 Mn",
+   "roundType": "Series B",
+   "investors": [
+    "Mirae Asset Venture Investments",
+    "Sorin Investments",
+    "Anisha Saraf",
+    "K Securities",
+    "MGA Ventures",
+    "B2V Ventures"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
+   "website": null
+  },
+  {
+   "date": "2026-10-19",
+   "name": "Hunar",
+   "sector": "AI",
+   "subsector": "Application Layer",
+   "businessModel": "B2B",
+   "amountUsdMn": 4.2,
+   "amountRaw": "$4.2 Mn",
+   "roundType": "Blume Ventures",
+   "investors": [
+    "Blume Ventures",
+    "Hyderabad Angels Fund",
+    "Together Fund",
+    "Seedstars",
+    "AVNM Ventures",
+    "Prateek Maheshwari",
+    "Alakh Pandey",
+    "Aditya Vuchi"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": true,
+   "aiLayer": "application",
+   "isAIService": true,
+   "website": "https://hunar.ai/"
+  },
+  {
+   "date": "2026-10-19",
+   "name": "So/Facet",
+   "sector": "Ecommerce",
+   "subsector": "D2C",
+   "businessModel": "B2C",
+   "amountUsdMn": 1,
+   "amountRaw": "$1 Mn",
+   "roundType": "Seed",
+   "investors": [
+    "Sauce.Vc"
+   ],
+   "source": "https://inc42.com/buzz/from-even-health-to-the-pant-project-indian-startups-raised-over-184-mn-this-week/",
+   "isAI": false,
+   "aiLayer": "",
+   "isAIService": false,
    "website": null
   },
   {
@@ -10386,7 +11314,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": true,
-   "website": "https://graphai.app/"
+   "website": "https://www.graphai.tech/"
   },
   {
    "date": "2026-09-10",
@@ -11041,7 +11969,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": true,
-   "website": "https://oppex.ai/"
+   "website": "https://www.oppex.ai/"
   },
   {
    "date": "2026-09-01",
@@ -15800,7 +16728,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": true,
-   "website": "https://flexprice.io/"
+   "website": "https://flexprice.in/"
   },
   {
    "date": "2026-05-26",
@@ -26090,7 +27018,7 @@
    "isAI": true,
    "aiLayer": "application",
    "isAIService": true,
-   "website": "https://redacto.ai/en-in"
+   "website": "https://redacto.ai/"
   },
   {
    "date": "2025-10-30",
@@ -26467,92 +27395,6 @@
    "aiLayer": "application",
    "isAIService": true,
    "website": "https://finallayer.com/"
-  },
-  {
-   "date": "2025-10-23",
-   "name": "Michezo Sports",
-   "sector": "Consumer Services",
-   "subsector": "Hyperlocal Services",
-   "businessModel": "B2C",
-   "amountUsdMn": 2.5,
-   "amountRaw": "$2.5 Mn",
-   "roundType": "",
-   "investors": [
-    "Centre Court Capital",
-    "Rainmatter"
-   ],
-   "source": "https://inc42.com/buzz/from-uniphore-to-unifyapps-indian-startups-raised-312-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-10-22",
-   "name": "Uniphore",
-   "sector": "Enterprise Tech",
-   "subsector": "Horizontal SaaS",
-   "businessModel": "B2B",
-   "amountUsdMn": 260,
-   "amountRaw": "$260 Mn",
-   "roundType": "Series F",
-   "investors": [
-    "NVIDIA",
-    "Advanced Micro Devices",
-    "Snowflake",
-    "Databricks",
-    "New Enterprise Associates",
-    "March Capital",
-    "BNF Capital",
-    "National Grid Partners",
-    "Prosperity7 VC"
-   ],
-   "source": "https://inc42.com/buzz/from-uniphore-to-unifyapps-indian-startups-raised-312-mn-this-week/",
-   "isAI": false,
-   "aiLayer": "",
-   "isAIService": false,
-   "website": null
-  },
-  {
-   "date": "2025-10-22",
-   "name": "UnifyApps",
-   "sector": "AI",
-   "subsector": "Application Layer",
-   "businessModel": "B2B",
-   "amountUsdMn": 50,
-   "amountRaw": "$50 Mn",
-   "roundType": "Series B",
-   "investors": [
-    "WestBridge Capital",
-    "ICONIQ"
-   ],
-   "source": "https://inc42.com/buzz/from-uniphore-to-unifyapps-indian-startups-raised-312-mn-this-week/",
-   "isAI": true,
-   "aiLayer": "application",
-   "isAIService": true,
-   "website": "https://www.unifyapps.com/"
-  },
-  {
-   "date": "2025-10-19",
-   "name": "Fundamento",
-   "sector": "AI",
-   "subsector": "Application Layer",
-   "businessModel": "B2B",
-   "amountUsdMn": 1.9,
-   "amountRaw": "$1.9 Mn",
-   "roundType": "Pre-Series A",
-   "investors": [
-    "IIFL",
-    "The Players Fund",
-    "Venture Catalysts",
-    "Lead Invest",
-    "Epic Angels"
-   ],
-   "source": "https://inc42.com/buzz/from-zepto-to-kuku-fm-indian-startups-raised-737-mn-this-week/",
-   "isAI": true,
-   "aiLayer": "application",
-   "isAIService": true,
-   "website": "https://fundamento.ai/"
   }
  ]
 }
